@@ -1,0 +1,15 @@
+# Workflow name
+name: "CI Workflow"
+
+# Event for the workflow
+on: push
+
+# List of jobs
+jobs:
+  test:
+    # Operating System
+    runs-on: ubuntu-latest
+    # Job steps
+    steps:
+      - uses: actions/checkout@v3 # Checkout the repository code
+      - run: npm install # Install dependencies
