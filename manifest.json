@@ -1,0 +1,25 @@
+{
+    "name": "Smoker",
+    "short_name": "Smoker",
+    "description": "Smoker - Your ultimate smoking tracker and management app.",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#ff5722",
+    "icons": [
+      {
+        "src": "/pwa-192x192.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      },
+      {
+        "src": "/pwa-512x512.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
+    ],
+    "id": "/?source=pwa",
+    "scope": "/",
+    "orientation": "portrait-primary",
+    "categories": ["health", "lifestyle", "tracker"]
+  }
