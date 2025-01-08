@@ -1,20 +1,3 @@
-## 🔥 Issues
-<!-- [여기서부터 주석]
-
-    - 관련된 issue 티켓과 링크를 작성해주세요.
-
-      ex)
-        * issue: [KAN-](https://chic.atlassian.net/browse/KAN-)
-        sub-issues:
-          - [KAN-](https://chic.atlassian.net/browse/KAN-)
-          - [KAN-](https://chic.atlassian.net/browse/KAN-)
-
-
-[여기까지 주석] -->
-
-<br/>
-<br/>
-
 ## 🎯 작업 내용
 
 <!-- [여기서부터 주석]
