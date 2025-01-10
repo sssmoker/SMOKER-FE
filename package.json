@@ -1,34 +1,39 @@
 {
-  "name": "pwa-react",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview",
-    "gen-pwa": "pwa-assets-generator --preset minimal public/logo.svg"
-  },
-  "dependencies": {
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "workbox-core": "^7.3.0",
-    "workbox-precaching": "^7.3.0"
-  },
-  "devDependencies": {
-    "@eslint/js": "^9.17.0",
-    "@types/react": "^18.3.18",
-    "@types/react-dom": "^18.3.5",
-    "@vite-pwa/assets-generator": "^0.2.6",
-    "@vitejs/plugin-react": "^4.3.4",
-    "@vitejs/plugin-react-swc": "^3.7.2",
-    "eslint": "^9.17.0",
-    "eslint-plugin-react": "^7.37.2",
-    "eslint-plugin-react-hooks": "^5.0.0",
-    "eslint-plugin-react-refresh": "^0.4.16",
-    "globals": "^15.14.0",
-    "vite": "^6.0.5",
-    "vite-plugin-pwa": "^0.21.1"
-  }
+	"name": "pwa-react",
+	"private": true,
+	"version": "0.0.0",
+	"type": "module",
+	"scripts": {
+		"dev": "vite",
+		"build": "vite build",
+		"lint": "eslint .",
+		"preview": "vite preview",
+		"gen-pwa": "pwa-assets-generator --preset minimal public/logo.svg",
+		"format": "prettier --write ."
+	},
+	"dependencies": {
+		"react": "^19.0.0",
+		"react-dom": "^19.0.0",
+		"react-router-dom": "^7.1.1",
+		"workbox-core": "^7.3.0",
+		"workbox-precaching": "^7.3.0"
+	},
+	"devDependencies": {
+		"@eslint/js": "^9.17.0",
+		"@types/react": "^18.3.18",
+		"@types/react-dom": "^18.3.5",
+		"@vite-pwa/assets-generator": "^0.2.6",
+		"@vitejs/plugin-react": "^4.3.4",
+		"@vitejs/plugin-react-swc": "^3.7.2",
+		"eslint": "^9.17.0",
+		"eslint-config-prettier": "^9.1.0",
+		"eslint-plugin-react": "^7.37.2",
+		"eslint-plugin-react-hooks": "^5.0.0",
+		"eslint-plugin-react-refresh": "^0.4.16",
+		"globals": "^15.14.0",
+		"prettier": "^3.4.2",
+		"prettier-plugin-tailwindcss": "^0.6.9",
+		"vite": "^6.0.5",
+		"vite-plugin-pwa": "^0.21.1"
+	}
 }
