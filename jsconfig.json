@@ -1,0 +1,9 @@
+{
+	"compilerOptions": {
+		"baseUrl": "./",
+		"paths": {
+			"@/*": ["src/*"] // Import Alias 설정
+		}
+	},
+	"include": ["src"]
+}

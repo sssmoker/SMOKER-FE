@@ -1,7 +1,13 @@
 import { defineConfig } from "vite"
 import { VitePWA } from "vite-plugin-pwa"
+import path from "path"
 
 export default defineConfig({
+	resolve: {
+		alias: {
+			"@": path.resolve(__dirname, "src"), // @ 경로를 src로 매핑
+		},
+	},
 	plugins: [
 		VitePWA({
 			registerType: "autoUpdate",
