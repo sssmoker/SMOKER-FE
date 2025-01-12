@@ -2,6 +2,11 @@ import { defineConfig } from "vite"
 import { VitePWA } from "vite-plugin-pwa"
 
 export default defineConfig({
+	resolve: {
+		alias: {
+			"@": path.resolve(__dirname, "src"), // Import Alias 설정
+		},
+	},
 	plugins: [
 		VitePWA({
 			registerType: "autoUpdate",
