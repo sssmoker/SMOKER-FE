@@ -1,11 +1,19 @@
 import { defineConfig } from "vite"
 import { VitePWA } from "vite-plugin-pwa"
+import fs from "fs"
 import path from "path"
 
 export default defineConfig({
 	resolve: {
 		alias: {
 			"@": path.resolve(__dirname, "src"), // @ 경로를 src로 매핑
+		},
+	},
+	sserver: {
+		port: 5000, // 포트 설정
+		https: {
+			key: fs.readFileSync(path.resolve(__dirname, "ssl/server.key")),
+			cert: fs.readFileSync(path.resolve(__dirname, "ssl/server.crt")),
 		},
 	},
 	plugins: [
