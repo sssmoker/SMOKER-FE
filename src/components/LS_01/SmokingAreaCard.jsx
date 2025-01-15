@@ -1,7 +1,6 @@
 import React from "react"
-import BookmarkSvg from "@/assets/icons/bookmark_icon.svg"
-import StarSvg from "@/assets/icons/star_mini_icon.svg"
 import SmokingAreaPng from "@/assets/dummy/LS_01_img1.png"
+// import { bookmark } from "lucide-react"
 
 export default function SmokingAreaCard() {
 	return (
@@ -10,11 +9,12 @@ export default function SmokingAreaCard() {
 			<div className="border-currentColor flex flex-col gap-y-1.5 border-b-2 p-5">
 				<div className="flex justify-between">
 					<p className="text-sm font-semibold">사당역 2번 출구 앞 흡연 부스</p>
-					<img className="px-1" src={BookmarkSvg} alt="북마크" />
+					{/* <img className="px-1" src={BookmarkSvg} alt="북마크" /> */}
+					
 				</div>
 
 				<div className="flex items-center gap-0.5">
-					<img src={StarSvg} alt="별점" />
+					{/* <img src={StarSvg} alt="별점" /> */}
 					<p className="text-2.5 font-normal text-gray-800">4.3(3) ꞏ 저장 30</p>
 					<p className="text-2 ml-1 font-normal text-gray-400">
 						내 위치에서 197m
