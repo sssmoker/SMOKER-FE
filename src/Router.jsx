@@ -18,6 +18,13 @@ export const router = createBrowserRouter([
 				path: "list",
 				element: <ListPage />,
 			},
+			// path 예시:
+			// smoking-area/?detail
+			// smoking-area/?review
+			// smoking-area/write-review
+			// add-smoking-area/?~~
+			// list/?my-bookmark
+			// my-page
 		],
 	},
 ])
