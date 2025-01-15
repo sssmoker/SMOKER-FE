@@ -1,8 +1,12 @@
 import React from "react"
-import { createBrowserRouter } from "react-router-dom"
-import RootLayout from "./layouts/root-layout"
-import HomePage from "./pages/HomePage"
-import ListPage from "./pages/ListPage"
+import { createBrowserRouter, Outlet } from "react-router-dom"
+import RootLayout from "@/layouts/root-layout"
+import HomePage from "@/pages/HomePage"
+import ListPage from "@/pages/ListPage"
+import SmokingAreaPage from "@/pages/SmokingAreaPage"
+import WritingReviewPage from "@/pages/WritingReviewPage"
+import AddSmokingAreaPage from "@/pages/AddSmokingAreaPage"
+import MyPage from "@/pages/MyPage"
 
 export const router = createBrowserRouter([
 	{
@@ -16,8 +20,36 @@ export const router = createBrowserRouter([
 			},
 			{
 				path: "list",
-				element: <ListPage />,
+				element: <Outlet />,
+				children: [
+					{
+						index: true,
+						element: <ListPage />,
+					},
+					{
+						path: "smoking-area",
+						element: <Outlet />,
+						children: [
+							{
+								index: true,
+								element: <SmokingAreaPage />,
+							},
+							{
+								path: "writing-review",
+								element: <WritingReviewPage />,
+							},
+						],
+					},
+				],
 			},
+			{
+				path: "add-smoking-area",
+				element: <AddSmokingAreaPage />,
+			},
+			{
+				path: "my-page",
+				element: <MyPage />
+			}
 		],
 	},
 ])

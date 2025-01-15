@@ -4,6 +4,13 @@ export default {
 	content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
 	theme: {
 		extend: {
+			spacing: {
+				25.5: "6.375rem", // 102px
+			},
+			fontSize: {
+				2: "0.5rem", // 8px
+				2.5: "0.625rem", // 10px
+			},
 			borderRadius: {
 				lg: "var(--radius)",
 				md: "calc(var(--radius) - 2px)",
