@@ -4,7 +4,7 @@ import React from "react"
 import PropTypes from "prop-types"
 import cn from "clsx"
 
-import { buttonVariants } from "./buttonVariants"
+import { buttonVariants } from "./ButtonVariants"
 
 export default function Button({
 	className,
