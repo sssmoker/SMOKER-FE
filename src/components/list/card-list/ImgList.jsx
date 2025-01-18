@@ -1,15 +1,7 @@
-import React, { useState } from "react"
+import React from "react"
 import ImgCard from "./ImgCard"
-import SmokingAreaPng from "@/assets/dummy/LS_01_img1.png" //
 
-export default function ImgList() {
-	const [imgList, setImgList] = useState([
-		SmokingAreaPng,
-		SmokingAreaPng,
-		SmokingAreaPng,
-		SmokingAreaPng,
-	])
-
+export default function ImgList({ imgList }) {
 	return (
 		<>
 			<div className="mt-0.5 flex gap-2 overflow-x-scroll">

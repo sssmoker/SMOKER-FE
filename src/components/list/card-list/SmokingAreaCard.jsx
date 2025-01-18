@@ -9,6 +9,7 @@ export default function SmokingAreaCard({
 	ratingCount,
 	bookmarkCount,
 	distance,
+	imgList,
 }) {
 	const [bookmarked, setBookmarked] = useState(isBookmarked)
 
@@ -40,7 +41,7 @@ export default function SmokingAreaCard({
 					</p>
 				</div>
 
-				<ImgList />
+				<ImgList imgList={imgList} />
 			</div>
 		</>
 	)
