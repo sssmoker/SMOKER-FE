@@ -1,14 +1,17 @@
-import SearchBar from "@/components/HM/SearchBar"
-import SmokingAreaList from "@/components/LS_01/SmokingAreaList"
 import React from "react"
+import SearchBar from "@/components/home/SearchBar"
+import SmokingAreaList from "@/components/list/card-list/SmokingAreaList"
 
 export default function ListPage() {
 	return (
 		<>
-			<SearchBar />
+			<div className="container h-[100%] bg-white text-black">
+				<SearchBar />
 
-			<div className="pt-28">
-				<SmokingAreaList />
+				<div className="pb-[60px] pt-28">
+					{/* 필터 */}
+					<SmokingAreaList />
+				</div>
 			</div>
 		</>
 	)
