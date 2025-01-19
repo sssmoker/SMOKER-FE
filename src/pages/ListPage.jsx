@@ -1,6 +1,6 @@
+import React from "react"
 import SearchBar from "@/components/home/SearchBar"
 import SmokingAreaList from "@/components/list/card-list/SmokingAreaList"
-import React from "react"
 
 export default function ListPage() {
 	return (

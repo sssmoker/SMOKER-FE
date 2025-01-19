@@ -1,11 +1,11 @@
 import React from "react"
-import Search from "../components/home/SearchBar"
+import SearchBar from "@/components/home/SearchBar"
 
 export default function HomePage() {
 	return (
 		<>
 			<div className="container h-[100%] bg-white text-black">
-				<Search />
+				<SearchBar />
 				<p>home page</p>
 			</div>
 		</>
