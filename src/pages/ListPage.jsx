@@ -1,5 +1,5 @@
-import SearchBar from "@/components/HM/SearchBar"
-import SmokingAreaList from "@/components/LS_01/SmokingAreaList"
+import SearchBar from "@/components/common/SearchBar"
+import SmokingAreaList from "@/components/AreaList/SmokingAreaList"
 import React from "react"
 
 export default function ListPage() {
