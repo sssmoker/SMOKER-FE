@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import SearchBar from "@/components/common/SearchBar" // 절대경로 사용
+import SearchBar from "@/components/common/SearchBar"
 import Map from "@/components/HomeMap/Map"
 import MarkerInfoCard from "@/components/HomeMap/MarkerInfoCard"
 
@@ -11,7 +11,7 @@ export default function HomePage() {
 	useEffect(() => {
 		const fetchMarkerData = async () => {
 			try {
-				const response = await fetch("http://localhost:3001/markers") // API 호출
+				const response = await fetch("http://localhost:3001/markers") // Mock 데이터 API 호출
 				const data = await response.json()
 				setMarkerData(data)
 			} catch (error) {
@@ -34,12 +34,12 @@ export default function HomePage() {
 				<SearchBar />
 			</div>
 
-			{/* 지도: SearchBar 아래에 위치 */}
+			{/* 지도 */}
 			<div className="absolute top-[60px] z-10 h-[calc(100%-120px)] w-full">
 				<Map markers={markerData} onMarkerClick={handleMarkerClick} />
 			</div>
 
-			{/* Marker Info Card */}
+			{/* 선택된 마커 정보 카드 */}
 			{selectedMarker && (
 				<MarkerInfoCard
 					title={selectedMarker.title}
