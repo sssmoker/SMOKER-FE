@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react"
 import SearchBar from "@/components/common/SearchBar" // 절대경로 사용
 import Map from "@/components/HomeMap/Map"
 import MarkerInfoCard from "@/components/HomeMap/MarkerInfoCard"
-import BottomNavigation from "@/components/common/Navbar"
 
 export default function HomePage() {
 	const [markerData, setMarkerData] = useState(null) // 전체 마커 데이터
@@ -12,7 +11,7 @@ export default function HomePage() {
 	useEffect(() => {
 		const fetchMarkerData = async () => {
 			try {
-				const response = await fetch("/api/markers") // API 호출
+				const response = await fetch("http://localhost:3001/markers") // API 호출
 				const data = await response.json()
 				setMarkerData(data)
 			} catch (error) {
@@ -29,16 +28,18 @@ export default function HomePage() {
 	}
 
 	return (
-		<div className="relative h-[100dvh] w-full bg-gray-100">
+		<div className="relative h-[100vh] w-full bg-gray-100">
 			{/* Search Bar */}
-			<SearchBar />
+			<div className="absolute left-0 top-[env(safe-area-inset-top)] z-50 w-full px-4">
+				<SearchBar />
+			</div>
 
-			{/* 지도 */}
-			<div className="absolute top-[env(safe-area-inset-top)] h-[calc(100%_-_120px)] w-full">
+			{/* 지도: SearchBar 아래에 위치 */}
+			<div className="absolute top-[60px] z-10 h-[calc(100%-120px)] w-full">
 				<Map markers={markerData} onMarkerClick={handleMarkerClick} />
 			</div>
 
-			{/* 선택된 마커 정보 카드 */}
+			{/* Marker Info Card */}
 			{selectedMarker && (
 				<MarkerInfoCard
 					title={selectedMarker.title}
@@ -47,9 +48,6 @@ export default function HomePage() {
 					distance={selectedMarker.distance}
 				/>
 			)}
-
-			{/* 하단 네비게이션 */}
-			<BottomNavigation />
 		</div>
 	)
 }

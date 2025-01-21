@@ -12,7 +12,7 @@ export default function SearchBar() {
 	}
 
 	return (
-		<div className="container fixed left-[4vw] right-[4vw] top-[env(safe-area-inset-top)] mx-5 flex items-center space-x-3 rounded-lg bg-white px-4 py-2 shadow-md">
+		<div className="container fixed top-[env(safe-area-inset-top)] mx-5 flex w-[80vw] items-center space-x-3 rounded-lg bg-white px-4 py-2 shadow-md">
 			<Search className="h-5 w-5 text-[#4517FF]" />
 			<input
 				type="text"

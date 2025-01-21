@@ -4,6 +4,15 @@ export default {
 	content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
 	theme: {
 		extend: {
+			extend: {
+				colors: {
+					primary: "#1D4ED8", // 메인 색상 추가
+					secondary: "#9333EA",
+				},
+				screens: {
+					xs: "375px", // 작은 모바일 화면
+				},
+			},
 			spacing: {
 				25.5: "6.375rem", // 102px
 			},
