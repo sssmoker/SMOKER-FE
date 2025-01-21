@@ -1,31 +1,12 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-	darkMode: ["class"],
-	content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+	darkMode: ["class"], // 다크모드 설정
+	content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"], // Tailwind가 적용될 파일 경로
 	theme: {
 		extend: {
-			extend: {
-				colors: {
-					primary: "#1D4ED8", // 메인 색상 추가
-					secondary: "#9333EA",
-				},
-				screens: {
-					xs: "375px", // 작은 모바일 화면
-				},
-			},
-			spacing: {
-				25.5: "6.375rem", // 102px
-			},
-			fontSize: {
-				2: "0.5rem", // 8px
-				2.5: "0.625rem", // 10px
-			},
-			borderRadius: {
-				lg: "var(--radius)",
-				md: "calc(var(--radius) - 2px)",
-				sm: "calc(var(--radius) - 4px)",
-			},
 			colors: {
+				primary: "#1D4ED8", // 메인 색상 추가
+				secondary: "#9333EA",
 				background: "hsl(var(--background))",
 				foreground: "hsl(var(--foreground))",
 				card: {
@@ -67,8 +48,22 @@ export default {
 					5: "hsl(var(--chart-5))",
 				},
 			},
+			screens: {
+				xs: "375px", // 작은 모바일 화면
+			},
+			spacing: {
+				25.5: "6.375rem", // 102px
+			},
+			fontSize: {
+				2: "0.5rem", // 8px
+				2.5: "0.625rem", // 10px
+			},
+			borderRadius: {
+				lg: "var(--radius)",
+				md: "calc(var(--radius) - 2px)",
+				sm: "calc(var(--radius) - 4px)",
+			},
 		},
 	},
-	// eslint-disable-next-line no-undef
-	plugins: [require("tailwindcss-animate")],
+	plugins: [require("tailwindcss-animate")], // 플러그인 설정
 }

@@ -1,18 +1,16 @@
 import React, { useState } from "react"
 import { Search } from "lucide-react"
-import AroundMeBtn from "./AroundMeBtn"
+import AroundMeBtn from "./AroundMeBtn" // 내 주변 버튼 컴포넌트
 
 export default function SearchBar() {
 	const [searchTerm, setSearchTerm] = useState("")
 
 	const handleInputChange = (e) => {
-		const value = e.target.value
-		setSearchTerm(value)
-		console.log("Search Term:", value)
+		setSearchTerm(e.target.value)
 	}
 
 	return (
-		<div className="container fixed top-[env(safe-area-inset-top)] mx-5 flex w-[80vw] items-center space-x-3 rounded-lg bg-white px-4 py-2 shadow-md">
+		<div className="fixed left-0 right-0 top-[calc(env(safe-area-inset-top)+20px)] z-50 mx-5 flex w-[calc(100%-40px)] items-center space-x-3 rounded-lg bg-white px-4 py-2 shadow-md">
 			<Search className="h-5 w-5 text-[#4517FF]" />
 			<input
 				type="text"

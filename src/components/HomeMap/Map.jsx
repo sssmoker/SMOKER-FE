@@ -16,7 +16,7 @@ const Map = ({ markers, onMarkerClick }) => {
 			const container = document.getElementById("map")
 			const options = {
 				center: new window.kakao.maps.LatLng(37.4769, 126.9811), // 중심 좌표
-				level: 3, // 확대 수준
+				level: 2, // 확대 수준
 			}
 			const map = new window.kakao.maps.Map(container, options)
 

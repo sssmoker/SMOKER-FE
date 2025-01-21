@@ -1,8 +1,8 @@
 import React, { useState } from "react"
 import { MapPin, PencilLine, Star, User } from "lucide-react"
 
-export default function Navbar() {
-	const [activeIndex, setActiveIndex] = useState(null)
+export default function Navbar({ onMapClick }) {
+	const [activeIndex, setActiveIndex] = useState(0)
 
 	const menuItems = [
 		{ icon: <MapPin className="h-6 w-6" />, label: "Map" },
@@ -11,8 +11,16 @@ export default function Navbar() {
 		{ icon: <User className="h-6 w-6" />, label: "Profile" },
 	]
 
+	const handleMenuClick = (index) => {
+		setActiveIndex(index)
+		if (index === 0) {
+			// Map 버튼 클릭 시 새로고침
+			window.location.reload()
+		}
+	}
+
 	return (
-		<div className="fixed bottom-0 left-0 right-0 mx-auto w-[400px] max-w-[400px]">
+		<div className="fixed bottom-0 left-0 right-0 mx-auto max-w-[600px]">
 			<div className="h-[30px] rounded-t-lg bg-gradient-to-t from-white to-transparent"></div>
 			<div className="flex h-[6vh] items-center justify-between rounded-b-lg bg-white p-4 shadow-lg">
 				{menuItems.map((item, index) => (
