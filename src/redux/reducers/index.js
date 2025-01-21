@@ -1,8 +1,8 @@
 import { combineReducers } from "redux"
-import counterReducer from "./counterSlice"
+import authReducer from "./authReducer"
+import smokingAreaReducer from "./smokingAreaReducer"
 
-const rootReducer = combineReducers({
-	counter: counterReducer, // 상태 이름: 리듀서
+export default combineReducers({
+	auth: authReducer, // 사용자 인증 상태
+	smokingArea: smokingAreaReducer, // 흡연 구역 상태
 })
-
-export default rootReducer

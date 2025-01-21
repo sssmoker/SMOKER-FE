@@ -12,3 +12,5 @@ export default function Marker({ lat, lng, onClick }) {
 		/>
 	)
 }
+
+// 필요 없어짐!

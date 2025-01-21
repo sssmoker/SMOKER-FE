@@ -4,6 +4,10 @@ export default {
 	content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"], // Tailwind가 적용될 파일 경로
 	theme: {
 		extend: {
+			gradientColorStops: {
+				transparent: "rgba(255,255,255,0)",
+				white: "rgba(255,255,255,1)",
+			},
 			colors: {
 				primary: "#1D4ED8", // 메인 색상 추가
 				secondary: "#9333EA",

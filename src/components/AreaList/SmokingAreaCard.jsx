@@ -10,13 +10,14 @@ export default function SmokingAreaCard() {
 				<div className="flex justify-between">
 					<p className="text-sm font-semibold">사당역 2번 출구 앞 흡연 부스</p>
 					{/* <img className="px-1" src={BookmarkSvg} alt="북마크" /> */}
-					
 				</div>
 
 				<div className="flex items-center gap-0.5">
 					{/* <img src={StarSvg} alt="별점" /> */}
-					<p className="text-2.5 font-normal text-gray-800">4.3(3) ꞏ 저장 30</p>
-					<p className="text-2 ml-1 font-normal text-gray-400">
+					<p className="text-2.5 font-normal text-gray-800">
+						⭐ 4.3(3) · 저장 30
+					</p>
+					<p className="ml-1 text-2 font-normal text-gray-400">
 						내 위치에서 197m
 					</p>
 				</div>

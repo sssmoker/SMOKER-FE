@@ -2,37 +2,62 @@ import React, { useState, useEffect } from "react"
 import SearchBar from "@/components/common/SearchBar"
 import Map from "@/components/HomeMap/Map"
 import MarkerInfoCard from "@/components/HomeMap/MarkerInfoCard"
-import Button from "@/components/common/button/ComButton" // 버튼 컴포넌트
+import Button from "@/components/common/button/ComButton"
 
 export default function HomePage() {
-	const [markerData, setMarkerData] = useState(null) // 전체 마커 데이터
+	const [markerData, setMarkerData] = useState([]) // 전체 마커 데이터
+	const [currentLocation, setCurrentLocation] = useState(null) // 현재 위치 데이터
 	const [selectedMarker, setSelectedMarker] = useState(null) // 선택된 마커 데이터
 	const [isMarkerSelected, setIsMarkerSelected] = useState(false) // Marker 상태
+	const [fadeIn, setFadeIn] = useState(false) // 애니메이션 효과
 
-	// 마커 데이터를 가져오는 API 호출
+	// 현재 위치와 마커 데이터를 가져오는 API 호출
 	useEffect(() => {
-		const fetchMarkerData = async () => {
+		const fetchData = async () => {
 			try {
-				const response = await fetch("http://localhost:3001/markers") // Mock 데이터 API 호출
-				const data = await response.json()
-				setMarkerData(data)
+				// 현재 위치 데이터 가져오기
+				const locationResponse = await fetch(
+					"http://localhost:3001/currentLocation",
+				)
+				const locationData = await locationResponse.json()
+				setCurrentLocation(locationData)
+
+				// 마커 데이터 가져오기
+				const markersResponse = await fetch(
+					"http://localhost:3001/smokingAreas",
+				)
+				const markersData = await markersResponse.json()
+				// `smokingAreas`에 맞춰 데이터 포맷 변경
+				const formattedMarkers = markersData.map((marker) => ({
+					id: marker.smoking_id,
+					title: marker.smoking_name,
+					region: marker.region,
+					rating: marker.rating || "N/A",
+					distance: marker.distance || 0,
+					latitude: marker.latitude,
+					longitude: marker.longitude,
+				}))
+				setMarkerData(formattedMarkers)
 			} catch (error) {
-				console.error("Failed to fetch marker data:", error)
+				console.error("Failed to fetch data:", error)
 			}
 		}
 
-		fetchMarkerData()
+		fetchData()
 	}, [])
 
 	const handleMarkerClick = (marker) => {
-		setSelectedMarker(marker)
-		setIsMarkerSelected(true) // 마커 선택 시 "목록 보기" 버튼 숨기기
+		setFadeIn(false) // 기존 카드 서서히 사라지기
+		setTimeout(() => {
+			setSelectedMarker(marker)
+			setIsMarkerSelected(true)
+			setFadeIn(true) // 새 카드 서서히 나타나기
+		}, 300)
 	}
 
-	// Map 버튼 클릭 이벤트
 	const handleMapClick = () => {
 		setSelectedMarker(null)
-		setIsMarkerSelected(false) // MarkerInfoCard 숨기기, "목록 보기" 표시
+		setIsMarkerSelected(false) // MarkerInfoCard 숨기기
 	}
 
 	const handleListClick = () => {
@@ -48,12 +73,16 @@ export default function HomePage() {
 
 			{/* 지도 */}
 			<div className="absolute top-0 z-10 h-[calc(100%-60px)] w-full">
-				<Map markers={markerData} onMarkerClick={handleMarkerClick} />
+				<Map
+					markers={markerData}
+					currentLocation={currentLocation}
+					onMarkerClick={handleMarkerClick}
+				/>
 			</div>
 
 			{/* 목록 보기 버튼 */}
 			{!isMarkerSelected && (
-				<div className="absolute bottom-20 left-0 right-0 z-20 flex justify-center">
+				<div className="absolute bottom-28 left-0 right-0 z-10 flex justify-center">
 					<Button
 						size="m"
 						color="purple"
@@ -65,13 +94,20 @@ export default function HomePage() {
 				</div>
 			)}
 
+			{/* Marker Info Card */}
 			{isMarkerSelected && selectedMarker && (
-				<MarkerInfoCard
-					title={selectedMarker.title}
-					address={selectedMarker.address}
-					rating={selectedMarker.rating}
-					distance={selectedMarker.distance}
-				/>
+				<div
+					className={`absolute bottom-12 left-0 right-0 z-20 flex justify-center transition-opacity duration-500 ${
+						fadeIn ? "opacity-100" : "opacity-0"
+					}`}
+				>
+					<MarkerInfoCard
+						title={selectedMarker.title}
+						region={selectedMarker.region}
+						rating={selectedMarker.rating}
+						distance={selectedMarker.distance}
+					/>
+				</div>
 			)}
 		</div>
 	)
