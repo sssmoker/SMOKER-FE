@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import SearchBar from "@/components/common/SearchBar"
-import SmokingAreaCard from "@/components/AreaList/SmokingAreaCard"
+import SmokingAreaCard from "@/components/area-list/card-list/SmokingAreaCard"
 import Button from "@/components/common/button/ComButton"
 
 export default function SavedSmokingAreasPage() {

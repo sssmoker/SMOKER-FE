@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
 import SearchBar from "@/components/common/SearchBar"
 import Button from "@/components/common/button/ComButton"
+import SmokingAreaList from "@/components/area-list/card-list/SmokingAreaList"
 
 export default function ListPage() {
 	const [smokingAreas, setSmokingAreas] = useState([]) // 흡연 구역 데이터
@@ -67,44 +68,7 @@ export default function ListPage() {
 
 			{/* 흡연 구역 목록 */}
 			<div className="mt-32 px-4">
-				{smokingAreas.map((area) => (
-					<div
-						key={area.smoking_area_Id}
-						className="mb-6 flex items-center rounded-lg border bg-white p-4 shadow"
-					>
-						<img
-							src={`/images/smoking-area-${area.smoking_area_Id}.jpg`}
-							alt={area.name}
-							className="mr-4 h-20 w-20 rounded-lg object-cover"
-						/>
-						<div className="flex flex-col justify-between">
-							<h3 className="text-lg font-semibold">{area.name}</h3>
-							<p className="text-sm text-gray-500">{area.Location.address}</p>
-							<div className="flex items-center text-sm text-gray-500">
-								<span className="mr-2">
-									⭐ {area.rating}({area.review_count})
-								</span>
-								<span>저장 {area.saved_count}</span>
-							</div>
-						</div>
-						<button className="ml-auto text-gray-500">
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke="currentColor"
-								className="h-6 w-6"
-							>
-								<path
-									strokeLinecap="round"
-									strokeLinejoin="round"
-									strokeWidth="2"
-									d="M5 13l4 4L19 7"
-								/>
-							</svg>
-						</button>
-					</div>
-				))}
+				<SmokingAreaList />
 			</div>
 
 			{/* 하단 네비게이션 */}
