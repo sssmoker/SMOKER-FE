@@ -19,7 +19,6 @@ export default function SmokingAreaCard({
 
 	return (
 		<>
-			{/* 수정필요: 선색, 폰트 사이즈 조정 */}
 			<div className="flex flex-col gap-y-1.5 border-b-[0.5px] border-[#B5B5B5] p-5">
 				<div className="flex justify-between">
 					<p className="text-[13px] font-semibold text-[#000]">{title}</p>
