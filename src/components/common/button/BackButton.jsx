@@ -16,7 +16,6 @@ export default function BackButton({ className = "" }) {
 			className={`flex items-center space-x-2 px-4 py-2 text-gray-800 transition-all duration-200 hover:text-black ${className}`}
 		>
 			<ArrowLeft className="h-5 w-5" />
-			<span className="text-sm font-medium">Back</span>
 		</button>
 	)
 }

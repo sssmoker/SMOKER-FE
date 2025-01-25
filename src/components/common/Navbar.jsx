@@ -27,7 +27,7 @@ export default function Navbar() {
 	}
 
 	return (
-		<div className="fixed bottom-0 left-0 right-0 z-50 mx-auto max-w-[500px]">
+		<div className="fixed bottom-0 left-0 right-0 z-50 mx-auto w-full">
 			{/* 상단 그라데이션 */}
 			<div className="absolute inset-x-0 -top-24 z-40 h-24 bg-gradient-to-t from-white to-transparent"></div>
 
