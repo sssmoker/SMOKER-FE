@@ -21,7 +21,7 @@ const OptionsList = ({ options, selectedOptions, onToggle }) => (
 					key={option}
 					className={`rounded-2xl border px-4 py-2 transition-all duration-200 ${
 						isSelected
-							? "border-purple-500 bg-purple-500 text-white"
+							? "border-[#4517FF] bg-[#4517FF] text-white"
 							: "border-gray-300 bg-white text-gray-700 hover:bg-gray-100"
 					}`}
 					onClick={() => onToggle(option)}
