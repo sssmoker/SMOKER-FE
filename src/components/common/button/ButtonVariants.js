@@ -7,7 +7,7 @@ export const buttonVariants = cva(
 			size: {
 				m: "w-[130px] h-[40px] text-sm",
 				l: "w-[200px] h-[40px]  text-base",
-				xl: "w-[360px] h-[40px]  text-base",
+				xl: "w-[90vw] h-[40px]  text-base",
 			},
 			color: {
 				green: "bg-green-500 text-white hover:bg-green-600",
