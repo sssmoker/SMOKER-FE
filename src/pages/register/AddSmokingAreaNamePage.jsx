@@ -1,7 +1,11 @@
 import React, { useState } from "react"
 import { useNavigate, useLocation } from "react-router-dom"
+import {
+	Title,
+	OptionsList,
+	CompleteButton,
+} from "@/components/smoking-update/OptionsSelection"
 import ComButton from "@/components/common/button/ComButton"
-import OptionsSelection from "@/components/smoking-update/OptionsSelection"
 
 const options = [
 	"밀폐형 흡연부스예요",
@@ -18,6 +22,15 @@ export default function AddSmokingAreaNamePage() {
 	const location = useLocation()
 	const [name, setName] = useState("")
 	const [showOptions, setShowOptions] = useState(false)
+	const [selectedOptions, setSelectedOptions] = useState([])
+
+	const toggleOption = (option) => {
+		setSelectedOptions((prev) =>
+			prev.includes(option)
+				? prev.filter((o) => o !== option)
+				: [...prev, option],
+		)
+	}
 
 	const handleNext = () => {
 		if (name.trim()) {
@@ -28,17 +41,20 @@ export default function AddSmokingAreaNamePage() {
 	}
 
 	const handleComplete = () => {
-		navigate("/add-smoking-area-details", {
-			state: { ...location.state, name },
-		})
+		const data = {
+			...location.state,
+			name,
+			details: selectedOptions,
+		}
+		console.log("등록 데이터:", data)
+		alert("등록이 완료되었습니다!")
+		navigate("/")
 	}
 
 	return (
 		<div className="h-screen space-y-4 bg-white p-6">
-			<h1 className="pb-[5vh] font-bold text-gray-500">
-				정보를 업데이트해주세요 !
-			</h1>
-			<h1 className="text-xl font-bold">흡연 구역의 이름을 입력해주세요.</h1>
+			<Title text="정보를 업데이트해주세요!" />
+			<Title text="흡연 구역의 이름을 입력해주세요." />
 			<input
 				type="text"
 				className="w-full rounded border p-3"
@@ -50,8 +66,14 @@ export default function AddSmokingAreaNamePage() {
 				다음
 			</ComButton>
 			{showOptions && (
-				<div className="mt-4">
-					<OptionsSelection onComplete={handleComplete} />
+				<div className="mt-[5vh]">
+					<Title text="흡연 부스의 정보를 선택해주세요." />
+					<OptionsList
+						options={options}
+						selectedOptions={selectedOptions}
+						onToggle={toggleOption}
+					/>
+					<CompleteButton onClick={handleComplete} />
 				</div>
 			)}
 		</div>

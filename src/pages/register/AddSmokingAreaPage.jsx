@@ -1,6 +1,7 @@
 // AddSmokingAreaPage.jsx
 import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import ComButton from "@/components/common/button/ComButton"
 
 export default function AddSmokingAreaPage() {
 	const navigate = useNavigate()
@@ -27,12 +28,9 @@ export default function AddSmokingAreaPage() {
 			{/* 위치 정보 및 버튼 */}
 			<div className="absolute bottom-0 left-0 right-0 bg-white p-4 shadow-lg">
 				<p className="text-gray-800">{address}</p>
-				<button
-					onClick={handleNext}
-					className="mt-4 w-full rounded-md bg-purple-500 py-3 text-white"
-				>
+				<ComButton onClick={handleNext} size="xl">
 					다음
-				</button>
+				</ComButton>
 			</div>
 		</div>
 	)

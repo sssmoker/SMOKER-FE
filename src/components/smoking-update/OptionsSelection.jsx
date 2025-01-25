@@ -1,39 +1,51 @@
 import React from "react"
 import PropTypes from "prop-types"
-import Button from "@/components/common/button/ComButton"
+import ComButton from "@/components/common/button/ComButton"
 
-export default function OptionsSelection({
-	options,
-	selectedOptions,
-	toggleOption,
-	onComplete,
-}) {
+// Title 컴포넌트
+function Title({ text }) {
+	return <h1 className="text-xl font-bold">{text}</h1>
+}
+
+Title.propTypes = {
+	text: PropTypes.string.isRequired,
+}
+function OptionsList({ options, selectedOptions, onToggle }) {
 	return (
-		<div>
-			<div className="mb-4 flex flex-wrap gap-2">
-				{options.map((option) => (
-					<button
-						key={option}
-						className={`rounded border px-4 py-2 ${
-							selectedOptions.includes(option) ? "bg-purple-500 text-white" : ""
-						}`}
-						onClick={() => toggleOption(option)}
-					>
-						{option}
-					</button>
-				))}
-			</div>
-
-			<Button size="xl" color="purple" onClick={onComplete}>
-				완료
-			</Button>
+		<div className="mb-4 flex flex-wrap gap-2">
+			{options.map((option) => (
+				<button
+					key={option}
+					className={`rounded-2xl border px-4 py-2 ${
+						selectedOptions.includes(option) ? "bg-purple-600 text-white" : ""
+					}`}
+					onClick={() => onToggle(option)}
+				>
+					{option}
+				</button>
+			))}
 		</div>
 	)
 }
 
-OptionsSelection.propTypes = {
-	options: PropTypes.arrayOf(PropTypes.string).isRequired, // 옵션 목록
-	selectedOptions: PropTypes.arrayOf(PropTypes.string).isRequired, // 선택된 옵션 목록
-	toggleOption: PropTypes.func.isRequired, // 옵션 선택/해제 함수
-	onComplete: PropTypes.func.isRequired, // 완료 버튼 클릭 핸들러
+OptionsList.propTypes = {
+	options: PropTypes.arrayOf(PropTypes.string).isRequired,
+	selectedOptions: PropTypes.arrayOf(PropTypes.string).isRequired,
+	onToggle: PropTypes.func.isRequired,
 }
+
+function CompleteButton({ onClick }) {
+	return (
+		<div className="mt-4">
+			<ComButton size="xl" color="purple" onClick={onClick}>
+				완료
+			</ComButton>
+		</div>
+	)
+}
+
+CompleteButton.propTypes = {
+	onClick: PropTypes.func.isRequired,
+}
+
+export { Title, OptionsList, CompleteButton }

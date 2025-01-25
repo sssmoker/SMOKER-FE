@@ -10,7 +10,6 @@ import SmokingAreaUpdatePage from "@/pages/SmokingAreaUpdatePage"
 import WritingReviewPage from "@/pages/WritingReviewPage"
 import AddSmokingAreaPage from "@/pages/register/AddSmokingAreaPage"
 import AddSmokingAreaNamePage from "@/pages/register/AddSmokingAreaNamePage"
-import AddSmokingAreaDetailsPage from "@/pages/register/AddSmokingAreaDetailsPage"
 import MyPage from "@/pages/MyPage"
 import MemberInfoPage from "@/pages/MemberInfoPage"
 import LoginPage from "@/pages/LoginPage"
@@ -76,10 +75,6 @@ const addSmokingAreaRoutes = [
 	{
 		path: "name",
 		element: <AddSmokingAreaNamePage />, // 이름 입력 페이지
-	},
-	{
-		path: "details",
-		element: <AddSmokingAreaDetailsPage />, // 상세 정보 입력 페이지
 	},
 ]
 
