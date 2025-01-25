@@ -15,7 +15,7 @@ import MemberInfoPage from "@/pages/auth/MemberInfoPage"
 import LoginPage from "@/pages/auth/LoginPage"
 import UpdateSmokingAreaPage from "@/pages/UpdateSmokingAreaPage"
 import SavedSmokingAreasPage from "@/pages/favorites/SavedSmokingAreasPage"
-
+import AddSmokingAreaImagePage from "@/pages/add-smoking-area/AddSmokingAreaImagePage"
 // "list" 경로와 하위 페이지들
 const listRoutes = [
 	{
@@ -75,6 +75,10 @@ const addSmokingAreaRoutes = [
 	{
 		path: "name",
 		element: <AddSmokingAreaNamePage />, // 이름 입력 페이지
+	},
+	{
+		path: "image",
+		element: <AddSmokingAreaImagePage />, // 이름 입력 페이지
 	},
 ]
 

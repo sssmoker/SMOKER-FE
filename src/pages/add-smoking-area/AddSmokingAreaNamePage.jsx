@@ -6,6 +6,7 @@ import {
 	CompleteButton,
 } from "@/components/smoking-update/OptionsSelection"
 import ComButton from "@/components/common/button/ComButton"
+import BackButton from "@/components/common/button/BackButton"
 
 const options = [
 	"밀폐형 흡연부스예요",
@@ -53,6 +54,7 @@ export default function AddSmokingAreaNamePage() {
 
 	return (
 		<div className="h-screen space-y-4 bg-white p-6">
+			<BackButton />
 			<Title text="정보를 업데이트해주세요!" />
 			<Title text="흡연 구역의 이름을 입력해주세요." />
 			<input
