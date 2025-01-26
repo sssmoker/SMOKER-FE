@@ -3,20 +3,19 @@ import { createBrowserRouter, Outlet } from "react-router-dom"
 import RootLayout from "@/layouts/root-layout"
 import HomePage from "@/pages/HomePage"
 import ListPage from "@/pages/ListPage"
-import SmokingAreaPage from "@/pages/SmokingAreaPage"
-import SmokingAreaDetailPage from "@/pages/SmokingAreaDetailPage"
-import SmokingAreaReviewPage from "@/pages/SmokingAreaReviewPage"
-import SmokingAreaUpdatePage from "@/pages/SmokingAreaUpdatePage"
-import WritingReviewPage from "@/pages/WritingReviewPage"
-import AddSmokingAreaPage from "@/pages/AddSmokingAreaPage"
-import AddSmokingAreaNamePage from "@/pages/AddSmokingAreaNamePage"
-import AddSmokingAreaDetailsPage from "@/pages/AddSmokingAreaDetailsPage"
-import MyPage from "@/pages/MyPage"
-import MemberInfoPage from "@/pages/MemberInfoPage"
-import LoginPage from "@/pages/LoginPage"
+import SmokingAreaPage from "@/pages/smoking-area/SmokingAreaPage"
+import SmokingAreaDetailPage from "@/pages/smoking-area/SmokingAreaDetailPage"
+import SmokingAreaReviewPage from "@/pages/smoking-area/SmokingAreaReviewPage"
+import SmokingAreaUpdatePage from "@/pages/smoking-area/SmokingAreaUpdatePage"
+import WritingReviewPage from "@/pages/smoking-area/WritingReviewPage"
+import AddSmokingAreaPage from "@/pages/add-smoking-area/AddSmokingAreaPage"
+import AddSmokingAreaNamePage from "@/pages/add-smoking-area/AddSmokingAreaNamePage"
+import MyPage from "@/pages/auth/MyPage"
+import MemberInfoPage from "@/pages/auth/MemberInfoPage"
+import LoginPage from "@/pages/auth/LoginPage"
 import UpdateSmokingAreaPage from "@/pages/UpdateSmokingAreaPage"
-import SavedSmokingAreasPage from "@/pages/SavedSmokingAreasPage"
-
+import SavedSmokingAreasPage from "@/pages/favorites/SavedSmokingAreasPage"
+import AddSmokingAreaImagePage from "@/pages/add-smoking-area/AddSmokingAreaImagePage"
 // "list" 경로와 하위 페이지들
 const listRoutes = [
 	{
@@ -78,8 +77,8 @@ const addSmokingAreaRoutes = [
 		element: <AddSmokingAreaNamePage />, // 이름 입력 페이지
 	},
 	{
-		path: "details",
-		element: <AddSmokingAreaDetailsPage />, // 상세 정보 입력 페이지
+		path: "image",
+		element: <AddSmokingAreaImagePage />, // 이름 입력 페이지
 	},
 ]
 
