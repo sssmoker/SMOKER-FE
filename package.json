@@ -12,6 +12,7 @@
 		"format": "prettier --write ."
 	},
 	"dependencies": {
+		"@lasbe/react-modal": "^1.0.1",
 		"@reduxjs/toolkit": "^2.5.0",
 		"class-variance-authority": "^0.7.1",
 		"clsx": "^2.1.1",
