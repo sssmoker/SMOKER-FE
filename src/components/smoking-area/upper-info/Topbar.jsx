@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { Bookmark } from "lucide-react"
 import { Share2 } from "lucide-react"
 import BackButton from "@/components/common/button/BackButton"
-import IconButton from "@/components/smoking-area/default/IconButton"
+import IconButton from "@/components/smoking-area/upper-info/IconButton"
 
 export default function Topbar() {
 	const [bookmarked, setBookmarked] = useState(false)
