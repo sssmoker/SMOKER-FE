@@ -43,7 +43,7 @@ export default function SmokingAreaPage() {
 	}, [])
 
 	return (
-		<div className="bg-white pb-[84px]">
+		<div className="bg-white">
 			<Topbar />
 			{/* 이미지 연결 예정 */}
 			{bgImg && <BackgroundImg bgImg={bgImg} />}

@@ -6,7 +6,7 @@ export default function SmokingAreaReviewPage({ reviewListData }) {
 	const [reviews, setReviews] = useState(reviewListData)
 
 	return (
-		<>
+		<div className="pb-[84px]">
 			<StarRatingStatistics />
 
 			{reviews.length ? (
@@ -14,6 +14,6 @@ export default function SmokingAreaReviewPage({ reviewListData }) {
 			) : (
 				<p>리뷰가 없습니다.</p>
 			)}
-		</>
+		</div>
 	)
 }
