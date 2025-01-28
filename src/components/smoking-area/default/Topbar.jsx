@@ -2,9 +2,9 @@ import React, { useState } from "react"
 import { Bookmark } from "lucide-react"
 import { Share2 } from "lucide-react"
 import BackButton from "@/components/common/button/BackButton"
-import IconButton from "@/components/smoking-area/topbar/IconButton"
+import IconButton from "@/components/smoking-area/default/IconButton"
 
-export default function SmokingAreaTopbar() {
+export default function Topbar() {
 	const [bookmarked, setBookmarked] = useState(false)
 
 	const handleBookmarkBtn = () => {
@@ -13,7 +13,7 @@ export default function SmokingAreaTopbar() {
 
 	return (
 		<>
-			<div className="mx-[20px] flex justify-between pt-[16px]">
+			<div className="relative z-[2] mx-[20px] flex justify-between pt-[16px]">
 				<BackButton className={`rounded-full bg-white`} />
 
 				<div className="flex gap-[12px]">
