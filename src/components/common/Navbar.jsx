@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { MapPin, PencilLine, Star, User } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 
-export default function Navbar() {
+export default function Navbar({ onRefresh }) {
 	const [activeIndex, setActiveIndex] = useState(0)
 	const navigate = useNavigate()
 
@@ -27,7 +27,15 @@ export default function Navbar() {
 
 	const handleMenuClick = (index, path) => {
 		setActiveIndex(index)
-		navigate(path)
+
+		if (path === "/") {
+			// "지도" 버튼 클릭 시 onRefresh 호출
+			navigate(path) // 메인 페이지(`/`)로 이동
+
+			onRefresh?.() // onRefresh가 전달되었을 경우에만 실행
+		} else {
+			navigate(path)
+		}
 	}
 
 	return (
