@@ -5,8 +5,6 @@ import UpdateBtn from "./UpdateBtn"
 export default function SmokingAreaInfo({ smoking_name, region }) {
 	return (
 		<>
-			{/* text-[13px] font-semibold text-[#000] */}
-
 			<div className="mx-[20px] flex flex-col gap-[6px] py-[16px] text-[#252525]">
 				<p className="font-regular text-[12px] text-[#b5b5b5]">
 					내 위치에서 100m

@@ -23,7 +23,7 @@ export default function SmokingAreaDetailPage() {
 				const reviewsData = await reviewsResponse.json()
 				setReviews(reviewsData)
 			} catch (error) {
-				console.error("Error fetching smoking area details:", error)
+				// console.error("Error fetching smoking area details:", error)
 			}
 		}
 		fetchSmokingAreaDetails()
