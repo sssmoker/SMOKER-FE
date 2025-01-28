@@ -6,20 +6,26 @@ import Button from "@/components/common/button/ComButton"
 import { useNavigate } from "react-router-dom"
 
 export default function HomePage() {
-	const [markerData, setMarkerData] = useState([])
-	const [currentLocation, setCurrentLocation] = useState(null)
-	const [selectedMarker, setSelectedMarker] = useState(null)
-	const [isMarkerSelected, setIsMarkerSelected] = useState(false)
-	const [fadeIn, setFadeIn] = useState(false)
+	const [markerData, setMarkerData] = useState([]) // 전체 마커 데이터
+	const [currentLocation, setCurrentLocation] = useState(null) // 현재 위치 데이터
+	const [selectedMarker, setSelectedMarker] = useState(null) // 선택된 마커 데이터
+	const [isMarkerSelected, setIsMarkerSelected] = useState(false) // Marker 상태
+	const [fadeIn, setFadeIn] = useState(false) // 애니메이션 효과
+	const [loading, setLoading] = useState(true) // 로딩 상태
 
-	// 현재 위치와 마커 데이터를 가져오는 API 호출
+	// API에서 현재 위치와 마커 데이터를 가져옴
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
+				setLoading(true)
+
 				// 현재 위치 데이터 가져오기
 				const locationResponse = await fetch(
 					"http://localhost:3001/currentLocation",
 				)
+				if (!locationResponse.ok) {
+					throw new Error("Failed to fetch current location")
+				}
 				const locationData = await locationResponse.json()
 				setCurrentLocation(locationData)
 
@@ -27,8 +33,12 @@ export default function HomePage() {
 				const markersResponse = await fetch(
 					"http://localhost:3001/smokingAreas",
 				)
+				if (!markersResponse.ok) {
+					throw new Error("Failed to fetch marker data")
+				}
 				const markersData = await markersResponse.json()
-				// `smokingAreas`에 맞춰 데이터 포맷 변경
+
+				// 마커 데이터를 포맷팅
 				const formattedMarkers = markersData.map((marker) => ({
 					id: marker.smoking_id,
 					title: marker.smoking_name,
@@ -38,9 +48,12 @@ export default function HomePage() {
 					latitude: marker.latitude,
 					longitude: marker.longitude,
 				}))
+
 				setMarkerData(formattedMarkers)
 			} catch (error) {
-				console.error("Failed to fetch data:", error)
+				console.error("Error fetching data:", error)
+			} finally {
+				setLoading(false)
 			}
 		}
 
@@ -58,9 +71,21 @@ export default function HomePage() {
 		}, 300)
 	}
 
+	const handleMapClick = () => {
+		setSelectedMarker(null)
+		setIsMarkerSelected(false) // MarkerInfoCard 숨기기 및 목록 보기 버튼 표시
+	}
+
 	const handleListClick = () => {
 		setIsMarkerSelected(false) // "목록 보기" 클릭 시 MarkerInfoCard 숨기기
-		navigate("/list")
+	}
+
+	if (loading) {
+		return (
+			<div className="flex h-screen items-center justify-center">
+				<p className="text-lg text-gray-600">로딩 중...</p>
+			</div>
+		)
 	}
 
 	return (
@@ -74,6 +99,7 @@ export default function HomePage() {
 					markers={markerData}
 					currentLocation={currentLocation}
 					onMarkerClick={handleMarkerClick}
+					onMapClick={handleMapClick} // 지도 클릭 이벤트 추가
 				/>
 			</div>
 
