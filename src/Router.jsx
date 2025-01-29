@@ -116,10 +116,10 @@ const routes = [
 		element: <Outlet />,
 		children: favoritesRoutes, // "favorites" 경로와 하위 경로
 	},
-	{
-		path: "update-smoking-area",
-		element: <UpdateSmokingAreaPage />, // 흡연 구역 업데이트 페이지
-	},
+	// {
+	// 	path: "update-smoking-area",
+	// 	element: <UpdateSmokingAreaPage />, // 흡연 구역 업데이트 페이지
+	// },
 ]
 
 // createBrowserRouter로 전체 라우팅 설정
