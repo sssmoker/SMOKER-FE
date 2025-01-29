@@ -7,6 +7,7 @@ import {
 } from "@/components/smoking-update/OptionsSelection"
 import ComButton from "@/components/common/button/ComButton"
 import BackButton from "@/components/common/button/BackButton"
+import { motion, AnimatePresence } from "framer-motion"
 
 const options = [
 	"환풍시설이 있어요",
@@ -62,6 +63,13 @@ export default function AddSmokingAreaNamePage() {
 		setShowOptions(true)
 	}
 
+	const fadeIn = {
+		initial: { opacity: 0, y: 20 },
+		animate: { opacity: 1, y: 0 },
+		exit: { opacity: 0, y: -20 },
+		transition: { duration: 0.3 },
+	}
+
 	return (
 		<div className="h-screen space-y-4 bg-white p-6">
 			<BackButton />
@@ -80,40 +88,44 @@ export default function AddSmokingAreaNamePage() {
 				}}
 			/>
 
-			{showFacilityType && (
-				<>
-					<Title text="흡연 구역의 시설 형태를 선택해주세요." />
-					<div className="mt-[5vh]">
-						<div className="mt-4 flex justify-center gap-4">
-							{facilityOptions.map((option) => (
-								<button
-									key={option.id}
-									className={`rounded-lg px-6 py-3 ${
-										facilityType === option.id
-											? "bg-gray-700 text-white"
-											: "bg-gray-100"
-									}`}
-									onClick={() => handleFacilityTypeChange(option.id)}
-								>
-									{option.label}
-								</button>
-							))}
+			<AnimatePresence>
+				{showFacilityType && (
+					<motion.div {...fadeIn}>
+						<Title text="흡연 구역의 시설 형태를 선택해주세요." />
+						<div className="mt-[5vh]">
+							<div className="mt-4 flex justify-center gap-4">
+								{facilityOptions.map((option) => (
+									<button
+										key={option.id}
+										className={`rounded-lg px-6 py-3 ${
+											facilityType === option.id
+												? "bg-gray-700 text-white"
+												: "bg-gray-100"
+										}`}
+										onClick={() => handleFacilityTypeChange(option.id)}
+									>
+										{option.label}
+									</button>
+								))}
+							</div>
 						</div>
-					</div>
-				</>
-			)}
+					</motion.div>
+				)}
+			</AnimatePresence>
 
-			{showOptions && (
-				<div className="mt-[5vh]">
-					<Title text="흡연 부스의 정보를 선택해주세요." />
-					<OptionsList
-						options={options}
-						selectedOptions={selectedOptions}
-						onToggle={toggleOption}
-					/>
-					<CompleteButton onClick={handleComplete} />
-				</div>
-			)}
+			<AnimatePresence>
+				{showOptions && (
+					<motion.div {...fadeIn} className="mt-[5vh]">
+						<Title text="흡연 부스의 정보를 선택해주세요." />
+						<OptionsList
+							options={options}
+							selectedOptions={selectedOptions}
+							onToggle={toggleOption}
+						/>
+						<CompleteButton onClick={handleComplete} />
+					</motion.div>
+				)}
+			</AnimatePresence>
 		</div>
 	)
 }
