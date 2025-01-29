@@ -5,7 +5,6 @@ import {
 	OptionsList,
 	CompleteButton,
 } from "@/components/smoking-update/OptionsSelection"
-import ComButton from "@/components/common/button/ComButton"
 import BackButton from "@/components/common/button/BackButton"
 import { motion, AnimatePresence } from "framer-motion"
 
