@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react"
 import Topbar from "@/components/smoking-area/upper-info/Topbar"
 import BackgroundImg from "@/components/smoking-area/upper-info/BackgroundImg"
 import SmokingAreaInfo from "@/components/smoking-area/upper-info/SmokingAreaInfo"
-import PageNavBtn from "@/components/smoking-area/PageNavBtn"
+import PageNavButton from "@/components/smoking-area/PageNavButton"
 import SmokingAreaDetailPage from "./SmokingAreaDetailPage"
 import SmokingAreaReviewPage from "./SmokingAreaReviewPage"
 
@@ -53,15 +53,15 @@ export default function SmokingAreaPage() {
 
 			<div className="h-[8px] w-full bg-[#E0E0E0]" />
 			<div className="flex justify-evenly gap-[20px]">
-				<PageNavBtn
+				<PageNavButton
 					currentPage={currentPage}
 					setCurrentPage={setCurrentPage}
-					btnName="detail"
+					buttonName="detail"
 				/>
-				<PageNavBtn
+				<PageNavButton
 					currentPage={currentPage}
 					setCurrentPage={setCurrentPage}
-					btnName="review"
+					buttonName="review"
 				/>
 			</div>
 

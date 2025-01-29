@@ -7,7 +7,7 @@ import IconButton from "@/components/smoking-area/upper-info/IconButton"
 export default function Topbar() {
 	const [bookmarked, setBookmarked] = useState(false)
 
-	const handleBookmarkBtn = () => {
+	const handleBookmarkButton = () => {
 		setBookmarked(!bookmarked)
 	}
 
@@ -19,7 +19,7 @@ export default function Topbar() {
 				<div className="flex gap-[12px]">
 					<IconButton
 						LucideIcon={Bookmark}
-						handleClickBtn={handleBookmarkBtn}
+						handleClickButton={handleBookmarkButton}
 						className={bookmarked ? "fill-[#252525]" : "fill-none"}
 					/>
 					<IconButton LucideIcon={Share2} />

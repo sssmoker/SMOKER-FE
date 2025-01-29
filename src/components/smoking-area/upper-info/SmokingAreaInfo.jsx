@@ -1,6 +1,6 @@
 import React from "react"
 import { Star } from "lucide-react"
-import UpdateBtn from "./UpdateBtn"
+import UpdateButton from "./UpdateButton"
 
 export default function SmokingAreaInfo({ smoking_name, region }) {
 	return (
@@ -11,7 +11,7 @@ export default function SmokingAreaInfo({ smoking_name, region }) {
 				</p>
 				<div className="mt-[-3px] flex items-center justify-between">
 					<h2 className="text-[16px] font-bold">{smoking_name}</h2>
-					<UpdateBtn />
+					<UpdateButton />
 				</div>
 
 				<p className="font-regular text-[10px]">{region}</p>
