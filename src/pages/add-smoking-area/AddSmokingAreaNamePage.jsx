@@ -9,7 +9,7 @@ import ComButton from "@/components/common/button/ComButton"
 import BackButton from "@/components/common/button/BackButton"
 
 const options = [
-	"밀폐형 흡연부스예요",
+	"환풍시설이 있어요",
 	"깔끔해요",
 	"쓰레기통이 있어요",
 	"의자가 있어요",
@@ -24,6 +24,8 @@ export default function AddSmokingAreaNamePage() {
 	const [name, setName] = useState("")
 	const [showOptions, setShowOptions] = useState(false)
 	const [selectedOptions, setSelectedOptions] = useState([])
+	const [facilityType, setFacilityType] = useState(null)
+	const [showFacilityType, setShowFacilityType] = useState(false)
 
 	const toggleOption = (option) => {
 		setSelectedOptions((prev) =>
@@ -33,11 +35,9 @@ export default function AddSmokingAreaNamePage() {
 		)
 	}
 
-	const handleNext = () => {
+	const handleNext1 = () => {
 		if (name.trim()) {
-			setShowOptions(true)
-		} else {
-			alert("흡연 구역 이름을 입력해주세요!")
+			setShowFacilityType(true)
 		}
 	}
 
@@ -52,6 +52,16 @@ export default function AddSmokingAreaNamePage() {
 		navigate("/")
 	}
 
+	const facilityOptions = [
+		{ id: "closed", label: "밀폐형" },
+		{ id: "open", label: "개방형" },
+	]
+
+	const handleFacilityTypeChange = (type) => {
+		setFacilityType(type)
+		setShowOptions(true)
+	}
+
 	return (
 		<div className="h-screen space-y-4 bg-white p-6">
 			<BackButton />
@@ -62,11 +72,37 @@ export default function AddSmokingAreaNamePage() {
 				className="w-full rounded border p-3"
 				placeholder="예: 청파성당 앞 흡연 부스"
 				value={name}
-				onChange={(e) => setName(e.target.value)}
+				onChange={(e) => {
+					setName(e.target.value)
+					if (e.target.value.trim()) {
+						handleNext1()
+					}
+				}}
 			/>
-			<ComButton size="xl" color="purple" onClick={handleNext}>
-				다음
-			</ComButton>
+
+			{showFacilityType && (
+				<>
+					<Title text="흡연 구역의 시설 형태를 선택해주세요." />
+					<div className="mt-[5vh]">
+						<div className="mt-4 flex justify-center gap-4">
+							{facilityOptions.map((option) => (
+								<button
+									key={option.id}
+									className={`rounded-lg px-6 py-3 ${
+										facilityType === option.id
+											? "bg-gray-700 text-white"
+											: "bg-gray-100"
+									}`}
+									onClick={() => handleFacilityTypeChange(option.id)}
+								>
+									{option.label}
+								</button>
+							))}
+						</div>
+					</div>
+				</>
+			)}
+
 			{showOptions && (
 				<div className="mt-[5vh]">
 					<Title text="흡연 부스의 정보를 선택해주세요." />
