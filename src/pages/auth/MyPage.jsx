@@ -1,5 +1,6 @@
 import React from "react"
 import { useNavigate } from "react-router-dom"
+import BackButton from "@/components/common/button/BackButton"
 
 export default function MyPage() {
 	const navigate = useNavigate()
@@ -21,8 +22,9 @@ export default function MyPage() {
 
 	return (
 		<div className="flex h-screen flex-col bg-gray-100">
-			<header className="border-b border-gray-300 p-4 text-lg font-bold">
-				마이페이지
+			<header className="flex items-center border-b border-gray-300 p-4 text-lg font-bold">
+				<BackButton className="mr-2" />
+				<span>마이페이지</span>
 			</header>
 			<ul className="flex-1 overflow-y-auto bg-white">
 				{menuItems.map((item, index) => (
