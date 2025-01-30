@@ -32,8 +32,9 @@
 	"smokingAreas": [
 		{
 			"smoking_id": 1,
-			"smoking_name": "사당역 123번 출구 앞 흡연 부스",
-			"region": "서울 동작구 사당역 1-12번지",
+			"smoking_name": "사당역 2번 출구 앞 흡연 부스",
+			"region": "서울 동작구",
+			"rating": 4.3,
 			"latitude": 37.4769,
 			"longitude": 126.9811,
 			"is_enclosed_SmokingBooth": true,
@@ -61,7 +62,8 @@
 		{
 			"smoking_id": 2,
 			"smoking_name": "카페 앞 흡연 구역",
-			"region": "서울 동작구 사당역 2-3번지",
+			"region": "서울 동작구",
+			"rating": 4.5,
 			"latitude": 37.4772,
 			"longitude": 126.982,
 			"is_enclosed_SmokingBooth": false,
@@ -90,7 +92,8 @@
 		{
 			"smoking_id": 3,
 			"smoking_name": "공원 흡연 부스",
-			"region": "서울 동작구 사당역 5번지",
+			"region": "서울 동작구",
+			"rating": 4.6,
 			"latitude": 37.4765,
 			"longitude": 126.9805,
 			"is_enclosed_SmokingBooth": true,
@@ -119,7 +122,8 @@
 		{
 			"smoking_id": 4,
 			"smoking_name": "편의점 뒤편 흡연 구역",
-			"region": "서울 동작구 사당역 1-2번지",
+			"region": "서울 동작구",
+			"rating": 4.8,
 			"latitude": 37.4774,
 			"longitude": 126.9818,
 			"is_enclosed_SmokingBooth": false,

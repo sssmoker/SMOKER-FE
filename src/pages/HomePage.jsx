@@ -12,6 +12,7 @@ export default function HomePage() {
 	const [isMarkerSelected, setIsMarkerSelected] = useState(false) // Marker 상태
 	const [fadeIn, setFadeIn] = useState(false) // 애니메이션 효과
 	const [loading, setLoading] = useState(true) // 로딩 상태
+	const [moveToLocation, setMoveToLocation] = useState(null)
 
 	// API에서 현재 위치와 마커 데이터를 가져옴
 	useEffect(() => {
@@ -88,18 +89,34 @@ export default function HomePage() {
 		)
 	}
 
+	const handleMoveToCurrentLocation = () => {
+		if (currentLocation) {
+			console.log(
+				"현재 위치로 이동:",
+				currentLocation.userLat,
+				currentLocation.userLng,
+			) // 디버깅 로그 추가
+			setMoveToLocation({
+				lat: currentLocation.userLat,
+				lng: currentLocation.userLng,
+			})
+		} else {
+			console.error("현재 위치 데이터가 없습니다!")
+		}
+	}
+
 	return (
 		<div className="relative h-[100vh] w-full bg-gray-100">
 			<div className="absolute left-0 top-[env(safe-area-inset-top)] z-50 w-full px-4">
-				<SearchBar />
+				<SearchBar onMoveToCurrentLocation={handleMoveToCurrentLocation} />
 			</div>
 
 			<div className="absolute top-0 z-10 h-[calc(100%-60px)] w-full">
 				<Map
 					markers={markerData}
 					currentLocation={currentLocation}
+					moveToLocation={moveToLocation}
 					onMarkerClick={handleMarkerClick}
-					onMapClick={handleMapClick} // 지도 클릭 이벤트 추가
 				/>
 			</div>
 
