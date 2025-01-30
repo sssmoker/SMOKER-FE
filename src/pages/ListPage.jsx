@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 import SearchBar from "@/components/common/SearchBar"
 import Button from "@/components/common/button/ComButton"
 import SmokingAreaList from "@/components/area-list/card-list/SmokingAreaList"
+import Filter from "@/components/area-list/filter/Filter"
 
 export default function ListPage() {
 	const [smokingAreas, setSmokingAreas] = useState([]) // 흡연 구역 데이터
@@ -53,7 +54,7 @@ export default function ListPage() {
 			</div>
 
 			{/* 필터 버튼 */}
-			<div className="absolute top-20 z-50 flex w-full justify-end px-4">
+			{/* <div className="absolute top-20 z-50 flex w-full justify-end px-4">
 				<Button
 					size="m"
 					color="purple"
@@ -64,10 +65,11 @@ export default function ListPage() {
 				>
 					{filter === "nearest" ? "거리순" : "인기순"}
 				</Button>
-			</div>
+			</div> */}
 
 			{/* 흡연 구역 목록 */}
 			<div className="mt-32 px-4">
+				<Filter />
 				<SmokingAreaList />
 			</div>
 
