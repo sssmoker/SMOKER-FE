@@ -8,6 +8,7 @@ export default function MemberInfoPage() {
 	const [memberInfo, setMemberInfo] = useState(null)
 	const [reviews, setReviews] = useState([])
 	const [tab, setTab] = useState("info") // "info" or "reviews"
+	const [profileImage, setProfileImage] = useState(null) // 추가된 상태
 
 	useEffect(() => {
 		// Fetch member information
@@ -36,8 +37,18 @@ export default function MemberInfoPage() {
 		fetchReviews()
 	}, [])
 
+	// 📌 이미지 업로드 핸들러
+	const handleImageUpload = (event) => {
+		const file = event.target.files[0]
+		if (file) {
+			const imageUrl = URL.createObjectURL(file)
+			setProfileImage(imageUrl) // 프로필 이미지 상태 업데이트
+		}
+	}
+
 	return (
 		<div className="flex h-screen flex-col bg-gray-100">
+			{/* 헤더 */}
 			<header className="flex items-center p-4 text-lg font-bold">
 				<BackButton className="mr-2" />
 				<span>회원정보</span>
@@ -47,30 +58,46 @@ export default function MemberInfoPage() {
 			<div className="flex flex-col items-center py-6">
 				<div className="relative flex flex-col items-center">
 					{/* 프로필 이미지 */}
-					{/*서버에서 프로필 불러오기 추가구현 예정*/}
-					<div className="relative flex h-20 w-20 items-center justify-center rounded-full bg-gray-200">
-						<Camera className="h-6 w-6 text-gray-500" />
-						<div className="absolute -bottom-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full border border-white bg-gray-200">
-							<Plus className="h-4 w-4" />
-						</div>
+					<div className="relative flex h-20 w-20 items-center justify-center overflow-hidden rounded-full bg-gray-200">
+						{profileImage ? (
+							<img
+								src={profileImage}
+								alt="Profile"
+								className="h-full w-full object-cover"
+							/>
+						) : (
+							<Camera className="h-6 w-6 text-gray-500" />
+						)}
 					</div>
 
-					{/* 닉네임 + 수정 버튼 */}
-					<div className="mt-2 flex flex-row items-center">
-						{/* 닉네임 */}
-						<div className="text-center text-lg font-bold">
-							{memberInfo ? memberInfo.user_name : "닉네임을 입력하시오"}
-						</div>
+					{/* + 버튼 (파일 업로드) */}
+					<label
+						htmlFor="file-upload"
+						className="absolute -bottom-1 -right-1 flex h-6 w-6 cursor-pointer items-center justify-center rounded-full border border-white bg-gray-200"
+					>
+						<Plus className="h-4 w-4" />
+					</label>
+					<input
+						id="file-upload"
+						type="file"
+						accept="image/*"
+						className="hidden"
+						onChange={handleImageUpload}
+					/>
+				</div>
 
-						{/* 수정 버튼 */}
-						<div className="ml-2">
-							<span
-								className="cursor-pointer text-xs text-gray-500 underline hover:text-gray-700"
-								onClick={() => navigate("/edit-name")}
-							>
-								수정
-							</span>
-						</div>
+				{/* 닉네임 + 수정 버튼 */}
+				<div className="mt-2 flex flex-row items-center">
+					<div className="text-center text-lg font-bold">
+						{memberInfo ? memberInfo.user_name : "닉네임을 입력하시오"}
+					</div>
+					<div className="ml-2">
+						<span
+							className="cursor-pointer text-xs text-gray-500 underline hover:text-gray-700"
+							onClick={() => navigate("/edit-name")}
+						>
+							수정
+						</span>
 					</div>
 				</div>
 			</div>
