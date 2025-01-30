@@ -57,7 +57,7 @@ export default function MemberInfoPage() {
 			{/* 프로필 영역 */}
 			<div className="flex flex-col items-center py-6">
 				<div className="relative flex flex-col items-center">
-					{/* 프로필 이미지 */}
+					{/* 프로필 이미지, 이미지 저장api 추가예정 */}
 					<div className="relative flex h-20 w-20 items-center justify-center overflow-hidden rounded-full bg-gray-200">
 						{profileImage ? (
 							<img
@@ -70,7 +70,7 @@ export default function MemberInfoPage() {
 						)}
 					</div>
 
-					{/* + 버튼 (파일 업로드) */}
+					{/* + 버튼 (파일 업로드 or 기본이미지로 다시 바꾸기(질문할 것)) */}
 					<label
 						htmlFor="file-upload"
 						className="absolute -bottom-1 -right-1 flex h-6 w-6 cursor-pointer items-center justify-center rounded-full border border-white bg-gray-200"
@@ -89,12 +89,12 @@ export default function MemberInfoPage() {
 				{/* 닉네임 + 수정 버튼 */}
 				<div className="mt-2 flex flex-row items-center">
 					<div className="text-center text-lg font-bold">
-						{memberInfo ? memberInfo.user_name : "닉네임을 입력하시오"}
+						{memberInfo ? memberInfo.user_name : "이름을 입력하시오"}
 					</div>
 					<div className="ml-2">
 						<span
 							className="cursor-pointer text-xs text-gray-500 underline hover:text-gray-700"
-							onClick={() => navigate("/edit-name")}
+							onClick={() => navigate("/my-page/info/edit-name")}
 						>
 							수정
 						</span>
