@@ -16,6 +16,8 @@ import LoginPage from "@/pages/auth/LoginPage"
 import UpdateSmokingAreaPage from "@/pages/UpdateSmokingAreaPage"
 import SavedSmokingAreasPage from "@/pages/favorites/SavedSmokingAreasPage"
 import AddSmokingAreaImagePage from "@/pages/add-smoking-area/AddSmokingAreaImagePage"
+import EditNamePage from "@/pages/auth/EditNamePage"
+
 // "list" 경로와 하위 페이지들
 const listRoutes = [
 	{
@@ -62,7 +64,11 @@ const myPageRoutes = [
 	},
 	{
 		path: "info",
-		element: <MemberInfoPage />, // 회원 정보 페이지
+		element: <Outlet />,
+		children: [
+			{ index: true, element: <MemberInfoPage /> }, // 회원 정보 페이지
+			{ path: "edit-name", element: <EditNamePage /> }, // 닉네임 수정 페이지
+		],
 	},
 ]
 
