@@ -1,9 +1,13 @@
 import React, { useState } from "react"
 import BackButton from "@/components/common/button/BackButton"
 import ComButton from "@/components/common/button/ComButton"
+import CompleteToast from "@/components/smoking-add/completeToast"
+import AlertToast from "@/components/smoking-add/alertToast"
 
 export default function AddSmokingAreaImagePage() {
 	const [image, setImage] = useState(null)
+	const [showCompleteToast, setShowCompleteToast] = useState(false)
+	const [showAlertToast, setShowAlertToast] = useState(false)
 
 	const handleImageUpload = (e) => {
 		const file = e.target.files[0]
@@ -13,11 +17,23 @@ export default function AddSmokingAreaImagePage() {
 	}
 
 	const handleSubmit = () => {
-		alert("이미지가 업로드되었습니다!")
+		if (image) {
+			setShowCompleteToast(true)
+		} else {
+			setShowAlertToast(true)
+		}
 	}
 
 	return (
-		<div className="h-screen space-y-6 px-4 py-6">
+		<div className="relative h-screen space-y-6 bg-white px-4 py-6">
+			<CompleteToast
+				isVisible={showCompleteToast}
+				onClose={() => setShowCompleteToast(false)}
+			/>
+			<AlertToast
+				isVisible={showAlertToast}
+				onClose={() => setShowAlertToast(false)}
+			/>
 			<BackButton />
 
 			<div className="space-y-2 text-left">
@@ -79,7 +95,7 @@ export default function AddSmokingAreaImagePage() {
 				</label>
 			</div>
 
-			<div className="mt-4">
+			<div className="mt-4 flex w-full justify-center">
 				<ComButton size="xl" onClick={handleSubmit}>
 					다음
 				</ComButton>
