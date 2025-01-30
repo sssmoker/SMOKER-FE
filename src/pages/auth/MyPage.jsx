@@ -5,16 +5,20 @@ import BackButton from "@/components/common/button/BackButton"
 
 export default function MyPage() {
 	const navigate = useNavigate()
+	const isLoggedIn = !!sessionStorage.getItem("user") // 로그인 여부 확인
 
 	const menuItems = [
-		{ label: "회원 정보", path: "/my-page/info" },
+		{
+			label: isLoggedIn ? "회원 정보" : "회원가입/로그인",
+			path: isLoggedIn ? "/my-page/info" : "/my-page/login",
+		},
 		{ label: "공지사항", path: "/notices" },
 		{ label: "자주 묻는 질문", path: "/faq" },
 		{ label: "1:1 문의", path: "/inquiry" },
 		{ label: "서비스 이용 약관", path: "/terms" },
 		{ label: "위치 기반 서비스 이용 약관", path: "/location-terms" },
 		{ label: "개인정보처리방침", path: "/privacy-policy" },
-		{ label: "로그아웃", path: "/logout" },
+		...(isLoggedIn ? [{ label: "로그아웃", path: "/logout" }] : []), // 로그인 상태일 때만 로그아웃 표시
 	]
 
 	const handleMenuClick = (path) => {
