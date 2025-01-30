@@ -2,7 +2,12 @@ import React, { useEffect } from "react"
 import { renderToString } from "react-dom/server"
 import { Cigarette, CircleDot } from "lucide-react"
 
-export default function Map({ markers, currentLocation, onMarkerClick }) {
+export default function Map({
+	markers,
+	currentLocation,
+	moveToLocation,
+	onMarkerClick,
+}) {
 	useEffect(() => {
 		loadKakaoMapScript().then(() => {
 			initializeMap(markers, currentLocation, onMarkerClick)
@@ -14,10 +19,17 @@ export default function Map({ markers, currentLocation, onMarkerClick }) {
 		}
 	}, [markers, currentLocation])
 
+	// moveToLocation 값이 변경되면 지도 이동
+	useEffect(() => {
+		if (moveToLocation) {
+			moveMapToLocation(moveToLocation)
+		}
+	}, [moveToLocation])
+
 	return <div id="map" style={{ width: "100%", height: "100%" }} />
 }
 
-// 카카오 맵 API 스크립트 로드
+// 📌 카카오 맵 API 스크립트 로드
 const loadKakaoMapScript = () => {
 	return new Promise((resolve) => {
 		if (window.kakao && window.kakao.maps) {
@@ -34,7 +46,7 @@ const loadKakaoMapScript = () => {
 	})
 }
 
-// 지도 초기화
+// 📌 지도 초기화
 const initializeMap = (markers, currentLocation, onMarkerClick) => {
 	const container = document.getElementById("map")
 	const options = {
@@ -44,7 +56,9 @@ const initializeMap = (markers, currentLocation, onMarkerClick) => {
 		),
 		level: 2,
 	}
+
 	const map = new window.kakao.maps.Map(container, options)
+	window.kakaoMapInstance = map // 글로벌 변수로 저장 (지도 인스턴스)
 
 	// 흡연 구역 마커 추가
 	if (markers) addSmokingMarkers(map, markers, onMarkerClick)
@@ -53,7 +67,15 @@ const initializeMap = (markers, currentLocation, onMarkerClick) => {
 	if (currentLocation) addCurrentLocationMarker(map, currentLocation)
 }
 
-// 흡연 구역 마커 추가
+// 📌 지도 이동 함수
+const moveMapToLocation = (location) => {
+	if (window.kakao && window.kakao.maps && window.kakaoMapInstance) {
+		const newCenter = new window.kakao.maps.LatLng(location.lat, location.lng)
+		window.kakaoMapInstance.setCenter(newCenter)
+	}
+}
+
+// 📌 흡연 구역 마커 추가
 const addSmokingMarkers = (map, markers, onMarkerClick) => {
 	markers.forEach((markerData) => {
 		const markerDiv = document.createElement("div")
@@ -92,7 +114,7 @@ const addSmokingMarkers = (map, markers, onMarkerClick) => {
 	})
 }
 
-// 현재 위치 마커 추가
+// 📌 현재 위치 마커 추가 (실시간 업데이트)
 const addCurrentLocationMarker = (map, currentLocation) => {
 	let currentOverlay = null
 
