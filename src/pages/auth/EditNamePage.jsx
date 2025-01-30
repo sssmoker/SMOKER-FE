@@ -1,6 +1,88 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
+import BackButton from "@/components/common/button/BackButton"
+import LongButton from "@/components/common/button/LongButton"
 
+//이름 수정 저장, 기존 닉네임 불러오기 기능 다시 구현예정
 export default function EditNamePage() {
-	return <div>hi</div>
+	const navigate = useNavigate()
+	const [nickname, setNickname] = useState("")
+	const [originalNickname, setOriginalNickname] = useState("") // 원래 닉네임 저장
+	const [isLoading, setIsLoading] = useState(false)
+	const [isUpdated, setIsUpdated] = useState(false) // 수정 완료 상태 체크
+
+	useEffect(() => {
+		// 기존 닉네임 불러오기
+		const fetchNickname = async () => {
+			try {
+				const response = await fetch("http://localhost:3001/member")
+				const data = await response.json()
+				setNickname(data.user_name)
+				setOriginalNickname(data.user_name) // 원래 닉네임 저장
+			} catch (error) {
+				console.error("Failed to fetch nickname:", error)
+			}
+		}
+		fetchNickname()
+	}, [])
+
+	const handleUpdateNickname = async () => {
+		if (!nickname.trim() || nickname === originalNickname) return
+
+		setIsLoading(true)
+		try {
+			await fetch("http://localhost:3001/member", {
+				method: "PATCH",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ user_name: nickname }),
+			})
+
+			setOriginalNickname(nickname) // 원래 닉네임 업데이트
+			setIsUpdated(true) // 수정 완료 상태 변경
+
+			// 2초 후 다시 원래 상태로 변경
+			setTimeout(() => {
+				setIsUpdated(false)
+			}, 2000)
+		} catch (error) {
+			console.error("Failed to update nickname:", error)
+		} finally {
+			setIsLoading(false)
+		}
+	}
+
+	return (
+		<div className="flex h-screen flex-col bg-gray-100 px-6">
+			{/* 헤더 */}
+			<header className="flex items-center p-4 text-lg font-bold">
+				<BackButton className="mr-2" />
+				<span>이름을 입력해주세요</span>
+			</header>
+
+			{/* 입력 폼 */}
+			<div className="mx-auto mt-10 w-full max-w-sm">
+				<label className="block text-sm font-bold">이름</label>
+				<input
+					type="text"
+					className="mt-1 w-full rounded-lg border p-2"
+					value={nickname}
+					onChange={(e) => setNickname(e.target.value)}
+					onKeyDown={(e) => e.key === "Enter" && handleUpdateNickname()}
+				/>
+
+				{/* 버튼 상태 변경 */}
+				<LongButton
+					className={`mt-6 w-full ${
+						isUpdated
+							? "bg-gray-500 text-white"
+							: "bg-indigo-600 hover:bg-indigo-700"
+					}`}
+					onClick={handleUpdateNickname}
+					disabled={isLoading || isUpdated}
+				>
+					{isUpdated ? "수정 완료" : "수정"}
+				</LongButton>
+			</div>
+		</div>
+	)
 }
