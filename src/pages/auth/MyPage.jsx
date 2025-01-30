@@ -1,5 +1,6 @@
 import React from "react"
 import { useNavigate } from "react-router-dom"
+import { ChevronRight } from "lucide-react"
 import BackButton from "@/components/common/button/BackButton"
 
 export default function MyPage() {
@@ -30,10 +31,11 @@ export default function MyPage() {
 				{menuItems.map((item, index) => (
 					<li
 						key={index}
-						className="cursor-pointer border-b px-4 py-3 hover:bg-gray-50"
+						className="flex cursor-pointer items-center justify-between border-b px-4 py-3 hover:bg-gray-50"
 						onClick={() => handleMenuClick(item.path)}
 					>
-						{item.label}
+						<span>{item.label}</span>
+						<ChevronRight className="h-4 w-4 text-gray-400" />
 					</li>
 				))}
 			</ul>
