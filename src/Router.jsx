@@ -16,117 +16,77 @@ import LoginPage from "@/pages/auth/LoginPage"
 import UpdateSmokingAreaPage from "@/pages/UpdateSmokingAreaPage"
 import SavedSmokingAreasPage from "@/pages/favorites/SavedSmokingAreasPage"
 import AddSmokingAreaImagePage from "@/pages/add-smoking-area/AddSmokingAreaImagePage"
+
 // "list" 경로와 하위 페이지들
 const listRoutes = [
-	{
-		index: true, // 기본 ListPage
-		element: <ListPage />,
-	},
+	{ index: true, element: <ListPage /> },
 	{
 		path: "smoking-area",
-		element: <Outlet />, // 하위 smoking-area 페이지들
+		element: <Outlet />,
 		children: [
-			{
-				index: true,
-				element: <SmokingAreaPage />,
-			},
-			{
-				path: "detail",
-				element: <SmokingAreaDetailPage />, // 상세 정보 페이지
-			},
-			{
-				path: "review",
-				element: <SmokingAreaReviewPage />, // 리뷰 페이지
-			},
-			{
-				path: "update",
-				element: <SmokingAreaUpdatePage />, // 흡연 구역 업데이트 페이지
-			},
-			{
-				path: "writing-review",
-				element: <WritingReviewPage />, // 리뷰 작성 페이지
-			},
+			{ index: true, element: <SmokingAreaPage /> },
+			{ path: "detail", element: <SmokingAreaDetailPage /> },
+			{ path: "review", element: <SmokingAreaReviewPage /> },
+			{ path: "update", element: <SmokingAreaUpdatePage /> },
+			{ path: "writing-review", element: <WritingReviewPage /> },
 		],
-	},
-]
-
-// "my-page" 경로와 하위 페이지들
-const myPageRoutes = [
-	{
-		index: true,
-		element: <MyPage />, // 기본 마이 페이지
-	},
-	{
-		path: "login",
-		element: <LoginPage />, // 로그인 페이지
-	},
-	{
-		path: "info",
-		element: <MemberInfoPage />, // 회원 정보 페이지
 	},
 ]
 
 // "add-smoking-area" 경로와 하위 페이지들
 const addSmokingAreaRoutes = [
-	{
-		path: "location",
-		element: <AddSmokingAreaPage />, // 위치 설정 페이지
-	},
-	{
-		path: "name",
-		element: <AddSmokingAreaNamePage />, // 이름 입력 페이지
-	},
-	{
-		path: "image",
-		element: <AddSmokingAreaImagePage />, // 이름 입력 페이지
-	},
+	{ path: "location", element: <AddSmokingAreaPage /> },
+	{ path: "name", element: <AddSmokingAreaNamePage /> },
+	{ path: "image", element: <AddSmokingAreaImagePage /> },
+]
+
+// "my-page" 경로와 하위 페이지들 (로그인은 개별 경로로 이동)
+const myPageRoutes = [
+	{ index: true, element: <MyPage /> },
+	{ path: "info", element: <MemberInfoPage /> },
 ]
 
 // "favorites" 경로 추가
-const favoritesRoutes = [
-	{
-		index: true,
-		element: <SavedSmokingAreasPage />, // 저장된 흡연 구역 페이지
-	},
-]
+const favoritesRoutes = [{ index: true, element: <SavedSmokingAreasPage /> }]
 
 // 전체 루트와 경로 정의
 const routes = [
-	{
-		index: true,
-		element: <HomePage />, // 홈 페이지
-	},
+	{ index: true, element: <HomePage /> },
 	{
 		path: "list",
 		element: <Outlet />,
-		children: listRoutes, // "list"와 하위 경로
+		children: listRoutes,
 	},
 	{
 		path: "add-smoking-area",
 		element: <Outlet />,
-		children: addSmokingAreaRoutes, // "add-smoking-area"와 하위 경로
+		children: addSmokingAreaRoutes,
 	},
 	{
 		path: "my-page",
 		element: <Outlet />,
-		children: myPageRoutes, // "my-page"와 하위 경로
+		children: myPageRoutes,
 	},
 	{
 		path: "favorites",
 		element: <Outlet />,
-		children: favoritesRoutes, // "favorites" 경로와 하위 경로
+		children: favoritesRoutes,
 	},
-	// {
-	// 	path: "update-smoking-area",
-	// 	element: <UpdateSmokingAreaPage />, // 흡연 구역 업데이트 페이지
-	// },
+	{
+		path: "update-smoking-area",
+		element: <UpdateSmokingAreaPage />, // 흡연 구역 업데이트 페이지
+	},
+	{
+		path: "login", // 기존 "my-page/login"에서 "/"로 바로 접근하도록 변경
+		element: <LoginPage />,
+	},
 ]
 
 // createBrowserRouter로 전체 라우팅 설정
 export const router = createBrowserRouter([
 	{
 		path: "/",
-		element: <RootLayout />, // 레이아웃 컴포넌트
+		element: <RootLayout />,
 		children: routes,
 	},
 ])
