@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom"
 export default function SmokingAreaHistoryPage() {
 	const navigate = useNavigate()
 
-	const handleSubmit = () => {
+	const handleMoveToUpdate = () => {
 		navigate("/list/smoking-area/update")
 	}
 
@@ -31,7 +31,7 @@ export default function SmokingAreaHistoryPage() {
 						<HistoryCard />
 					</ul>
 					<div className="mt-3 flex justify-center">
-						<ComButton onClick={handleSubmit} size="xl">
+						<ComButton onClick={handleMoveToUpdate} size="xl">
 							정보 수정하러 가기
 						</ComButton>
 					</div>

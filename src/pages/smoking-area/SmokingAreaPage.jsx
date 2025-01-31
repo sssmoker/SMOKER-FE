@@ -7,6 +7,7 @@ import SmokingAreaDetailPage from "./SmokingAreaDetailPage"
 import SmokingAreaReviewPage from "./SmokingAreaReviewPage"
 
 import DummyPng from "@/assets/dummy/SM_01_img1.png" // imageUrl
+import FloatingButton from "@/components/smoking-area/review/FloatingButton"
 
 export default function SmokingAreaPage() {
 	const [bgImg, setBgImg] = useState(DummyPng) // imageUrl
@@ -68,7 +69,10 @@ export default function SmokingAreaPage() {
 			{currentPage == "detail" ? (
 				<SmokingAreaDetailPage />
 			) : (
-				<SmokingAreaReviewPage reviewListData={reviewListData} />
+				<>
+					<SmokingAreaReviewPage reviewListData={reviewListData} />
+					<FloatingButton />
+				</>
 			)}
 		</div>
 	)
