@@ -1,11 +1,11 @@
 import React from "react"
 import SmokingAreaCard from "./SmokingAreaCard"
-import smokingAreaListDummy from "@/data/smokingAreaListDummy"
 
-export default function SmokingAreaList() {
+export default function SmokingAreaList({ smokingAreas }) {
 	return (
 		<>
-			{smokingAreaListDummy.map((data, i) => (
+			{/* key값 id로 수정하자 */}
+			{smokingAreas.map((data, i) => (
 				<SmokingAreaCard key={i} {...data} />
 			))}
 		</>
