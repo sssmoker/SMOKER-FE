@@ -1,10 +1,33 @@
-import React from "react"
+import React, { useState } from "react"
+import { useNavigate } from "react-router-dom"
 import BackButton from "@/components/common/button/BackButton"
 import ComButton from "@/components/common/button/ComButton"
-import { useNavigate } from "react-router-dom"
+import {
+	Title,
+	OptionsList,
+} from "@/components/smoking-update/OptionsSelection"
+
+const options = [
+	"환풍시설이 있어요",
+	"깔끔해요",
+	"쓰레기통이 있어요",
+	"의자가 있어요",
+	"장애인 편의시설이에요",
+	"냉난방이 가능해요",
+	"야외에 있어요",
+]
 
 export default function SmokingAreaUpdatePage() {
 	const navigate = useNavigate()
+	const [selectedOptions, setSelectedOptions] = useState([])
+
+	const toggleOption = (option) => {
+		setSelectedOptions((prev) =>
+			prev.includes(option)
+				? prev.filter((o) => o !== option)
+				: [...prev, option],
+		)
+	}
 
 	const handleSubmit = () => {
 		navigate("/list/smoking-area")
@@ -25,8 +48,14 @@ export default function SmokingAreaUpdatePage() {
 					</div>
 				</div>
 
-				<div className="mb-[8px] mt-[32px] w-full rounded-2xl border border-white bg-white px-4 py-5">
-					{/* 흰 박스 */}
+				{/* 흰 박스 */}
+				<div className="mb-[8px] mt-[32px] w-full rounded-2xl border border-white bg-white px-6 py-8">
+					<Title text="흡연 부스의 정보를 수정해주세요." />
+					<OptionsList
+						options={options}
+						selectedOptions={selectedOptions}
+						onToggle={toggleOption}
+					/>
 				</div>
 
 				<a

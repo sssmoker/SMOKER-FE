@@ -4,7 +4,7 @@ import ComButton from "@/components/common/button/ComButton"
 
 // Title 컴포넌트
 const Title = ({ text }) => (
-	<h1 className="text-xl font-bold text-gray-800">{text}</h1>
+	<h1 className="mb-[12px] text-[14px] font-bold">{text}</h1>
 )
 
 Title.propTypes = {
@@ -19,7 +19,7 @@ const OptionsList = ({ options, selectedOptions, onToggle }) => (
 			return (
 				<button
 					key={option}
-					className={`rounded-2xl border px-4 py-2 transition-all duration-200 ${
+					className={`font-regular rounded-[10px] border px-3 py-2 text-[11px] transition-all duration-200 ${
 						isSelected
 							? "bg-gray-700 text-white"
 							: "border-gray-300 bg-white text-gray-700 hover:bg-gray-100"
