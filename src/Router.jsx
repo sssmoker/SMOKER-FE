@@ -4,8 +4,6 @@ import RootLayout from "@/layouts/root-layout"
 import HomePage from "@/pages/HomePage"
 import ListPage from "@/pages/ListPage"
 import SmokingAreaPage from "@/pages/smoking-area/SmokingAreaPage"
-import SmokingAreaDetailPage from "@/pages/smoking-area/SmokingAreaDetailPage"
-import SmokingAreaReviewPage from "@/pages/smoking-area/SmokingAreaReviewPage"
 import SmokingAreaUpdatePage from "@/pages/smoking-area/SmokingAreaUpdatePage"
 import WritingReviewPage from "@/pages/smoking-area/WritingReviewPage"
 import AddSmokingAreaPage from "@/pages/add-smoking-area/AddSmokingAreaPage"
@@ -16,6 +14,7 @@ import LoginPage from "@/pages/auth/LoginPage"
 import UpdateSmokingAreaPage from "@/pages/UpdateSmokingAreaPage"
 import SavedSmokingAreasPage from "@/pages/favorites/SavedSmokingAreasPage"
 import AddSmokingAreaImagePage from "@/pages/add-smoking-area/AddSmokingAreaImagePage"
+import SmokingAreaHistoryPage from "./pages/smoking-area/SmokingAreaHistoryPage"
 // "list" 경로와 하위 페이지들
 const listRoutes = [
 	{
@@ -28,15 +27,11 @@ const listRoutes = [
 		children: [
 			{
 				index: true,
-				element: <SmokingAreaPage />,
+				element: <SmokingAreaPage />, // 상세 정보 및 후기 페이지
 			},
 			{
-				path: "detail",
-				element: <SmokingAreaDetailPage />, // 상세 정보 페이지
-			},
-			{
-				path: "review",
-				element: <SmokingAreaReviewPage />, // 리뷰 페이지
+				path: "history",
+				element: <SmokingAreaHistoryPage />, // 히스토리 페이지
 			},
 			{
 				path: "update",
