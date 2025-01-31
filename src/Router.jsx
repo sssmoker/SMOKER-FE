@@ -17,6 +17,7 @@ import UpdateSmokingAreaPage from "@/pages/UpdateSmokingAreaPage"
 import SavedSmokingAreasPage from "@/pages/favorites/SavedSmokingAreasPage"
 import AddSmokingAreaImagePage from "@/pages/add-smoking-area/AddSmokingAreaImagePage"
 import EditNamePage from "@/pages/auth/EditNamePage"
+import NoticePage from "@/pages/notices/NoticePage"
 
 // "list" 경로와 하위 페이지들
 const listRoutes = [
@@ -96,6 +97,15 @@ const favoritesRoutes = [
 	},
 ]
 
+// "notices" 경로 추가
+const noticesRoutes = [
+	{
+		index: true,
+		element: <NoticePage />, // 공지사항 목록 페이지
+	},
+	//	공지사항목록 단건조회, faq(자주묻는질문),자주묻는 질문 단건 조회 추가예정정
+]
+
 // 전체 루트와 경로 정의
 const routes = [
 	{
@@ -121,6 +131,11 @@ const routes = [
 		path: "favorites",
 		element: <Outlet />,
 		children: favoritesRoutes, // "favorites" 경로와 하위 경로
+	},
+	{
+		path: "notices",
+		element: <Outlet />,
+		children: noticesRoutes, // "notices"와 하위 경로로
 	},
 	// {
 	// 	path: "update-smoking-area",
