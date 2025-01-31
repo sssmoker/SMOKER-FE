@@ -56,7 +56,7 @@ export default {
 				xs: "375px", // 작은 모바일 화면
 			},
 			spacing: {
-				25.5: "6.375rem", // 102px
+				// 25.5: "6.375rem", // 102px
 			},
 			fontSize: {
 				2: "0.5rem", // 8px
