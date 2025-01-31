@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import SearchBar from "@/components/common/SearchBar"
 import Map from "@/components/HomeMap/Map"
-import ComButton from "@/components/common/button/ComButton"
 import Toast from "@/components/common/toast/Toast"
 
 export default function HomePage() {
@@ -14,6 +13,7 @@ export default function HomePage() {
 
 	const navigate = useNavigate()
 
+	// API에서 현재 위치 & 마커 데이터 가져오기
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
@@ -53,10 +53,27 @@ export default function HomePage() {
 		fetchData()
 	}, [])
 
+	// "다음" 버튼 클릭 시 위치 동의 모달 닫기 (현재 위치 이동 X)
 	const handleNext = () => {
 		setShowAgreementToast(false)
-		console.log("현재 위치로 이동 요청")
-		setMoveToLocation(currentLocation)
+		console.log("약관 동의 후 진행")
+	}
+
+	// "내 주변" 버튼 클릭 시 현재 위치로 이동
+	const handleMoveToCurrentLocation = () => {
+		if (currentLocation) {
+			console.log(
+				"내 주변 이동:",
+				currentLocation.userLat,
+				currentLocation.userLng,
+			)
+			setMoveToLocation({
+				lat: currentLocation.userLat,
+				lng: currentLocation.userLng,
+			})
+		} else {
+			console.error("현재 위치 데이터 없음!")
+		}
 	}
 
 	return (
@@ -72,11 +89,13 @@ export default function HomePage() {
 				cancelText="로그인"
 			/>
 
-			{/* 검색창 */}
-			<SearchBar />
+			<SearchBar onMoveToCurrentLocation={handleMoveToCurrentLocation} />
 
-			{/* 지도 */}
-			<Map markers={markerData} currentLocation={currentLocation} />
+			<Map
+				markers={markerData}
+				currentLocation={currentLocation}
+				moveToLocation={moveToLocation}
+			/>
 		</div>
 	)
 }
