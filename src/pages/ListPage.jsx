@@ -47,13 +47,16 @@ export default function ListPage() {
 	}, [userLat, userLng, filter])
 
 	return (
-		<div className="relative h-[100vh] bg-gray-100">
+		<div className="relative h-[100vh] bg-white">
 			{/* 상단 검색바 */}
 			<div className="absolute left-0 top-[env(safe-area-inset-top)] z-50 w-full px-4">
 				<SearchBar placeholder="내 주변에 흡연구역을 검색해보세요 (예시) LG타워 사당역" />
 			</div>
 
 			{/* 필터 버튼 */}
+			<div className="fixed left-[20px] top-[92px]">
+				<Filter />
+			</div>
 			{/* <div className="absolute top-20 z-50 flex w-full justify-end px-4">
 				<Button
 					size="m"
@@ -68,21 +71,17 @@ export default function ListPage() {
 			</div> */}
 
 			{/* 흡연 구역 목록 */}
-			<div className="mt-32 px-4">
-				<Filter />
-				<SmokingAreaList />
+			<div className="h-[calc(100%-84px)] w-full pt-32">
+				<ul className="h-full w-full overflow-y-scroll">
+					<SmokingAreaList />
+				</ul>
 			</div>
 
 			{/* 하단 네비게이션 */}
-			<div className="fixed bottom-0 left-0 right-0 z-50 mx-auto max-w-[500px] bg-white shadow-lg">
-				<div className="flex justify-between px-6 py-4">
-					<Button size="m" color="purple">
-						Map
-					</Button>
-					<Button size="m" color="gray">
-						List
-					</Button>
-				</div>
+			<div className="fixed bottom-[100px] left-0 right-0 z-50 mx-auto flex w-full max-w-[500px] justify-center">
+				<Button size="m" color="purple">
+					지도 보기
+				</Button>
 			</div>
 		</div>
 	)
