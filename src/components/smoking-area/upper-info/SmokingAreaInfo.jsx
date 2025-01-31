@@ -1,6 +1,25 @@
 import React from "react"
 import { Star } from "lucide-react"
-import UpdateButton from "./UpdateButton"
+import { useNavigate } from "react-router-dom"
+
+function UpdateButton() {
+	const navigate = useNavigate()
+
+	const handleMoveToUpdate = () => {
+		navigate("/list/smoking-area/history")
+	}
+
+	return (
+		<>
+			<button
+				onClick={handleMoveToUpdate}
+				className="font-regular h-[22px] w-[60px] rounded-full border border-solid border-[#B5B5B5] bg-white text-[10px] text-[#252525]"
+			>
+				정보수정
+			</button>
+		</>
+	)
+}
 
 export default function SmokingAreaInfo({ smoking_name, region }) {
 	return (
