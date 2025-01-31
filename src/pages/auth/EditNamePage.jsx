@@ -74,8 +74,8 @@ export default function EditNamePage() {
 				<LongButton
 					className={`mt-6 w-full ${
 						isUpdated
-							? "bg-gray-500 text-white"
-							: "bg-indigo-600 hover:bg-indigo-700"
+							? "bg-[#828282] text-white"
+							: "bg-[#4517FF] hover:bg-indigo-700"
 					}`}
 					onClick={handleUpdateNickname}
 					disabled={isLoading || isUpdated}
