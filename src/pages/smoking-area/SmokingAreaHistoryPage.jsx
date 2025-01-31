@@ -10,7 +10,7 @@ export default function SmokingAreaHistoryPage() {
 	const handleSubmit = () => {
 		navigate("/list/smoking-area/update")
 	}
-	// text-[px] font-semibold text-[#252525]
+
 	return (
 		<>
 			<div className="container mx-auto h-screen bg-[#F5F3FF] px-4 py-6">
@@ -32,12 +32,11 @@ export default function SmokingAreaHistoryPage() {
 					</ul>
 					<div className="mt-3 flex justify-center">
 						<ComButton onClick={handleSubmit} size="xl">
-							등록하기
+							정보 수정하러 가기
 						</ComButton>
 					</div>
 				</div>
 			</div>
-			<div></div>
 		</>
 	)
 }
