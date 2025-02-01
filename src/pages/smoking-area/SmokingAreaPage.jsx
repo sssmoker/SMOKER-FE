@@ -8,6 +8,7 @@ import SmokingAreaReviewPage from "./SmokingAreaReviewPage"
 import FloatingButton from "@/components/smoking-area/review/FloatingButton"
 
 export default function SmokingAreaPage() {
+	const [bgImg] = useState(DummyPng) // imageUrl
 	const [currentPage, setCurrentPage] = useState("detail")
 	const [smokingAreaData, setSmokingAreaData] = useState({})
 	const [reviewListData, setReviewListData] = useState([])

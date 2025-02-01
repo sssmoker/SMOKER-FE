@@ -2,10 +2,9 @@ import React from "react"
 import ReviewCard from "@/components/smoking-area/review/ReviewCard"
 import StarRatingStatistics from "@/components/smoking-area/review/StarRatingStatistics"
 
-export default function SmokingAreaReviewPage({
-	starRatingData,
-	reviewListData = [],
-}) {
+export default function SmokingAreaReviewPage({ reviewListData }) {
+	const [reviews] = useState(reviewListData)
+
 	return (
 		<div className="pb-[20vh]">
 			{reviewListData.length ? (
