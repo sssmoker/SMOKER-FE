@@ -1,6 +1,7 @@
 import React, { useEffect } from "react"
+import PropTypes from "prop-types"
 import { renderToString } from "react-dom/server"
-import { Cigarette, CircleDot } from "lucide-react"
+import { Cigarette } from "lucide-react"
 
 export default function Map({
 	markers,
@@ -19,7 +20,6 @@ export default function Map({
 		}
 	}, [markers, currentLocation])
 
-	// moveToLocation 값이 변경되면 지도 이동
 	useEffect(() => {
 		if (moveToLocation) {
 			moveMapToLocation(moveToLocation)
@@ -29,7 +29,6 @@ export default function Map({
 	return <div id="map" style={{ width: "100%", height: "100%" }} />
 }
 
-// 📌 카카오 맵 API 스크립트 로드
 const loadKakaoMapScript = () => {
 	return new Promise((resolve) => {
 		if (window.kakao && window.kakao.maps) {
@@ -46,36 +45,37 @@ const loadKakaoMapScript = () => {
 	})
 }
 
-// 📌 지도 초기화
 const initializeMap = (markers, currentLocation, onMarkerClick) => {
 	const container = document.getElementById("map")
+	const center = new window.kakao.maps.LatLng(
+		currentLocation ? currentLocation.userLat : 37.4769,
+		currentLocation ? currentLocation.userLng : 126.9811,
+	)
+
 	const options = {
-		center: new window.kakao.maps.LatLng(
-			currentLocation ? currentLocation.userLat : 37.4769,
-			currentLocation ? currentLocation.userLng : 126.9811,
-		),
+		center,
 		level: 2,
 	}
 
 	const map = new window.kakao.maps.Map(container, options)
-	window.kakaoMapInstance = map // 글로벌 변수로 저장 (지도 인스턴스)
+	window.kakaoMapInstance = map
 
-	// 흡연 구역 마커 추가
 	if (markers) addSmokingMarkers(map, markers, onMarkerClick)
-
-	// 현재 위치 마커 추가
 	if (currentLocation) addCurrentLocationMarker(map, currentLocation)
 }
 
-// 📌 지도 이동 함수
 const moveMapToLocation = (location) => {
 	if (window.kakao && window.kakao.maps && window.kakaoMapInstance) {
-		const newCenter = new window.kakao.maps.LatLng(location.lat, location.lng)
-		window.kakaoMapInstance.setCenter(newCenter)
+		const lat = location.userLat || location.lat
+		const lng = location.userLng || location.lng
+
+		if (lat && lng) {
+			const newCenter = new window.kakao.maps.LatLng(lat, lng)
+			window.kakaoMapInstance.setCenter(newCenter)
+		}
 	}
 }
 
-// 📌 흡연 구역 마커 추가
 const addSmokingMarkers = (map, markers, onMarkerClick) => {
 	markers.forEach((markerData) => {
 		const markerDiv = document.createElement("div")
@@ -83,23 +83,18 @@ const addSmokingMarkers = (map, markers, onMarkerClick) => {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 40px;
-      height: 40px;
+      width: 30px;
+      height: 30px;
       background: #4517FF;
-      border-radius: 12px;
-      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-      position: absolute;
-      z-index: 100;
+      border-radius: 10px;
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
     `
+
 		markerDiv.innerHTML = renderToString(
-			<Cigarette className="text-white" style={{ width: 20, height: 20 }} />,
+			<Cigarette className="text-white" style={{ width: 15, height: 15 }} />,
 		)
 
-		// 클릭 이벤트 추가
-		markerDiv.onclick = () => {
-			console.log("Marker clicked:", markerData)
-			onMarkerClick(markerData)
-		}
+		markerDiv.onclick = () => onMarkerClick(markerData)
 
 		const smokingOverlay = new window.kakao.maps.CustomOverlay({
 			position: new window.kakao.maps.LatLng(
@@ -114,7 +109,6 @@ const addSmokingMarkers = (map, markers, onMarkerClick) => {
 	})
 }
 
-// 📌 현재 위치 마커 추가 (실시간 업데이트)
 const addCurrentLocationMarker = (map, currentLocation) => {
 	let currentOverlay = null
 
@@ -126,20 +120,42 @@ const addCurrentLocationMarker = (map, currentLocation) => {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 40px;
-      height: 40px;
-      background: rgba(69, 23, 255, 0.1);
-      border: 3px solid rgba(69, 23, 255, 0.5);
+      width: 35px;
+      height: 35px;
+      background: rgba(248, 150, 179, 0.4);
       border-radius: 50%;
       position: absolute;
       z-index: 300;
     `
-		markerDiv.innerHTML = renderToString(
-			<CircleDot
-				className="text-[#4517FF]"
-				style={{ width: 20, height: 20 }}
-			/>,
-		)
+
+		markerDiv.innerHTML = `
+      <div style="
+        width: 16px;
+        height: 16px;
+        background: yellow;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      ">
+        <div style="
+          width: 10px;
+          height: 10px;
+          background: blue;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        ">
+          <div style="
+            width: 4px;
+            height: 4px;
+            background: yellow;
+            border-radius: 50%;
+          "></div>
+        </div>
+      </div>
+    `
 
 		currentOverlay = new window.kakao.maps.CustomOverlay({
 			position: new window.kakao.maps.LatLng(
@@ -154,4 +170,26 @@ const addCurrentLocationMarker = (map, currentLocation) => {
 	}
 
 	updateLocation()
+}
+
+// PropTypes 추가
+Map.propTypes = {
+	markers: PropTypes.arrayOf(
+		PropTypes.shape({
+			id: PropTypes.number.isRequired,
+			title: PropTypes.string.isRequired,
+			region: PropTypes.string.isRequired,
+			latitude: PropTypes.number.isRequired,
+			longitude: PropTypes.number.isRequired,
+		}),
+	).isRequired,
+	currentLocation: PropTypes.shape({
+		userLat: PropTypes.number,
+		userLng: PropTypes.number,
+	}),
+	moveToLocation: PropTypes.shape({
+		lat: PropTypes.number,
+		lng: PropTypes.number,
+	}),
+	onMarkerClick: PropTypes.func.isRequired,
 }
