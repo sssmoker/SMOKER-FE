@@ -71,7 +71,6 @@ export default function LoginPage() {
 				모든 기능을 이용해보세요!
 			</p>
 
-			{/* 간편로그인 타이틀 */}
 			<div className="mt-32 w-full max-w-sm text-center">
 				<div className="flex items-center">
 					<div className="flex-grow border-t-2 border-[#E8ECF4]"></div>
@@ -116,10 +115,8 @@ export default function LoginPage() {
 				</div>
 			</div>
 
-			{/* 에러 메시지 */}
 			{error && <p className="mt-4 text-sm text-red-500">{error}</p>}
 
-			{/* 이용 약관 */}
 			<p className="text-center text-xs text-gray-500">
 				회원가입하면{" "}
 				<span className="font-bold text-gray-700 underline">

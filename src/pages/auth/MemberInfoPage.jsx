@@ -37,7 +37,7 @@ export default function MemberInfoPage() {
 		fetchReviews()
 	}, [])
 
-	// 📌 이미지 업로드 핸들러
+	// 이미지 업로드 핸들러
 	const handleImageUpload = (event) => {
 		const file = event.target.files[0]
 		if (file) {
@@ -48,7 +48,6 @@ export default function MemberInfoPage() {
 
 	return (
 		<div className="flex h-screen flex-col bg-gray-100">
-			{/* 헤더 */}
 			<header className="flex items-center p-4 text-lg font-bold">
 				<BackButton className="mr-2" />
 				<span>회원정보</span>
@@ -86,7 +85,6 @@ export default function MemberInfoPage() {
 					/>
 				</div>
 
-				{/* 닉네임 + 수정 버튼 */}
 				<div className="mt-2 flex flex-row items-center">
 					<div className="text-center text-lg font-bold">
 						{memberInfo ? memberInfo.user_name : "이름을 입력하시오"}
@@ -102,7 +100,6 @@ export default function MemberInfoPage() {
 				</div>
 			</div>
 
-			{/* 탭 메뉴 (상세정보 / 리뷰) */}
 			<div className="mt-2 flex w-full justify-center border-b">
 				<button
 					onClick={() => setTab("info")}
@@ -126,7 +123,6 @@ export default function MemberInfoPage() {
 				</button>
 			</div>
 
-			{/* 상세 정보 */}
 			{tab === "info" && memberInfo && (
 				<div className="p-4">
 					<h2 className="text-xl font-bold">{memberInfo.user_name}</h2>
