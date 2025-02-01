@@ -9,7 +9,7 @@ import SmokingAreaReviewPage from "./SmokingAreaReviewPage"
 import DummyPng from "@/assets/dummy/SM_01_img1.png" // imageUrl
 
 export default function SmokingAreaPage() {
-	const [bgImg, setBgImg] = useState(DummyPng) // imageUrl
+	const [bgImg] = useState(DummyPng) // imageUrl
 	const [currentPage, setCurrentPage] = useState("detail")
 	const [smokingAreaData, setSmokingAreaData] = useState({})
 	const [reviewListData, setReviewListData] = useState([])
