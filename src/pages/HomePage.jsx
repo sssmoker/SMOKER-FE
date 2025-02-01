@@ -10,12 +10,9 @@ import MarkerPopup from "@/components/HomeMap/MarkerPopup"
 export default function HomePage() {
 	const [markerData, setMarkerData] = useState([])
 	const [currentLocation, setCurrentLocation] = useState(null)
-	const [moveToLocation, setMoveToLocation] = useState(null)
-	const [showAgreementToast, setShowAgreementToast] = useState(
-		localStorage.getItem("locationAgreement") !== "true",
-	)
 	const [selectedMarker, setSelectedMarker] = useState(null)
-	const [showInfoCard, setShowInfoCard] = useState(false)
+	const [isMarkerSelected, setIsMarkerSelected] = useState(false)
+	const [fadeIn, setFadeIn] = useState(false)
 
 	const navigate = useNavigate()
 
@@ -79,64 +76,59 @@ export default function HomePage() {
 	const handleListPageNavigation = () => navigate("/list")
 
 	const handleMarkerClick = (marker) => {
-		console.log("📍 마커 클릭됨:", marker)
-		setSelectedMarker(marker)
-		setShowInfoCard(true)
+		setFadeIn(false)
+		setTimeout(() => {
+			setSelectedMarker(marker)
+			setIsMarkerSelected(true)
+			setFadeIn(true)
+		}, 300)
 	}
 
-	const handleCloseMarkerInfo = () => {
-		setShowInfoCard(false)
-		setTimeout(() => setSelectedMarker(null), 300)
+	const handleListClick = () => {
+		setIsMarkerSelected(false) // "목록 보기" 클릭 시 MarkerInfoCard 숨기기
 	}
 
 	return (
-		<div className="relative h-screen w-full bg-gray-100">
-			{showAgreementToast && (
-				<AgreementToast
-					isVisible={showAgreementToast}
-					onConfirm={handleAgreementConfirm}
-					onCancel={() => navigate("/login")}
+		<div className="relative h-[100vh] w-full bg-gray-100">
+			<div className="absolute left-0 top-[env(safe-area-inset-top)] z-50 w-full px-4">
+				<SearchBar />
+			</div>
+
+			<div className="absolute top-0 z-10 h-[calc(100%-60px)] w-full">
+				<Map
+					markers={markerData}
+					currentLocation={currentLocation}
+					onMarkerClick={handleMarkerClick}
 				/>
+			</div>
+
+			{!isMarkerSelected && (
+				<div className="absolute bottom-[12vh] left-0 right-0 z-10 flex justify-center">
+					<Button
+						size="m"
+						color="purple"
+						onClick={handleListClick}
+						className="rounded-full"
+					>
+						목록 보기
+					</Button>
+				</div>
 			)}
 
-			<SearchBar onMoveToCurrentLocation={handleMoveToCurrentLocation} />
-
-			<Map
-				markers={markerData}
-				currentLocation={currentLocation}
-				moveToLocation={moveToLocation}
-				onMarkerClick={handleMarkerClick}
-				결
-			/>
-
-			{selectedMarker && <MarkerPopup marker={selectedMarker} />}
-
-			<div
-				className={`fixed bottom-[12vh] left-1/2 z-50 flex w-auto max-w-[380px] -translate-x-1/2 justify-center px-4 transition-opacity duration-300 ${
-					showInfoCard ? "pointer-events-none opacity-0" : "opacity-100"
-				}`}
-			>
-				<ComButton size="m" color="purple" onClick={handleListPageNavigation}>
-					목록 보기
-				</ComButton>
-			</div>
-
-			<div
-				className={`fixed bottom-[12vh] left-1/2 z-50 flex w-auto max-w-[380px] -translate-x-1/2 justify-center px-4 transition-transform duration-300 ${
-					showInfoCard
-						? "translate-y-0 opacity-100"
-						: "pointer-events-none translate-y-6 opacity-0"
-				}`}
-			>
-				{selectedMarker && showInfoCard && (
-					<div className="fixed bottom-[12vh] left-1/2 z-50 flex w-auto max-w-[380px] -translate-x-1/2 justify-center px-4 transition-transform duration-300">
-						<MarkerInfoCard
-							{...selectedMarker}
-							onClose={handleCloseMarkerInfo}
-						/>
-					</div>
-				)}
-			</div>
+			{isMarkerSelected && selectedMarker && (
+				<div
+					className={`absolute bottom-12 left-0 right-0 z-20 flex justify-center transition-opacity duration-500 ${
+						fadeIn ? "opacity-100" : "opacity-0"
+					}`}
+				>
+					<MarkerInfoCard
+						title={selectedMarker.title}
+						region={selectedMarker.region}
+						rating={selectedMarker.rating}
+						distance={selectedMarker.distance}
+					/>
+				</div>
+			)}
 		</div>
 	)
 }
