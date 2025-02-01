@@ -3,6 +3,7 @@ import SearchBar from "@/components/common/SearchBar"
 import Map from "@/components/HomeMap/Map"
 import MarkerInfoCard from "@/components/HomeMap/MarkerInfoCard"
 import Button from "@/components/common/button/ComButton"
+import { useNavigate } from "react-router-dom"
 
 export default function HomePage() {
 	const [markerData, setMarkerData] = useState([]) // 전체 마커 데이터
@@ -46,6 +47,8 @@ export default function HomePage() {
 		fetchData()
 	}, [])
 
+	const navigate = useNavigate()
+
 	const handleMarkerClick = (marker) => {
 		setFadeIn(false) // 기존 카드 서서히 사라지기
 		setTimeout(() => {
@@ -62,6 +65,7 @@ export default function HomePage() {
 
 	const handleListClick = () => {
 		setIsMarkerSelected(false) // "목록 보기" 클릭 시 MarkerInfoCard 숨기기
+		navigate("/list")
 	}
 
 	return (
