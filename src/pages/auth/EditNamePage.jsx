@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 import BackButton from "@/components/common/button/BackButton"
 import LongButton from "@/components/common/button/LongButton"
 
-//이름 수정 저장, 기존 닉네임 불러오기 기능 다시 구현예정
+// 이름 수정 저장, 기존 닉네임 불러오기 기능 다시 구현 예정
 export default function EditNamePage() {
 	const navigate = useNavigate()
 	const [nickname, setNickname] = useState("")
@@ -52,15 +52,14 @@ export default function EditNamePage() {
 	}
 
 	return (
-		<div className="flex h-screen flex-col bg-gray-100 px-6">
-			{/* 헤더 */}
+		<div className="flex h-screen flex-col bg-gray-100">
 			<header className="flex items-center p-4 text-lg font-bold">
 				<BackButton className="mr-2" />
-				<span>이름을 입력해주세요</span>
+				<span>이름 수정</span>
 			</header>
 
-			{/* 입력 폼 */}
-			<div className="mx-auto mt-10 w-full max-w-sm">
+			<div className="mx-auto mt-10 w-full max-w-sm px-6">
+				{" "}
 				<label className="block text-sm font-bold">이름</label>
 				<input
 					type="text"
@@ -69,8 +68,6 @@ export default function EditNamePage() {
 					onChange={(e) => setNickname(e.target.value)}
 					onKeyDown={(e) => e.key === "Enter" && handleUpdateNickname()}
 				/>
-
-				{/* 버튼 상태 변경 */}
 				<LongButton
 					className={`mt-6 w-full ${
 						isUpdated
