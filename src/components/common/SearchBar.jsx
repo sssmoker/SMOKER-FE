@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import PropTypes from "prop-types"
 import { Search } from "lucide-react"
-import AroundMeBtn from "@/components/common/AroundMeBtn"
+import AroundMeBtn from "@/components/common/AroundMeButton"
 
 export default function SearchBar({ onMoveToCurrentLocation }) {
 	const [searchTerm, setSearchTerm] = useState("")

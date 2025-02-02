@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect } from "react"
 import PropTypes from "prop-types"
 import { renderToString } from "react-dom/server"
 import { Cigarette } from "lucide-react"
-import MarkerPopup from "@/components/HomeMap/MarkerPopup"
 
-export default function Map({ markers, currentLocation, moveToLocation }) {
-	const [selectedMarker, setSelectedMarker] = useState(null)
-
+export default function Map({
+	markers,
+	currentLocation,
+	moveToLocation,
+	onMarkerClick,
+}) {
 	useEffect(() => {
 		loadKakaoMapScript().then(() => {
-			initializeMap(markers, currentLocation, handleMarkerClick)
+			initializeMap(markers, currentLocation, onMarkerClick)
 		})
 
 		return () => {
@@ -24,15 +26,7 @@ export default function Map({ markers, currentLocation, moveToLocation }) {
 		}
 	}, [moveToLocation])
 
-	const handleMarkerClick = (marker) => {
-		setSelectedMarker((prev) => (prev?.id === marker.id ? null : marker))
-	}
-
-	return (
-		<div id="map" className="h-full w-full">
-			{selectedMarker && <MarkerPopup marker={selectedMarker} />}
-		</div>
-	)
+	return <div id="map" className="h-full w-full" />
 }
 
 const loadKakaoMapScript = () => {
@@ -83,7 +77,10 @@ const initializeMap = (markers, currentLocation, onMarkerClick) => {
 			<Cigarette className="text-white" style={{ width: 15, height: 15 }} />,
 		)
 
-		markerDiv.onclick = () => onMarkerClick(markerData)
+		markerDiv.onclick = () => {
+			console.log("📍 마커 클릭됨:", markerData)
+			onMarkerClick(markerData)
+		}
 
 		const smokingOverlay = new window.kakao.maps.CustomOverlay({
 			position: new window.kakao.maps.LatLng(
@@ -192,4 +189,5 @@ Map.propTypes = {
 		lat: PropTypes.number,
 		lng: PropTypes.number,
 	}),
+	onMarkerClick: PropTypes.func.isRequired,
 }

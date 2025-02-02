@@ -1,4 +1,5 @@
-import React from "react"
+import React, { useState } from "react"
+import PropTypes from "prop-types"
 import { MapPin, PencilLine, Star, User } from "lucide-react"
 import { useNavigate, useLocation } from "react-router-dom"
 
@@ -26,10 +27,9 @@ export default function Navbar({ onRefresh }) {
 		setActiveIndex(index)
 
 		if (path === "/") {
-			// "지도" 버튼 클릭 시 onRefresh 호출
-			navigate(path) // 메인 페이지(`/`)로 이동
+			navigate(path)
 
-			onRefresh?.() // onRefresh가 전달되었을 경우에만 실행
+			onRefresh?.()
 		} else {
 			navigate(path)
 		}
@@ -63,4 +63,9 @@ export default function Navbar({ onRefresh }) {
 			</div>
 		</div>
 	)
+}
+
+// 추가: PropTypes 유효성 검사
+Navbar.propTypes = {
+	onRefresh: PropTypes.func,
 }

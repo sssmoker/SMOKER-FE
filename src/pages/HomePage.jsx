@@ -79,11 +79,9 @@ export default function HomePage() {
 	const handleListPageNavigation = () => navigate("/list")
 
 	const handleMarkerClick = (marker) => {
-		setShowInfoCard(false)
-		setTimeout(() => {
-			setSelectedMarker(marker)
-			setShowInfoCard(true)
-		}, 200)
+		console.log("📍 마커 클릭됨:", marker)
+		setSelectedMarker(marker)
+		setShowInfoCard(true)
 	}
 
 	const handleCloseMarkerInfo = () => {
@@ -108,11 +106,11 @@ export default function HomePage() {
 				currentLocation={currentLocation}
 				moveToLocation={moveToLocation}
 				onMarkerClick={handleMarkerClick}
+				결
 			/>
 
 			{selectedMarker && <MarkerPopup marker={selectedMarker} />}
 
-			{/* 목록 보기 버튼 */}
 			<div
 				className={`fixed bottom-[12vh] left-1/2 z-50 flex w-auto max-w-[380px] -translate-x-1/2 justify-center px-4 transition-opacity duration-300 ${
 					showInfoCard ? "pointer-events-none opacity-0" : "opacity-100"
@@ -123,7 +121,6 @@ export default function HomePage() {
 				</ComButton>
 			</div>
 
-			{/* MarkerInfoCard */}
 			<div
 				className={`fixed bottom-[12vh] left-1/2 z-50 flex w-auto max-w-[380px] -translate-x-1/2 justify-center px-4 transition-transform duration-300 ${
 					showInfoCard
@@ -131,8 +128,13 @@ export default function HomePage() {
 						: "pointer-events-none translate-y-6 opacity-0"
 				}`}
 			>
-				{selectedMarker && (
-					<MarkerInfoCard {...selectedMarker} onClose={handleCloseMarkerInfo} />
+				{selectedMarker && showInfoCard && (
+					<div className="fixed bottom-[12vh] left-1/2 z-50 flex w-auto max-w-[380px] -translate-x-1/2 justify-center px-4 transition-transform duration-300">
+						<MarkerInfoCard
+							{...selectedMarker}
+							onClose={handleCloseMarkerInfo}
+						/>
+					</div>
 				)}
 			</div>
 		</div>
