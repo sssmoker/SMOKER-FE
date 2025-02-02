@@ -14,45 +14,30 @@ export default function SmokingAreaPage() {
 	const [starRatingData, setStarRatingData] = useState([])
 
 	useEffect(() => {
-		const fetchSmokingArea = async () => {
+		const fetchData = async () => {
 			try {
-				const response = await fetch(`http://localhost:3001/smokingAreas`)
-				const data = await response.json()
-				setSmokingAreaData(data[0] || {})
+				const [smokingAreasResponse, reviewsResponse, starRatingResponse] =
+					await Promise.all([
+						fetch(`http://localhost:3001/smokingAreas`),
+						fetch(`http://localhost:3001/reviews`),
+						fetch(`http://localhost:3001/starRating`),
+					])
+				const [smokingAreasData, reviewsData, starRatingData] =
+					await Promise.all([
+						smokingAreasResponse.json(),
+						reviewsResponse.json(),
+						starRatingResponse.json(),
+					])
+
+				setSmokingAreaData(smokingAreasData[0] || {})
+				setReviewListData(reviewsData || [])
+				setStarRatingData(starRatingData || [])
 			} catch (error) {
 				console.error("흡연 구역 데이터를 가져오지 못했습니다.", error)
 			}
 		}
 
-		fetchSmokingArea()
-	}, [])
-
-	useEffect(() => {
-		const fetchReviews = async () => {
-			try {
-				const response = await fetch(`http://localhost:3001/reviews`)
-				const data = await response.json()
-				setReviewListData(data || [])
-			} catch (error) {
-				console.error("흡연 구역 데이터를 가져오지 못했습니다.", error)
-			}
-		}
-
-		fetchReviews()
-	}, [])
-
-	useEffect(() => {
-		const fetchReviews = async () => {
-			try {
-				const response = await fetch(`http://localhost:3001/starRating`)
-				const data = await response.json()
-				setStarRatingData(data || [])
-			} catch (error) {
-				console.error("흡연 구역 데이터를 가져오지 못했습니다.", error)
-			}
-		}
-
-		fetchReviews()
+		fetchData()
 	}, [])
 
 	return (
