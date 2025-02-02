@@ -35,7 +35,7 @@ export default function RegisterSmokingArea() {
 	}
 
 	return (
-		<div className="relative h-screen w-full bg-gray-100">
+		<div className="relative h-screen w-full overflow-hidden bg-gray-100">
 			<div className="fixed left-0 right-0 top-0 z-50 flex items-center justify-between bg-white p-4 shadow-md">
 				<button onClick={() => navigate(-1)} className="p-2">
 					<ChevronLeft size={24} className="text-gray-800" />
@@ -61,6 +61,7 @@ export default function RegisterSmokingArea() {
 				currentLocation={selectedLocation}
 				moveToLocation={selectedLocation}
 				onMapMove={handleMapMove}
+				className="absolute inset-0 h-full w-full"
 			/>
 
 			<div className="fixed bottom-[16vh] left-1/2 z-50 w-full max-w-[380px] -translate-x-1/2 rounded-xl bg-white p-4 px-4 shadow-lg">

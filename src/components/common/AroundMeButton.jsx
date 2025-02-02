@@ -1,13 +1,13 @@
 import React from "react"
+import PropTypes from "prop-types"
 import { Compass } from "lucide-react"
 
-export default function AroundMeBtn({ onClick }) {
+export default function AroundMeButton({ onClick }) {
 	return (
 		<button
 			onClick={() => {
-				console.log("내 주변 버튼 클릭됨!") // 디버깅 로그 추가
 				if (onClick) {
-					onClick() // 클릭 이벤트 실행
+					onClick()
 				} else {
 					console.error("onClick 함수가 전달되지 않음")
 				}
@@ -18,4 +18,8 @@ export default function AroundMeBtn({ onClick }) {
 			<span className="mt-1 text-xs font-medium">내 주변</span>
 		</button>
 	)
+}
+
+AroundMeButton.propTypes = {
+	onClick: PropTypes.func.isRequired,
 }
