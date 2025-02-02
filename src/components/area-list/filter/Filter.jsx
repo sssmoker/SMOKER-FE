@@ -21,16 +21,18 @@ function FilterButton({ handleClickButton, buttonText, iconExist }) {
 	)
 }
 
-export default function Filter() {
-	const textOptions = ["거리순", "평점순"]
+export default function Filter({
+	FILTER_OPTIONS = {},
+	selectedFilter,
+	setSelectedFilter,
+}) {
 	const iconOptions = ["down", "up"]
-	const [selectedOption, setSelectedOption] = useState(textOptions[0])
 	const [toggleFilter, setToggleFilter] = useState(false)
 
 	const handleClickButton = (option) => {
 		if (option) {
 			setToggleFilter(false)
-			setSelectedOption(option)
+			setSelectedFilter(option)
 		} else {
 			setToggleFilter(!toggleFilter)
 		}
@@ -41,21 +43,24 @@ export default function Filter() {
 			<div className="box-content w-[80px] rounded-[10px] border bg-white">
 				<FilterButton
 					handleClickButton={() => handleClickButton()}
-					buttonText={selectedOption}
+					buttonText={selectedFilter}
 					iconExist={toggleFilter ? iconOptions[1] : iconOptions[0]}
 				/>
 				{toggleFilter && (
-					<ul>
-						{textOptions.map((option) => (
-							<li key={option}>
-								<FilterButton
-									handleClickButton={() => handleClickButton(option)}
-									buttonText={option}
-									iconExist={false}
-								/>
-							</li>
-						))}
-					</ul>
+					<>
+						<FilterButton
+							handleClickButton={() =>
+								handleClickButton(FILTER_OPTIONS.DISTANCE)
+							}
+							buttonText={FILTER_OPTIONS.DISTANCE}
+							iconExist={false}
+						/>
+						<FilterButton
+							handleClickButton={() => handleClickButton(FILTER_OPTIONS.RATING)}
+							buttonText={FILTER_OPTIONS.RATING}
+							iconExist={false}
+						/>
+					</>
 				)}
 			</div>
 		</>
