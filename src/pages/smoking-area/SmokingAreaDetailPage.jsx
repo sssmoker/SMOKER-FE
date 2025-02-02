@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from "react"
-import { useParams, useNavigate } from "react-router-dom"
-import Button from "@/components/common/button/ComButton"
+import React from "react"
 
 export default function SmokingAreaDetailPage({ detailInfoList = [] }) {
 	return (
