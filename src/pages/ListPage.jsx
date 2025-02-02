@@ -68,13 +68,13 @@ export default function ListPage() {
 
 			{/* 흡연 구역 목록 */}
 			<div className="h-[calc(100%-84px)] w-full pt-32">
-				<ul className="h-full w-full overflow-y-scroll">
+				<ul className="h-full w-full overflow-y-scroll pb-[11vh]">
 					<SmokingAreaList smokingAreas={smokingAreas} />
 				</ul>
 			</div>
 
 			{/* 하단 네비게이션 */}
-			<div className="fixed bottom-[100px] left-0 right-0 z-50 mx-auto flex w-full max-w-[500px] justify-center">
+			<div className="fixed bottom-[12vh] left-0 right-0 z-50 mx-auto flex w-full max-w-[500px] justify-center">
 				<Button onClick={handleMoveToHome} size="m" color="purple">
 					지도 보기
 				</Button>
