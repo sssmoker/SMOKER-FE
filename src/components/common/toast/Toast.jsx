@@ -9,6 +9,7 @@ export default function Toast({
 	icon,
 	duration = 3000,
 	onClose,
+	children,
 }) {
 	useEffect(() => {
 		if (isVisible && duration) {
@@ -31,12 +32,13 @@ export default function Toast({
 				>
 					<div className="pointer-events-none flex w-full flex-col items-center rounded-3xl bg-white p-8 text-center shadow-lg">
 						<div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full">
-							<img src={icon} alt="icon" className="h-8 w-8" />
+							{icon}
 						</div>
 						<h2 className="mb-2 text-2xl font-bold">{message}</h2>
 						{subMessage && (
 							<p className="text-base text-gray-600">{subMessage}</p>
 						)}
+						{children && <div className="mt-4 w-full">{children}</div>}
 					</div>
 				</motion.div>
 			)}
@@ -48,7 +50,8 @@ Toast.propTypes = {
 	isVisible: PropTypes.bool.isRequired,
 	message: PropTypes.string.isRequired,
 	subMessage: PropTypes.string,
-	icon: PropTypes.string,
+	icon: PropTypes.node,
 	duration: PropTypes.number,
 	onClose: PropTypes.func.isRequired,
+	children: PropTypes.node,
 }

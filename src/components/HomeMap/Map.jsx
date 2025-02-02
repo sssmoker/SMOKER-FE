@@ -1,17 +1,16 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import PropTypes from "prop-types"
 import { renderToString } from "react-dom/server"
 import { Cigarette } from "lucide-react"
+import MarkerPopup from "@/components/HomeMap/MarkerPopup"
+import MarkerInfoCard from "@/components/HomeMap/MarkerInfoCard"
 
-export default function Map({
-	markers,
-	currentLocation,
-	moveToLocation,
-	onMarkerClick,
-}) {
+export default function Map({ markers, currentLocation, moveToLocation }) {
+	const [selectedMarker, setSelectedMarker] = useState(null)
+
 	useEffect(() => {
 		loadKakaoMapScript().then(() => {
-			initializeMap(markers, currentLocation, onMarkerClick)
+			initializeMap(markers, currentLocation, handleMarkerClick)
 		})
 
 		return () => {
@@ -26,7 +25,16 @@ export default function Map({
 		}
 	}, [moveToLocation])
 
-	return <div id="map" style={{ width: "100%", height: "100%" }} />
+	const handleMarkerClick = (marker) => {
+		setSelectedMarker(marker)
+	}
+
+	return (
+		<div id="map" style={{ width: "100%", height: "100%" }}>
+			{selectedMarker && <MarkerPopup marker={selectedMarker} />}
+			{selectedMarker && <MarkerInfoCard {...selectedMarker} />}
+		</div>
+	)
 }
 
 const loadKakaoMapScript = () => {
@@ -37,7 +45,7 @@ const loadKakaoMapScript = () => {
 		}
 
 		const script = document.createElement("script")
-		script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=081b17dcc860e4a545cc095e0e255dcd&libraries=services`
+		script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=YOUR_KAKAO_API_KEY&libraries=services`
 		script.async = true
 		document.head.appendChild(script)
 
@@ -47,36 +55,16 @@ const loadKakaoMapScript = () => {
 
 const initializeMap = (markers, currentLocation, onMarkerClick) => {
 	const container = document.getElementById("map")
-	const center = new window.kakao.maps.LatLng(
-		currentLocation ? currentLocation.userLat : 37.4769,
-		currentLocation ? currentLocation.userLng : 126.9811,
-	)
-
-	const options = {
-		center,
+	const map = new window.kakao.maps.Map(container, {
+		center: new window.kakao.maps.LatLng(
+			currentLocation ? currentLocation.userLat : 37.4769,
+			currentLocation ? currentLocation.userLng : 126.9811,
+		),
 		level: 2,
-	}
+	})
 
-	const map = new window.kakao.maps.Map(container, options)
 	window.kakaoMapInstance = map
 
-	if (markers) addSmokingMarkers(map, markers, onMarkerClick)
-	if (currentLocation) addCurrentLocationMarker(map, currentLocation)
-}
-
-const moveMapToLocation = (location) => {
-	if (window.kakao && window.kakao.maps && window.kakaoMapInstance) {
-		const lat = location.userLat || location.lat
-		const lng = location.userLng || location.lng
-
-		if (lat && lng) {
-			const newCenter = new window.kakao.maps.LatLng(lat, lng)
-			window.kakaoMapInstance.setCenter(newCenter)
-		}
-	}
-}
-
-const addSmokingMarkers = (map, markers, onMarkerClick) => {
 	markers.forEach((markerData) => {
 		const markerDiv = document.createElement("div")
 		markerDiv.style.cssText = `
@@ -88,6 +76,7 @@ const addSmokingMarkers = (map, markers, onMarkerClick) => {
       background: #4517FF;
       border-radius: 10px;
       box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
     `
 
 		markerDiv.innerHTML = renderToString(
@@ -107,6 +96,20 @@ const addSmokingMarkers = (map, markers, onMarkerClick) => {
 
 		smokingOverlay.setMap(map)
 	})
+
+	if (currentLocation) addCurrentLocationMarker(map, currentLocation)
+}
+
+const moveMapToLocation = (location) => {
+	if (window.kakao && window.kakao.maps && window.kakaoMapInstance) {
+		const lat = location.userLat || location.lat
+		const lng = location.userLng || location.lng
+
+		if (lat && lng) {
+			const newCenter = new window.kakao.maps.LatLng(lat, lng)
+			window.kakaoMapInstance.setCenter(newCenter)
+		}
+	}
 }
 
 const addCurrentLocationMarker = (map, currentLocation) => {
@@ -172,7 +175,6 @@ const addCurrentLocationMarker = (map, currentLocation) => {
 	updateLocation()
 }
 
-// PropTypes 추가
 Map.propTypes = {
 	markers: PropTypes.arrayOf(
 		PropTypes.shape({
