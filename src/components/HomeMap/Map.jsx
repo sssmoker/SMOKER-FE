@@ -3,7 +3,6 @@ import PropTypes from "prop-types"
 import { renderToString } from "react-dom/server"
 import { Cigarette } from "lucide-react"
 import MarkerPopup from "@/components/HomeMap/MarkerPopup"
-import MarkerInfoCard from "@/components/HomeMap/MarkerInfoCard"
 
 export default function Map({ markers, currentLocation, moveToLocation }) {
 	const [selectedMarker, setSelectedMarker] = useState(null)
@@ -26,13 +25,12 @@ export default function Map({ markers, currentLocation, moveToLocation }) {
 	}, [moveToLocation])
 
 	const handleMarkerClick = (marker) => {
-		setSelectedMarker(marker)
+		setSelectedMarker((prev) => (prev?.id === marker.id ? null : marker))
 	}
 
 	return (
-		<div id="map" style={{ width: "100%", height: "100%" }}>
+		<div id="map" className="h-full w-full">
 			{selectedMarker && <MarkerPopup marker={selectedMarker} />}
-			{selectedMarker && <MarkerInfoCard {...selectedMarker} />}
 		</div>
 	)
 }
@@ -67,6 +65,7 @@ const initializeMap = (markers, currentLocation, onMarkerClick) => {
 
 	markers.forEach((markerData) => {
 		const markerDiv = document.createElement("div")
+		markerDiv.id = `marker-${markerData.id}`
 		markerDiv.style.cssText = `
       display: flex;
       align-items: center;
@@ -77,6 +76,7 @@ const initializeMap = (markers, currentLocation, onMarkerClick) => {
       border-radius: 10px;
       box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
       cursor: pointer;
+      transition: opacity 0.3s ease-out;
     `
 
 		markerDiv.innerHTML = renderToString(
@@ -180,7 +180,6 @@ Map.propTypes = {
 		PropTypes.shape({
 			id: PropTypes.number.isRequired,
 			title: PropTypes.string.isRequired,
-			region: PropTypes.string.isRequired,
 			latitude: PropTypes.number.isRequired,
 			longitude: PropTypes.number.isRequired,
 		}),
@@ -193,5 +192,4 @@ Map.propTypes = {
 		lat: PropTypes.number,
 		lng: PropTypes.number,
 	}),
-	onMarkerClick: PropTypes.func.isRequired,
 }
