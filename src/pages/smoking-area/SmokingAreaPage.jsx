@@ -5,12 +5,9 @@ import SmokingAreaInfo from "@/components/smoking-area/upper-info/SmokingAreaInf
 import PageNavButton from "@/components/smoking-area/PageNavButton"
 import SmokingAreaDetailPage from "./SmokingAreaDetailPage"
 import SmokingAreaReviewPage from "./SmokingAreaReviewPage"
-
-import DummyPng from "@/assets/dummy/SM_01_img1.png" // imageUrl
 import FloatingButton from "@/components/smoking-area/review/FloatingButton"
 
 export default function SmokingAreaPage() {
-	const [bgImg, setBgImg] = useState(DummyPng) // imageUrl
 	const [currentPage, setCurrentPage] = useState("detail")
 	const [smokingAreaData, setSmokingAreaData] = useState({})
 	const [reviewListData, setReviewListData] = useState([])
@@ -49,8 +46,6 @@ export default function SmokingAreaPage() {
 			try {
 				const response = await fetch(`http://localhost:3001/starRating`)
 				const data = await response.json()
-				console.log(data) //
-
 				setStarRatingData(data || [])
 			} catch (error) {
 				console.error("흡연 구역 데이터를 가져오지 못했습니다.", error)
@@ -62,11 +57,11 @@ export default function SmokingAreaPage() {
 
 	return (
 		<div className="min-h-[100vh] bg-white">
-			<Topbar />
-			{/* 이미지 연결 예정 */}
-			{bgImg && <BackgroundImg bgImg={bgImg} />}
+			<Topbar isBookmarked={smokingAreaData.is_bookmarked} />
+			{smokingAreaData.area_image && (
+				<BackgroundImg bgImg={smokingAreaData.area_image} />
+			)}
 
-			{/* api 추후 수정 예정 */}
 			<SmokingAreaInfo {...smokingAreaData} />
 
 			<div className="h-[8px] w-full bg-[#E0E0E0]" />
@@ -84,7 +79,7 @@ export default function SmokingAreaPage() {
 			</div>
 
 			{currentPage == "detail" ? (
-				<SmokingAreaDetailPage />
+				<SmokingAreaDetailPage detailInfoList={smokingAreaData.detail_info} />
 			) : (
 				<>
 					<SmokingAreaReviewPage
