@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import PropTypes from "prop-types"
 import { X } from "lucide-react"
 
@@ -10,8 +10,23 @@ export default function MarkerInfoCard({
 	image,
 	onClose,
 }) {
+	const [isVisible, setIsVisible] = useState(false)
+
+	useEffect(() => {
+		setIsVisible(true)
+	}, [])
+
+	const handleClose = () => {
+		setIsVisible(false)
+		setTimeout(() => onClose(), 300)
+	}
+
 	return (
-		<div className="relative flex rounded-lg border border-gray-300 bg-white p-4 shadow-lg">
+		<div
+			className={`fixed bottom-[14vh] left-1/2 w-full max-w-[380px] -translate-x-1/2 transform rounded-xl border border-gray-300 bg-white p-4 shadow-lg transition-all duration-300 ${
+				isVisible ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
+			}`}
+		>
 			{image && (
 				<img
 					src={image}
@@ -29,7 +44,7 @@ export default function MarkerInfoCard({
 			</div>
 			<button
 				className="absolute right-2 top-2 p-1 text-gray-500 hover:text-gray-700"
-				onClick={onClose}
+				onClick={handleClose}
 			>
 				<X size={20} />
 			</button>
