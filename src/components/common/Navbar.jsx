@@ -12,13 +12,9 @@ export default function Navbar({ onRefresh }) {
 		{
 			icon: <PencilLine className="h-6 w-6" />,
 			label: "등록",
-			path: "/add-smoking-area",
+			path: "/add-smoking-area/location",
 		},
-		{
-			icon: <Star className="h-6 w-6" />,
-			label: "저장",
-			path: "/favorites",
-		},
+		{ icon: <Star className="h-6 w-6" />, label: "저장", path: "/favorites" },
 		{
 			icon: <User className="h-6 w-6" />,
 			label: "마이페이지",
@@ -26,47 +22,46 @@ export default function Navbar({ onRefresh }) {
 		},
 	]
 
-	const handleMenuClick = (index, path) => {
-		setActiveIndex(index)
-
-		if (path === "/") {
-			navigate(path)
-
-			onRefresh?.()
-		} else {
-			navigate(path)
-		}
-	}
-
 	return (
-		<div className="fixed bottom-0 left-0 right-0 z-50 mx-auto w-full">
+		<div className="fixed bottom-0 left-0 right-0 z-10 mx-auto w-full">
 			<div className="relative z-50 flex h-[10vh] items-center justify-between rounded-t-xl bg-white px-4 pb-2 shadow-lg">
-				{menuItems.map((item, index) => (
-					<button
-						key={index}
-						onClick={() => handleMenuClick(index, item.path)}
-						className={`flex w-full flex-col items-center justify-center rounded-lg transition-all duration-300 hover:text-[#4517FF] ${
-							activeIndex === index
-								? "h-[6vh] bg-[#F6F3FF] text-[#4517FF]"
-								: "text-gray-600"
-						}`}
-					>
-						{item.icon}
-						<span
-							className={`mt-1 text-xs font-medium transition-opacity duration-300 ${
-								activeIndex === index ? "opacity-100" : "opacity-50"
+				{menuItems.map((item, index) => {
+					const isActive = activeIndex === index
+
+					return (
+						<button
+							key={index}
+							onClick={() => {
+								setActiveIndex(index)
+								navigate(item.path)
+								if (item.path === "/" && onRefresh) {
+									onRefresh()
+								}
+							}}
+							className={`flex w-full flex-col items-center justify-center rounded-lg transition-all duration-300 ${
+								isActive
+									? "h-[6vh] bg-[#F6F3FF] text-[#4517FF]"
+									: "text-gray-600"
 							}`}
 						>
-							{item.label}
-						</span>
-					</button>
-				))}
+							<div
+								className={`rounded-lg p-2 ${isActive ? "bg-[#F6F3FF]" : "bg-transparent"}`}
+							>
+								{item.icon}
+							</div>
+							<span
+								className={`mt-1 text-xs font-medium ${isActive ? "text-[#4517FF]" : "text-gray-600"}`}
+							>
+								{item.label}
+							</span>
+						</button>
+					)
+				})}
 			</div>
 		</div>
 	)
 }
 
-// 추가: PropTypes 유효성 검사
 Navbar.propTypes = {
 	onRefresh: PropTypes.func,
 }

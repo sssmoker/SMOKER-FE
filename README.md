@@ -1,8 +1,46 @@
-# React + Vite
+# 🚬 Smoker - 흡연 구역 안내 서비스
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Smoker**는 **위치 기반 서비스**를 활용하여 **흡연 구역을 쉽게 검색하고, 흡연 구역 목록을 제공하는 흡연자 전용 안내 서비스**입니다.  
+사용자는 지도에서 직접 흡연 구역을 검색하거나, 제공된 흡연 구역 목록을 확인하여 원하는 장소를 쉽게 찾을 수 있습니다.  
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 📌 주요 기능
+
+✅ **위치 기반 검색**  
+- 사용자의 현재 위치를 기반으로 **가장 가까운 흡연 구역**을 찾아줍니다.  
+- 특정 지역을 검색하여 해당 지역의 흡연 구역을 확인할 수 있습니다.  
+
+✅ **흡연 구역 지도 제공**  
+- 지도 상에서 흡연 구역을 한눈에 확인할 수 있습니다.  
+- 사용자가 직접 흡연 구역을 등록하고 공유할 수 있습니다.  
+
+✅ **흡연 구역 목록 조회**  
+- 위치 기반 또는 특정 지역을 기준으로 **흡연 구역 리스트**를 제공합니다.  
+- 이용자들이 제공한 리뷰 및 평점 확인 가능.  
+
+✅ **즐겨찾기 기능**  
+- 자주 방문하는 흡연 구역을 저장하여 빠르게 접근할 수 있습니다.  
+
+✅ **커뮤니티 및 리뷰 기능 (예정)**  
+- 흡연 구역에 대한 리뷰를 남기고, 다른 사용자들과 정보를 공유할 수 있습니다.  
+
+---
+
+## 🛠️ 기술 스택
+
+| **구분**   | **기술 스택** |
+|------------|--------------|
+| **Frontend** | React, PWA, Tailwind CSS |
+| **Backend** | Java Spring, Express |
+| **Database** | MySQL |
+| **API** | Google Maps API, Kakao Maps API |
+
+---
+
+## 🚀 프로젝트 실행 방법
+
+### 1. **프로젝트 클론**
+```bash
+
+cd smoker
