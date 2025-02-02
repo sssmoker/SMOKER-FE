@@ -15,10 +15,10 @@ export default function HomePage() {
 		localStorage.getItem("locationAgreement") !== "true",
 	)
 	const [selectedMarker, setSelectedMarker] = useState(null)
+	const [showInfoCard, setShowInfoCard] = useState(false)
 
 	const navigate = useNavigate()
 
-	// ✅ 마커 데이터를 가져오는 useEffect
 	useEffect(() => {
 		const fetchData = async () => {
 			await fetchLocationData()
@@ -27,7 +27,6 @@ export default function HomePage() {
 		fetchData()
 	}, [])
 
-	// ✅ 현재 위치 데이터를 불러오는 함수
 	const fetchLocationData = async () => {
 		try {
 			const res = await fetch("http://localhost:3001/currentLocation")
@@ -39,7 +38,6 @@ export default function HomePage() {
 		}
 	}
 
-	// ✅ 흡연 구역 마커 데이터를 불러오는 함수
 	const fetchMarkerData = async () => {
 		try {
 			const res = await fetch("http://localhost:3001/smokingAreas")
@@ -62,7 +60,6 @@ export default function HomePage() {
 		}
 	}
 
-	// ✅ 위치 동의 확인 후 이동
 	const handleAgreementConfirm = (isChecked) => {
 		localStorage.setItem("locationAgreement", isChecked ? "true" : "false")
 		setMoveToLocation(
@@ -71,7 +68,6 @@ export default function HomePage() {
 		setShowAgreementToast(false)
 	}
 
-	// ✅ 현재 위치로 이동
 	const handleMoveToCurrentLocation = () => {
 		if (!currentLocation) return
 		setMoveToLocation({
@@ -80,24 +76,23 @@ export default function HomePage() {
 		})
 	}
 
-	// ✅ 리스트 페이지 이동
 	const handleListPageNavigation = () => navigate("/list")
 
-	// ✅ 마커 클릭 시 동작
 	const handleMarkerClick = (marker) => {
-		console.log("📍 마커 클릭됨:", marker) // ✅ 디버깅 로그 추가
-		setSelectedMarker(marker)
+		setShowInfoCard(false)
+		setTimeout(() => {
+			setSelectedMarker(marker)
+			setShowInfoCard(true)
+		}, 200)
 	}
 
-	// ✅ 마커 정보 카드 닫기
 	const handleCloseMarkerInfo = () => {
-		console.log("❌ 마커 정보 카드 닫기")
-		setSelectedMarker(null)
+		setShowInfoCard(false)
+		setTimeout(() => setSelectedMarker(null), 300)
 	}
 
 	return (
 		<div className="relative h-screen w-full bg-gray-100">
-			{/* ✅ 위치 동의 팝업 */}
 			{showAgreementToast && (
 				<AgreementToast
 					isVisible={showAgreementToast}
@@ -106,10 +101,8 @@ export default function HomePage() {
 				/>
 			)}
 
-			{/* ✅ 검색 바 */}
 			<SearchBar onMoveToCurrentLocation={handleMoveToCurrentLocation} />
 
-			{/* ✅ 지도 */}
 			<Map
 				markers={markerData}
 				currentLocation={currentLocation}
@@ -117,28 +110,29 @@ export default function HomePage() {
 				onMarkerClick={handleMarkerClick}
 			/>
 
-			{/* ✅ 마커 팝업 */}
 			{selectedMarker && <MarkerPopup marker={selectedMarker} />}
 
-			{/* ✅ 하단 UI (목록 버튼 & 마커 정보 카드) */}
-			<div className="fixed bottom-[12vh] left-1/2 z-50 flex w-auto max-w-[380px] -translate-x-1/2 justify-center px-4">
-				{selectedMarker ? (
-					<div className="translate-y-0 opacity-100 transition-all duration-500">
-						<MarkerInfoCard
-							{...selectedMarker}
-							onClose={handleCloseMarkerInfo}
-						/>
-					</div>
-				) : (
-					<div className="opacity-100 transition-opacity duration-500">
-						<ComButton
-							size="m"
-							color="purple"
-							onClick={handleListPageNavigation}
-						>
-							목록 보기
-						</ComButton>
-					</div>
+			{/* 목록 보기 버튼 */}
+			<div
+				className={`fixed bottom-[12vh] left-1/2 z-50 flex w-auto max-w-[380px] -translate-x-1/2 justify-center px-4 transition-opacity duration-300 ${
+					showInfoCard ? "pointer-events-none opacity-0" : "opacity-100"
+				}`}
+			>
+				<ComButton size="m" color="purple" onClick={handleListPageNavigation}>
+					목록 보기
+				</ComButton>
+			</div>
+
+			{/* MarkerInfoCard */}
+			<div
+				className={`fixed bottom-[12vh] left-1/2 z-50 flex w-auto max-w-[380px] -translate-x-1/2 justify-center px-4 transition-transform duration-300 ${
+					showInfoCard
+						? "translate-y-0 opacity-100"
+						: "pointer-events-none translate-y-6 opacity-0"
+				}`}
+			>
+				{selectedMarker && (
+					<MarkerInfoCard {...selectedMarker} onClose={handleCloseMarkerInfo} />
 				)}
 			</div>
 		</div>
