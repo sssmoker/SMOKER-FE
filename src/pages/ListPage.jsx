@@ -10,7 +10,11 @@ export default function ListPage() {
 	const [smokingAreas, setSmokingAreas] = useState([]) // 흡연 구역 데이터
 	const [userLat, setUserLat] = useState(null) // 사용자 위도
 	const [userLng, setUserLng] = useState(null) // 사용자 경도
-	const [filter, setFilter] = useState("nearest") // 기본 필터: 가장 가까운 순
+	const FILTER_OPTIONS = {
+		DISTANCE: "거리순",
+		RATING: "평점순",
+	}
+	const [selectedFilter, setSelectedFilter] = useState(FILTER_OPTIONS.DISTANCE) // "거리순", "평점순"
 
 	// 현재 위치 가져오기
 	useEffect(() => {
@@ -32,23 +36,23 @@ export default function ListPage() {
 	// API를 통해 흡연 구역 목록 가져오기
 	useEffect(() => {
 		const fetchSmokingAreas = async () => {
-			if (userLat && userLng) {
-				try {
-					const response = await fetch(
-						`http://localhost:3001/list`,
-						// `http://localhost:3001/api/smoking-area/list?userLat=${userLat}&userLng=${userLng}&filter=${filter}`,
-					)
-					const data = await response.json()
-					console.log(data)
-					setSmokingAreas(data || [])
-				} catch (error) {
-					console.error("흡연 구역 데이터를 가져오지 못했습니다.", error)
-				}
+			try {
+				const response = await fetch(
+					`http://localhost:3001/list`,
+					// `http://localhost:3001/api/smoking-area/list?userLat=${userLat}&userLng=${userLng}&filter=${filter}`,
+				)
+				const data = await response.json()
+				console.log(data)
+				setSmokingAreas(data || [])
+			} catch (error) {
+				console.error("흡연 구역 데이터를 가져오지 못했습니다.", error)
 			}
 		}
 
-		fetchSmokingAreas()
-	}, [userLat, userLng, filter])
+		if (userLat && userLng) {
+			fetchSmokingAreas()
+		}
+	}, [userLat, userLng])
 
 	const handleMoveToHome = () => {
 		navigate("/")
@@ -63,13 +67,20 @@ export default function ListPage() {
 
 			{/* 필터 버튼 */}
 			<div className="fixed left-[20px] top-[92px]">
-				<Filter />
+				<Filter
+					FILTER_OPTIONS={FILTER_OPTIONS}
+					selectedFilter={selectedFilter}
+					setSelectedFilter={setSelectedFilter}
+				/>
 			</div>
 
 			{/* 흡연 구역 목록 */}
 			<div className="h-[calc(100%-84px)] w-full pt-32">
 				<ul className="h-full w-full overflow-y-scroll pb-[11vh]">
-					<SmokingAreaList smokingAreas={smokingAreas} />
+					<SmokingAreaList
+						selectedFilter={selectedFilter}
+						smokingAreas={smokingAreas}
+					/>
 				</ul>
 			</div>
 
