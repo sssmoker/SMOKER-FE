@@ -2,12 +2,15 @@ import React, { useState } from "react"
 import ReviewCard from "@/components/smoking-area/review/ReviewCard"
 import StarRatingStatistics from "@/components/smoking-area/review/StarRatingStatistics"
 
-export default function SmokingAreaReviewPage({ reviewListData }) {
+export default function SmokingAreaReviewPage({
+	starRatingData,
+	reviewListData,
+}) {
 	const [reviews, setReviews] = useState(reviewListData)
 
 	return (
-		<div className="pb-[84px]">
-			<StarRatingStatistics />
+		<div className="pb-[20vh]">
+			<StarRatingStatistics {...starRatingData} />
 
 			{reviews.length ? (
 				reviews.map((review) => <ReviewCard key={review.id} {...review} />)

@@ -14,6 +14,7 @@ export default function SmokingAreaPage() {
 	const [currentPage, setCurrentPage] = useState("detail")
 	const [smokingAreaData, setSmokingAreaData] = useState({})
 	const [reviewListData, setReviewListData] = useState([])
+	const [starRatingData, setStarRatingData] = useState([])
 
 	useEffect(() => {
 		const fetchSmokingArea = async () => {
@@ -43,8 +44,24 @@ export default function SmokingAreaPage() {
 		fetchReviews()
 	}, [])
 
+	useEffect(() => {
+		const fetchReviews = async () => {
+			try {
+				const response = await fetch(`http://localhost:3001/starRating`)
+				const data = await response.json()
+				console.log(data) //
+
+				setStarRatingData(data || [])
+			} catch (error) {
+				console.error("흡연 구역 데이터를 가져오지 못했습니다.", error)
+			}
+		}
+
+		fetchReviews()
+	}, [])
+
 	return (
-		<div className="bg-white">
+		<div className="min-h-[100vh] bg-white">
 			<Topbar />
 			{/* 이미지 연결 예정 */}
 			{bgImg && <BackgroundImg bgImg={bgImg} />}
@@ -70,7 +87,10 @@ export default function SmokingAreaPage() {
 				<SmokingAreaDetailPage />
 			) : (
 				<>
-					<SmokingAreaReviewPage reviewListData={reviewListData} />
+					<SmokingAreaReviewPage
+						starRatingData={starRatingData}
+						reviewListData={reviewListData}
+					/>
 					<FloatingButton />
 				</>
 			)}

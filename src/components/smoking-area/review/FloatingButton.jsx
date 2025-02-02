@@ -13,7 +13,7 @@ export default function FloatingButton() {
 		<>
 			<button
 				onClick={handleMoveToWritingRiview}
-				className="fixed bottom-[112px] right-[20px] flex h-[48px] w-[48px] items-center justify-center rounded-full bg-[#4517FF] text-[#fff]"
+				className="fixed bottom-[12vh] right-[20px] flex h-[48px] w-[48px] items-center justify-center rounded-full bg-[#4517FF] text-[#fff]"
 			>
 				<Pencil />
 			</button>
