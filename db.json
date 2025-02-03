@@ -32,8 +32,8 @@
 	"smokingAreas": [
 		{
 			"smoking_id": 1,
-			"smoking_name": "사당역 2번 출구 앞 흡연 부스",
-			"region": "서울 동작구",
+			"smoking_name": "사당역 123번 출구 앞 흡연 부스",
+			"region": "서울 동작구 사당역 1-12번지",
 			"latitude": 37.4769,
 			"longitude": 126.9811,
 			"is_enclosed_SmokingBooth": true,
@@ -42,12 +42,26 @@
 			"has_airconditioning": false,
 			"created_at": "2024-01-10T15:00:00",
 			"updated_at": "2024-01-15T15:00:00",
-			"region_id": 1
+			"region_id": 1,
+			"area_image": "http://test.api.weniv.co.kr/asset/img/7/thumbnailImg.jpg",
+			"distance": 123,
+			"review_num": 3,
+			"rating": 4.1,
+			"bookmark_count": 21,
+			"detail_info": [
+				"밀폐형 흡연부스예요",
+				"쓰레기통이 있어요",
+				"의자가 있어요",
+				"장애인 편의시설이에요",
+				"냉난방이 가능해요",
+				"야외에 있어요"
+			],
+			"is_bookmarked": true
 		},
 		{
 			"smoking_id": 2,
 			"smoking_name": "카페 앞 흡연 구역",
-			"region": "서울 동작구",
+			"region": "서울 동작구 사당역 2-3번지",
 			"latitude": 37.4772,
 			"longitude": 126.982,
 			"is_enclosed_SmokingBooth": false,
@@ -56,12 +70,27 @@
 			"has_airconditioning": false,
 			"created_at": "2024-01-15T16:00:00",
 			"updated_at": "2024-01-18T16:00:00",
-			"region_id": 1
+			"region_id": 1,
+			"area_image": "http://test.api.weniv.co.kr/asset/img/7/thumbnailImg.jpg",
+			"distance": 123,
+			"review_num": 3,
+			"rating": 4.1,
+			"bookmark_count": 21,
+			"detail_info": [
+				"밀폐형 흡연부스예요",
+				"깔끔해요",
+				"쓰레기통이 있어요",
+				"의자가 있어요",
+				"장애인 편의시설이에요",
+				"냉난방이 가능해요",
+				"야외에 있어요"
+			],
+			"is_bookmarked": true
 		},
 		{
 			"smoking_id": 3,
 			"smoking_name": "공원 흡연 부스",
-			"region": "서울 동작구",
+			"region": "서울 동작구 사당역 5번지",
 			"latitude": 37.4765,
 			"longitude": 126.9805,
 			"is_enclosed_SmokingBooth": true,
@@ -70,12 +99,27 @@
 			"has_airconditioning": true,
 			"created_at": "2024-01-20T17:00:00",
 			"updated_at": "2024-01-25T17:00:00",
-			"region_id": 1
+			"region_id": 1,
+			"area_image": "http://test.api.weniv.co.kr/asset/img/7/thumbnailImg.jpg",
+			"distance": 123,
+			"review_num": 3,
+			"rating": 4.1,
+			"bookmark_count": 21,
+			"detail_info": [
+				"밀폐형 흡연부스예요",
+				"깔끔해요",
+				"쓰레기통이 있어요",
+				"의자가 있어요",
+				"장애인 편의시설이에요",
+				"냉난방이 가능해요",
+				"야외에 있어요"
+			],
+			"is_bookmarked": true
 		},
 		{
 			"smoking_id": 4,
 			"smoking_name": "편의점 뒤편 흡연 구역",
-			"region": "서울 동작구",
+			"region": "서울 동작구 사당역 1-2번지",
 			"latitude": 37.4774,
 			"longitude": 126.9818,
 			"is_enclosed_SmokingBooth": false,
@@ -84,7 +128,22 @@
 			"has_airconditioning": false,
 			"created_at": "2024-01-25T18:00:00",
 			"updated_at": "2024-02-01T18:00:00",
-			"region_id": 1
+			"region_id": 1,
+			"area_image": "http://test.api.weniv.co.kr/asset/img/7/thumbnailImg.jpg",
+			"distance": 123,
+			"review_num": 3,
+			"rating": 4.1,
+			"bookmark_count": 21,
+			"detail_info": [
+				"밀폐형 흡연부스예요",
+				"깔끔해요",
+				"쓰레기통이 있어요",
+				"의자가 있어요",
+				"장애인 편의시설이에요",
+				"냉난방이 가능해요",
+				"야외에 있어요"
+			],
+			"is_bookmarked": true
 		}
 	],
 	"reviews": [
@@ -93,29 +152,34 @@
 			"user_id": 1,
 			"rating": 4.5,
 			"body": "실내 흡연장이지만 환기가 잘 됩니다.",
-			"created_at": "2024-01-12T14:00:00",
-			"updated_at": "2024-01-12T14:00:00",
+			"created_at": "2024-01-12",
+			"updated_at": "2024-01-12",
 			"smoking_id": 1
-		},
-		{
-			"id": 2,
-			"user_id": 2,
-			"rating": 4.0,
-			"body": "쓰레기통이 있어서 편리했어요.",
-			"created_at": "2024-01-18T15:00:00",
-			"updated_at": "2024-01-18T15:00:00",
-			"smoking_id": 2
 		},
 		{
 			"id": 3,
 			"user_id": 1,
 			"rating": 5.0,
 			"body": "공원에 있어서 공기도 좋고 깨끗해요.",
-			"created_at": "2024-01-25T16:00:00",
-			"updated_at": "2024-01-25T16:00:00",
+			"created_at": "2024-01-25",
+			"updated_at": "2024-01-25",
 			"smoking_id": 3
+		},
+		{
+			"id": 2,
+			"user_id": 2,
+			"rating": 4.0,
+			"body": "쓰레기통이 있어서 편리했어요.",
+			"created_at": "2024-01-18",
+			"updated_at": "2024-01-18",
+			"smoking_id": 2
 		}
 	],
+	"starRating": {
+		"review_num": 3,
+		"rating": 4.2,
+		"rating_list": [1, 2, 0, 0, 0]
+	},
 	"savedSmokingAreas": [
 		{
 			"scrap_id": 1,
@@ -154,6 +218,118 @@
 			"body": "흡연 구역의 유지보수가 2월 1일에 예정되어 있습니다.",
 			"created_at": "2024-01-25T12:00:00",
 			"updated_at": "2024-01-25T12:00:00"
+		}
+	],
+	"list": [
+		{
+			"title": "사당역 1번 출구 앞 흡연 부스",
+			"isBookmarked": true,
+			"rating": 4.3,
+			"ratingCount": 3,
+			"bookmarkCount": 30,
+			"distance": 197,
+			"img": false,
+			"smoking_id": 1
+		},
+		{
+			"title": "사당역 2번 출구 앞 흡연 부스",
+			"isBookmarked": true,
+			"rating": 3.9,
+			"ratingCount": 5,
+			"bookmarkCount": 30,
+			"distance": 12,
+			"img": false,
+			"smoking_id": 2
+		},
+		{
+			"title": "사당역 3번 출구 앞 흡연 부스",
+			"isBookmarked": false,
+			"rating": 3.2,
+			"ratingCount": 3,
+			"bookmarkCount": 30,
+			"distance": 453,
+			"img": false,
+			"smoking_id": 3
+		},
+		{
+			"title": "사당역 4번 출구 앞 흡연 부스",
+			"isBookmarked": true,
+			"rating": 4.8,
+			"ratingCount": 3,
+			"bookmarkCount": 30,
+			"distance": 42,
+			"img": false,
+			"smoking_id": 4
+		},
+		{
+			"title": "사당역 5번 출구 앞 흡연 부스",
+			"isBookmarked": false,
+			"rating": 2.4,
+			"ratingCount": 5,
+			"bookmarkCount": 30,
+			"distance": 156,
+			"img": false,
+			"smoking_id": 5
+		},
+		{
+			"title": "사당역 6번 출구 앞 흡연 부스",
+			"isBookmarked": false,
+			"rating": 4.2,
+			"ratingCount": 3,
+			"bookmarkCount": 30,
+			"distance": 137,
+			"img": false,
+			"smoking_id": 6
+		},
+		{
+			"title": "사당역 7번 출구 앞 흡연 부스",
+			"isBookmarked": false,
+			"rating": 5,
+			"ratingCount": 3,
+			"bookmarkCount": 30,
+			"distance": 152,
+			"img": false,
+			"smoking_id": 7
+		},
+		{
+			"title": "사당역 8번 출구 앞 흡연 부스",
+			"isBookmarked": false,
+			"rating": 1.9,
+			"ratingCount": 3,
+			"bookmarkCount": 30,
+			"distance": 123,
+			"img": false,
+			"smoking_id": 8
+		},
+		{
+			"title": "사당역 9번 출구 앞 흡연 부스",
+			"isBookmarked": false,
+			"rating": 4.2,
+			"ratingCount": 3,
+			"bookmarkCount": 30,
+			"distance": 175,
+			"img": false,
+			"smoking_id": 9
+		},
+		{
+			"title": "사당역 10번 출구 앞 흡연 부스",
+			"isBookmarked": false,
+			"rating": 2.3,
+			"ratingCount": 3,
+			"bookmarkCount": 30,
+			"distance": 165,
+			"img": false,
+			"smoking_id": 10
+		},
+		{
+			"title": "사당역 11번 출구 앞 흡연 부스",
+			"isBookmarked": false,
+			"rating": 1,
+			"ratingCount": 3,
+			"bookmarkCount": 30,
+			"distance": 245,
+			"img": false,
+			"smoking_id": 11
 		}
 	]
 }
