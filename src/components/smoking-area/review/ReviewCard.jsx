@@ -1,4 +1,5 @@
 import React from "react"
+import { Star } from "lucide-react"
 
 import DummyPng from "@/assets/dummy/SM_01_img1.png" // imageUrl
 
@@ -17,7 +18,7 @@ export default function ReviewCard({ user_id, rating, body, created_at }) {
 							{user_id}
 						</p>
 						<span className="font-regular text-[8px] text-[#b5b5b5]">
-							후기 1 {created_at}
+							후기 1 ꞏ {created_at}
 						</span>
 					</div>
 					<div className="font-regular text-[10px]">

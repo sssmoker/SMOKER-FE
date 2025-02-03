@@ -4,7 +4,7 @@ import Button from "@/components/common/button/ComButton"
 import SmokingAreaList from "@/components/area-list/card-list/SmokingAreaList"
 
 export default function ListPage() {
-	const [setSmokingAreas] = useState([]) // 흡연 구역 데이터
+	const [smokingAreas, setSmokingAreas] = useState([]) // 흡연 구역 데이터
 	const [userLat, setUserLat] = useState(null) // 사용자 위도
 	const [userLng, setUserLng] = useState(null) // 사용자 경도
 	const [filter, setFilter] = useState("nearest") // 기본 필터: 가장 가까운 순
