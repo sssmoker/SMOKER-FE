@@ -3,7 +3,7 @@ import ReviewCard from "@/components/smoking-area/review/ReviewCard"
 import StarRatingStatistics from "@/components/smoking-area/review/StarRatingStatistics"
 
 export default function SmokingAreaReviewPage({ reviewListData }) {
-	const [reviews, setReviews] = useState(reviewListData)
+	const [reviews] = useState(reviewListData)
 
 	return (
 		<div className="pb-[84px]">
