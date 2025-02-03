@@ -60,5 +60,6 @@ export default {
 			},
 		},
 	},
+	// eslint-disable-next-line no-undef
 	plugins: [require("tailwindcss-animate")], // 플러그인 설정
 }
