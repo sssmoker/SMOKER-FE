@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom"
 
 export default function ListPage() {
 	const [smokingAreas, setSmokingAreas] = useState([]) // 흡연 구역 데이터
-	const [setSmokingAreas] = useState([]) // 흡연 구역 데이터
 	const [userLat, setUserLat] = useState(null) // 사용자 위도
 	const [userLng, setUserLng] = useState(null) // 사용자 경도
 	const FILTER_OPTIONS = {
