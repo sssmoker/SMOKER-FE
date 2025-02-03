@@ -41,7 +41,7 @@
 
 [여기까지 주석] -->
 
-- [ ] Issue 번호 설정 확인
+- [ ] Main branch PUll 확인
 - [ ] Label 확인
 - [ ] Assignees 설정 확인
 - [ ] Reviewers 설정 확인

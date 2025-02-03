@@ -1,20 +1,16 @@
 import { defineConfig } from "vite"
 import { VitePWA } from "vite-plugin-pwa"
-import fs from "fs"
 import path from "path"
 
 export default defineConfig({
 	resolve: {
 		alias: {
+			// eslint-disable-next-line no-undef
 			"@": path.resolve(__dirname, "src"), // @ 경로를 src로 매핑
 		},
 	},
-	sserver: {
-		port: 5000, // 포트 설정
-		https: {
-			key: fs.readFileSync(path.resolve(__dirname, "ssl/server.key")),
-			cert: fs.readFileSync(path.resolve(__dirname, "ssl/server.crt")),
-		},
+	server: {
+		port: 5000, // 개발 서버 포트 설정
 	},
 	plugins: [
 		VitePWA({
@@ -52,17 +48,6 @@ export default defineConfig({
 								maxAgeSeconds: 60 * 60 * 24 * 7, // 7일
 							},
 							networkTimeoutSeconds: 10, // 네트워크 응답 대기 시간
-						},
-					},
-					{
-						urlPattern: /^https:\/\/cdn\.yourdomain\.com\/.*$/, // 정적 리소스 캐시
-						handler: "CacheFirst", // 캐시 우선
-						options: {
-							cacheName: "static-cache",
-							expiration: {
-								maxEntries: 50, // 최대 항목 수
-								maxAgeSeconds: 60 * 60 * 24 * 30, // 30일
-							},
 						},
 					},
 				],

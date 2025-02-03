@@ -26,26 +26,6 @@
 ## ------------------------
 🙂 commit title
 
-# [Commit Body]
-##
-## - `issue` 
-### - zira 에서 명시된 티켓과 그 링크 작성
-### - 작성 필수!
-###
-## - `sub-issues` 
-### - 위 이슈와 외, 연관된 티켓을 작성
-### - 목록으로 작성
-### - 미작성 시, 삭제
-###
-## - `desc`
-### - commit 에 대한 상세내용 
-### - 목록으로 작성
-### - 미작성 시, 삭제
-* issue: [NAILCASE-100001](https://nailcase.atlassian.net/browse/NAILCASE-100001)
-sub-issues:
- - [NAILCASE-100002](https://nailcase.atlassian.net/browse/NAILCASE-100002)
- - [NAILCASE-100003](https://nailcase.atlassian.net/browse/NAILCASE-100003)
-
 desc:
  - 〇〇 라이브러리 ~~ 설정 추가
  - 〇〇 문서 최신화
