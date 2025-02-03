@@ -26,9 +26,7 @@ export default function ReviewCard({ user_id, rating, body, created_at }) {
 							<Star
 								key={index}
 								className="h-3 w-3 fill-[#FFDD00] text-[#FFDD00]"
-							>
-								⭐
-							</Star>
+							/>
 						))}
 					</ul>
 					<p className="font-regular mt-[2px] text-[10px] text-[#252525]">
