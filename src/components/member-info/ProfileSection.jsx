@@ -4,6 +4,8 @@ import { Camera, Plus } from "lucide-react"
 export default function ProfileSection({ memberInfo, navigate }) {
 	const [profileImage, setProfileImage] = React.useState(null)
 
+	console.log("🔍 현재 memberInfo:", memberInfo) // ✅ 데이터 확인 로그
+
 	const handleImageUpload = (event) => {
 		const file = event.target.files[0]
 		if (file) {
@@ -13,7 +15,7 @@ export default function ProfileSection({ memberInfo, navigate }) {
 	}
 
 	return (
-		<div className="flex flex-col items-center py-6">
+		<div className="flex flex-col items-center bg-white py-6">
 			<div className="relative flex flex-col items-center">
 				<div className="relative flex h-20 w-20 items-center justify-center overflow-hidden rounded-full bg-gray-200">
 					{profileImage ? (
@@ -42,9 +44,10 @@ export default function ProfileSection({ memberInfo, navigate }) {
 				/>
 			</div>
 
+			{/* ✅ memberInfo에서 member_name 가져오기 */}
 			<div className="mt-2 flex flex-row items-center">
 				<div className="text-center text-lg font-bold">
-					{memberInfo ? memberInfo.user_name : "이름을 입력하시오"}
+					{memberInfo ? memberInfo.member_name : "이름을 입력하시오"}
 				</div>
 				<div className="ml-2">
 					<span
