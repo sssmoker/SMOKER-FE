@@ -6,49 +6,31 @@ import GoogleSymbol from "@/assets/GoogleSymbol.svg"
 
 export default function LoginPage() {
 	const navigate = useNavigate()
-	const [error, setError] = useState(null) // 에러 메시지 상태
+	const [error, setError] = useState(null)
 	const [isGoogleClicked, setIsGoogleClicked] = useState(false)
 
-	// Google OAuth Mock 로그인 핸들러
-	const handleGoogleLogin = async () => {
-		setIsGoogleClicked(true)
+	const handleLogin = async (provider) => {
+		setIsGoogleClicked(provider === "google")
+
 		try {
 			const response = await fetch(
-				"http://localhost:3001/users?provider=google",
+				`http://localhost:3001/members?login_type=${provider}`,
 			)
 			const data = await response.json()
 
 			if (data.length > 0) {
-				console.log("Google Login Successful")
-				sessionStorage.setItem("user", JSON.stringify(data[0]))
+				console.log(`${provider} Login Successful`)
+				sessionStorage.setItem("member", JSON.stringify(data[0]))
 				navigate("/my-page")
 			} else {
-				setError("Google 계정을 찾을 수 없습니다.")
+				setError(`${provider} 계정을 찾을 수 없습니다.`)
 			}
 		} catch (err) {
-			setError("Google 로그인 중 오류가 발생했습니다.")
+			setError(`${provider} 로그인 중 오류가 발생했습니다.`)
 			console.error(err)
 		}
+
 		setTimeout(() => setIsGoogleClicked(false), 300)
-	}
-
-	// Kakao OAuth Mock 로그인 핸들러
-	const handleKakaoLogin = async () => {
-		try {
-			const response = await fetch("http://localhost:3001/users?provider=kakao")
-			const data = await response.json()
-
-			if (data.length > 0) {
-				console.log("Kakao Login Successful")
-				sessionStorage.setItem("user", JSON.stringify(data[0]))
-				navigate("/my-page")
-			} else {
-				setError("Kakao 계정을 찾을 수 없습니다.")
-			}
-		} catch (err) {
-			setError("Kakao 로그인 중 오류가 발생했습니다.")
-			console.error(err)
-		}
 	}
 
 	return (
@@ -91,7 +73,7 @@ export default function LoginPage() {
 						}`}
 						onMouseDown={() => setIsGoogleClicked(true)}
 						onMouseUp={() => setIsGoogleClicked(false)}
-						onClick={handleGoogleLogin}
+						onClick={() => handleLogin("google")}
 					>
 						<div className="mr-[0.625rem] flex h-[1.5rem] w-[1.5rem] items-center justify-center bg-white">
 							<img
@@ -104,7 +86,7 @@ export default function LoginPage() {
 					</button>
 					<button
 						className="flex h-[2.75rem] min-w-[10rem] max-w-[50vw] flex-1 items-center justify-center whitespace-nowrap rounded-[0.75rem] bg-[#FEE500] px-4 text-xs font-medium text-black sm:text-sm"
-						onClick={handleKakaoLogin}
+						onClick={() => handleLogin("kakao")}
 					>
 						<div className="flex items-center gap-[0.5rem]">
 							<img
