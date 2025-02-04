@@ -9,8 +9,6 @@
 		{
 			"member_id": 1,
 			"member_name": "즐거운 하마 134",
-			"email": "hama134@gmail.com",
-			"password": "password123",
 			"login_type": "kakao",
 			"created_at": "2024-01-01T10:00:00",
 			"updated_at": "2024-01-15T10:00:00",
@@ -21,8 +19,6 @@
 		{
 			"member_id": 2,
 			"member_name": "행복한 고양이 567",
-			"email": "cat567@gmail.com",
-			"password": "securepass",
 			"login_type": "google",
 			"created_at": "2024-01-05T12:00:00",
 			"updated_at": "2024-01-20T12:00:00",
