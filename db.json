@@ -14,7 +14,39 @@
 			"updated_at": "2024-01-15T10:00:00",
 			"update_count": 5,
 			"status": "active",
-			"inactive_date": null
+			"inactive_date": null,
+			"details": [
+				{
+					"location": "사당역 2번 출구",
+					"date": "2023-09-13",
+					"description": "6번째 수정에 참여했어요!"
+				},
+				{
+					"location": "광운대학교 동해문화예술관",
+					"date": "2023-09-13",
+					"description": "6번째 수정에 참여했어요!"
+				},
+				{
+					"location": "강남역 1번 출구",
+					"date": "2023-08-25",
+					"description": "5번째 수정에 참여했어요!"
+				},
+				{
+					"location": "홍대입구역 3번 출구",
+					"date": "2023-07-19",
+					"description": "4번째 수정에 참여했어요!"
+				},
+				{
+					"location": "이태원역 4번 출구",
+					"date": "2023-06-10",
+					"description": "3번째 수정에 참여했어요!"
+				},
+				{
+					"location": "서울숲 공원",
+					"date": "2023-05-03",
+					"description": "2번째 수정에 참여했어요!"
+				}
+			]
 		},
 		{
 			"member_id": 2,
@@ -24,10 +56,26 @@
 			"updated_at": "2024-01-20T12:00:00",
 			"update_count": 3,
 			"status": "inactive",
-			"inactive_date": "2024-02-01T12:00:00"
+			"inactive_date": "2024-02-01T12:00:00",
+			"details": [
+				{
+					"location": "서울역",
+					"date": "2023-09-01",
+					"description": "3번째 수정에 참여했어요!"
+				},
+				{
+					"location": "건대입구역 2번 출구",
+					"date": "2023-08-10",
+					"description": "2번째 수정에 참여했어요!"
+				},
+				{
+					"location": "한강공원",
+					"date": "2023-07-20",
+					"description": "1번째 수정에 참여했어요!"
+				}
+			]
 		}
 	],
-
 	"smokingAreas": [
 		{
 			"smoking_id": 1,
