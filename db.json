@@ -5,10 +5,10 @@
 		"address": "서울 동작구 남부순환로 2090",
 		"description": "사용자의 현재 위치"
 	},
-	"users": [
+	"members": [
 		{
-			"user_id": 1,
-			"user_name": "즐거운 하마 134",
+			"member_id": 1,
+			"member_name": "즐거운 하마 134",
 			"email": "hama134@gmail.com",
 			"password": "password123",
 			"login_type": "kakao",
@@ -19,8 +19,8 @@
 			"inactive_date": null
 		},
 		{
-			"user_id": 2,
-			"user_name": "행복한 고양이 567",
+			"member_id": 2,
+			"member_name": "행복한 고양이 567",
 			"email": "cat567@gmail.com",
 			"password": "securepass",
 			"login_type": "google",
@@ -31,6 +31,7 @@
 			"inactive_date": "2024-02-01T12:00:00"
 		}
 	],
+
 	"smokingAreas": [
 		{
 			"smoking_id": 1,
