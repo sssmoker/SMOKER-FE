@@ -15,7 +15,7 @@ export default function MyPage() {
 		{ label: "위치 기반 서비스 이용 약관", path: "/location-terms" },
 		{ label: "개인정보처리방침", path: "/privacy-policy" },
 		{ label: "로그아웃", path: "/logout" },
-		{ label: "탈퇴하기", path: "/withdraw" },
+		{ label: "탈퇴하기", path: "/deactivate" },
 	]
 
 	const handleMenuClick = (path) => {

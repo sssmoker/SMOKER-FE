@@ -52,26 +52,26 @@ export default function LoginPage() {
 	}
 
 	return (
-		<div className="flex min-h-screen flex-col items-center gap-y-8 bg-gray-100 px-6">
+		<div className="flex min-h-screen flex-col items-center gap-y-8 bg-white px-6">
 			<div className="w-full p-4">
 				<BackButton className="absolute left-4 top-4" />
 			</div>
 
 			<div className="relative w-full max-w-xs">
-				<div className="absolute left-7 top-3 h-4 w-4 rounded-full bg-[#FDFF72]"></div>
-				<div className="absolute left-32 top-3 h-4 w-4 rounded-full bg-[#4517FF]"></div>
+				<div className="absolute left-7 top-8 h-4 w-4 rounded-full bg-[#FDFF72]"></div>
+				<div className="absolute left-32 top-8 h-4 w-4 rounded-full bg-[#4517FF]"></div>
 			</div>
 
-			<h1 className="bg-gradient-to-l from-[#2A0E99] to-[#4517FF] bg-clip-text text-center text-4xl font-bold text-transparent">
+			<h1 className="mt-6 bg-gradient-to-l from-[#2A0E99] to-[#4517FF] bg-clip-text text-center text-4xl font-bold text-transparent">
 				만나서 반가워요!
 			</h1>
 
-			<p className="-mt-5 ml-12 w-full max-w-sm text-left text-sm text-gray-600">
+			<p className="-mt-6 ml-12 w-full max-w-sm text-left text-sm text-gray-600">
 				로그인 후 스모커의 <br />
 				모든 기능을 이용해보세요!
 			</p>
 
-			<div className="mt-32 w-full max-w-sm text-center">
+			<div className="mt-36 w-full max-w-sm text-center">
 				<div className="flex items-center">
 					<div className="flex-grow border-t-2 border-[#E8ECF4]"></div>
 					<span className="px-3 text-sm font-bold text-[#6A707C]">
@@ -81,36 +81,39 @@ export default function LoginPage() {
 				</div>
 			</div>
 
-			{/* 로그인 버튼 */}
-			<div className="flex w-full max-w-sm flex-col items-center gap-y-6">
-				<div className="flex w-full flex-row space-x-2">
+			<div className="-mt-5 flex w-full max-w-sm flex-col items-center gap-y-6">
+				<div className="flex w-full flex-row gap-2">
 					<button
-						className={`flex w-full items-center justify-center gap-3 whitespace-nowrap rounded-[0.75rem] border px-4 py-3 text-xs transition-all duration-200 sm:text-sm ${
+						className={`flex h-[2.75rem] min-w-[10rem] max-w-[50vw] flex-1 items-center justify-center whitespace-nowrap rounded-[0.75rem] border px-4 text-xs transition-all duration-200 sm:text-sm ${
 							isGoogleClicked
 								? "bg-[#4285F4] text-white"
 								: "border-[#DEDEDE] bg-white text-black"
 						}`}
+						onMouseDown={() => setIsGoogleClicked(true)}
+						onMouseUp={() => setIsGoogleClicked(false)}
 						onClick={handleGoogleLogin}
 					>
-						<div className="flex h-6 w-6 items-center justify-center bg-white">
+						<div className="mr-[0.625rem] flex h-[1.5rem] w-[1.5rem] items-center justify-center bg-white">
 							<img
 								src={GoogleSymbol}
 								alt="Google"
-								className="h-4 w-4 sm:h-5 sm:w-5"
+								className="h-[1.125rem] w-[1.125rem] sm:h-5 sm:w-5"
 							/>
 						</div>
-						<span className="font-bold">구글로 로그인하기</span>
+						<span className="text-center font-bold">구글로 로그인하기</span>
 					</button>
 					<button
-						className="flex w-full items-center justify-center gap-3 whitespace-nowrap rounded-[0.75rem] bg-[#FEE500] px-4 py-3 text-xs font-medium text-black sm:text-sm"
+						className="flex h-[2.75rem] min-w-[10rem] max-w-[50vw] flex-1 items-center justify-center whitespace-nowrap rounded-[0.75rem] bg-[#FEE500] px-4 text-xs font-medium text-black sm:text-sm"
 						onClick={handleKakaoLogin}
 					>
-						<img
-							src={KakaoSymbol}
-							alt="Kakao"
-							className="h-4 w-4 sm:h-5 sm:w-5"
-						/>
-						<span className="font-bold">카카오로 로그인하기</span>
+						<div className="flex items-center gap-[0.5rem]">
+							<img
+								src={KakaoSymbol}
+								alt="Kakao"
+								className="h-[1.125rem] w-[1.125rem] sm:h-5 sm:w-5"
+							/>
+							<span className="text-center font-bold">카카오로 로그인하기</span>
+						</div>
 					</button>
 				</div>
 			</div>
