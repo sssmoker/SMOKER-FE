@@ -44,11 +44,7 @@ export default function Navbar({ onRefresh }) {
 									: "text-gray-600"
 							}`}
 						>
-							<div
-								className={`rounded-lg p-2 ${isActive ? "bg-[#F6F3FF]" : "bg-transparent"}`}
-							>
-								{item.icon}
-							</div>
+							<div className={`rounded-lg p-2`}>{item.icon}</div>
 							<span
 								className={`mt-1 text-xs font-medium ${isActive ? "text-[#4517FF]" : "text-gray-600"}`}
 							>

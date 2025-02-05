@@ -142,5 +142,117 @@
 			"region_id": 3,
 			"image": "/src/assets/sample-image.png"
 		}
+	],
+	"list": [
+		{
+			"title": "사당역 1번 출구 앞 흡연 부스",
+			"isBookmarked": true,
+			"rating": 4.3,
+			"ratingCount": 3,
+			"bookmarkCount": 30,
+			"distance": 197,
+			"img": false,
+			"smoking_id": 1
+		},
+		{
+			"title": "사당역 2번 출구 앞 흡연 부스",
+			"isBookmarked": true,
+			"rating": 3.9,
+			"ratingCount": 5,
+			"bookmarkCount": 30,
+			"distance": 12,
+			"img": false,
+			"smoking_id": 2
+		},
+		{
+			"title": "사당역 3번 출구 앞 흡연 부스",
+			"isBookmarked": false,
+			"rating": 3.2,
+			"ratingCount": 3,
+			"bookmarkCount": 30,
+			"distance": 453,
+			"img": false,
+			"smoking_id": 3
+		},
+		{
+			"title": "사당역 4번 출구 앞 흡연 부스",
+			"isBookmarked": true,
+			"rating": 4.8,
+			"ratingCount": 3,
+			"bookmarkCount": 30,
+			"distance": 42,
+			"img": false,
+			"smoking_id": 4
+		},
+		{
+			"title": "사당역 5번 출구 앞 흡연 부스",
+			"isBookmarked": false,
+			"rating": 2.4,
+			"ratingCount": 5,
+			"bookmarkCount": 30,
+			"distance": 156,
+			"img": false,
+			"smoking_id": 5
+		},
+		{
+			"title": "사당역 6번 출구 앞 흡연 부스",
+			"isBookmarked": false,
+			"rating": 4.2,
+			"ratingCount": 3,
+			"bookmarkCount": 30,
+			"distance": 137,
+			"img": false,
+			"smoking_id": 6
+		},
+		{
+			"title": "사당역 7번 출구 앞 흡연 부스",
+			"isBookmarked": false,
+			"rating": 5,
+			"ratingCount": 3,
+			"bookmarkCount": 30,
+			"distance": 152,
+			"img": false,
+			"smoking_id": 7
+		},
+		{
+			"title": "사당역 8번 출구 앞 흡연 부스",
+			"isBookmarked": false,
+			"rating": 1.9,
+			"ratingCount": 3,
+			"bookmarkCount": 30,
+			"distance": 123,
+			"img": false,
+			"smoking_id": 8
+		},
+		{
+			"title": "사당역 9번 출구 앞 흡연 부스",
+			"isBookmarked": false,
+			"rating": 4.2,
+			"ratingCount": 3,
+			"bookmarkCount": 30,
+			"distance": 175,
+			"img": false,
+			"smoking_id": 9
+		},
+		{
+			"title": "사당역 10번 출구 앞 흡연 부스",
+			"isBookmarked": false,
+			"rating": 2.3,
+			"ratingCount": 3,
+			"bookmarkCount": 30,
+			"distance": 165,
+			"img": false,
+			"smoking_id": 10
+		},
+		{
+			"title": "사당역 11번 출구 앞 흡연 부스",
+			"isBookmarked": false,
+			"rating": 1,
+			"ratingCount": 3,
+			"bookmarkCount": 30,
+			"distance": 245,
+			"img": false,
+			"smoking_id": 11
+		}
 	]
 }
