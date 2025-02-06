@@ -1,8 +1,9 @@
 import React, { useState } from "react"
+import PropTypes from "prop-types"
 import { Search } from "lucide-react"
-import AroundMeBtn from "./AroundMeBtn" // 내 주변 버튼 컴포넌트
+import AroundMeBtn from "@/components/common/AroundMeButton"
 
-export default function SearchBar() {
+export default function SearchBar({ onMoveToCurrentLocation }) {
 	const [searchTerm, setSearchTerm] = useState("")
 
 	const handleInputChange = (e) => {
@@ -20,7 +21,11 @@ export default function SearchBar() {
 				className="flex-grow border-none text-sm text-gray-700 placeholder-gray-400 focus:outline-none"
 			/>
 			<div className="mx-3 h-5 w-[1px] bg-[#4517FF]"></div>
-			<AroundMeBtn />
+			<AroundMeBtn onClick={onMoveToCurrentLocation} />
 		</div>
 	)
+}
+
+SearchBar.propTypes = {
+	onMoveToCurrentLocation: PropTypes.func.isRequired,
 }
