@@ -203,6 +203,47 @@
 			"count": 1
 		}
 	},
+	"updated-history": {
+		"isSuccess": true,
+		"code": "string",
+		"message": "string",
+		"result": {
+			"updatedHistories": [
+				{
+					"memberName": "string",
+					"updateCount": 0,
+					"updatedAt": "2025-02-06T12:58:29.635Z"
+				},
+				{
+					"memberName": "string",
+					"updateCount": 0,
+					"updatedAt": "2025-02-06T12:58:29.635Z"
+				},
+				{
+					"memberName": "string",
+					"updateCount": 0,
+					"updatedAt": "2025-02-06T12:58:29.635Z"
+				},
+				{
+					"memberName": "string",
+					"updateCount": 0,
+					"updatedAt": "2025-02-06T12:58:29.635Z"
+				},
+				{
+					"memberName": "string",
+					"updateCount": 0,
+					"updatedAt": "2025-02-06T12:58:29.635Z"
+				},
+				{
+					"memberName": "string",
+					"updateCount": 0,
+					"updatedAt": "2025-02-06T12:58:29.635Z"
+				}
+			],
+			"isLastPage": true,
+			"pageNumber": 0
+		}
+	},
 	"savedSmokingAreas": [
 		{
 			"scrap_id": 1,

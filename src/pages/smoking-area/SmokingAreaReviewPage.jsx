@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Fragment } from "react"
 import ReviewCard from "@/components/smoking-area/review/ReviewCard"
 import StarRatingStatistics from "@/components/smoking-area/review/StarRatingStatistics"
 
@@ -13,8 +13,8 @@ export default function SmokingAreaReviewPage({
 				<>
 					<StarRatingStatistics {...starRatingData} />
 
-					{reviewListData.reviews.map((review) => (
-						<ReviewCard key={review.id} {...review} />
+					{reviewListData.reviews.map((review, i) => (
+						<ReviewCard key={i} {...review} />
 					))}
 				</>
 			) : (

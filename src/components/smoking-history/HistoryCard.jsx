@@ -1,13 +1,15 @@
 import React from "react"
 
-export default function HistoryCard() {
+export default function HistoryCard({ memberName, updateCount, updatedAt }) {
 	return (
 		<>
 			<li className="px-[30px] py-[20px]">
 				<div className="flex-start flex items-center gap-[4px]">
-					<p className="text-[13px] font-semibold text-[#252525]">닉네임</p>
+					<p className="text-[13px] font-semibold text-[#252525]">
+						{memberName}
+					</p>
 					<span className="font-regular text-[8px] text-[#B5B5B5]">
-						업데이트 참여 수 1 ꞏ 24.12.19
+						업데이트 참여 수 {updateCount} ꞏ {updatedAt.slice(0, 10)}
 					</span>
 				</div>
 				<p className="font-regular mt-[4px] text-[11px] text-[#252525]">
