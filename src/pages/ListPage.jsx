@@ -35,7 +35,7 @@ export default function ListPage() {
 
 	// API를 통해 흡연 구역 목록 가져오기
 	const { data, error, isLoading } = useQuery({
-		queryKey: [userLat, userLng, selectedFilter],
+		queryKey: ["smokingAreaList", userLat, userLng, selectedFilter],
 		queryFn: async () => {
 			const response = await fetch(
 				"http://localhost:3001/list",

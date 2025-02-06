@@ -15,7 +15,7 @@ export default function SmokingAreaList({
 		<>
 			{smokingAreasData.length ? (
 				sortedDataList.map((data) => (
-					<SmokingAreaCard key={data.smoking_id} {...data} />
+					<SmokingAreaCard key={data.smokingAreaId} {...data} />
 				))
 			) : (
 				<div className="mt-[10vh] flex flex-col items-center">

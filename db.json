@@ -146,6 +146,35 @@
 			"is_bookmarked": true
 		}
 	],
+	"detail": {
+		"isSuccess": true,
+		"code": "string",
+		"message": "string",
+		"result": {
+			"smokingAreaName": "string",
+			"location": {
+				"address": "string",
+				"latitude": 0,
+				"longitude": 0
+			},
+			"feature": {
+				"hasAirPurifier": false,
+				"hasAirConditioning": false,
+				"hasChair": true,
+				"hasTrashBin": true,
+				"hasVentilationSystem": false,
+				"isAccessible": false,
+				"hasCCTV": false,
+				"hasEmergencyButton": false,
+				"hasVoiceGuidance": false,
+				"hasFireExtinguisher": false,
+				"isRegularlyCleaned": false,
+				"hasCigaretteDisposal": true,
+				"hasSunshade": true,
+				"hasRainProtection": true
+			}
+		}
+	},
 	"reviews": [
 		{
 			"id": 1,
@@ -241,7 +270,7 @@
 					"rating": 0
 				},
 				{
-					"smokingAreaId": 0,
+					"smokingAreaId": 1,
 					"smokingAreaName": "string",
 					"imageUrl": "http://test.api.weniv.co.kr/asset/img/7/thumbnailImg.jpg",
 					"distance": 0,
