@@ -4,12 +4,12 @@ import Button from "@/components/common/button/ComButton"
 import SmokingAreaList from "@/components/area-list/card-list/SmokingAreaList"
 import Filter from "@/components/area-list/filter/Filter"
 import { useNavigate } from "react-router-dom"
+import { useQuery } from "@tanstack/react-query"
 
 export default function ListPage() {
 	const navigate = useNavigate()
-	const [smokingAreas, setSmokingAreas] = useState([]) // 흡연 구역 데이터
-	const [userLat, setUserLat] = useState(null) // 사용자 위도
-	const [userLng, setUserLng] = useState(null) // 사용자 경도
+	const [userLat, setUserLat] = useState(37.477) // 사용자 위도 // 임시 데이터
+	const [userLng, setUserLng] = useState(126.9812) // 사용자 경도 // 임시 데이터
 	const FILTER_OPTIONS = {
 		DISTANCE: "거리순",
 		RATING: "평점순",
@@ -17,46 +17,59 @@ export default function ListPage() {
 	const [selectedFilter, setSelectedFilter] = useState(FILTER_OPTIONS.DISTANCE) // "거리순", "평점순"
 
 	// 현재 위치 가져오기
-	useEffect(() => {
-		const fetchUserLocation = () => {
-			navigator.geolocation.getCurrentPosition(
-				(position) => {
-					setUserLat(position.coords.latitude)
-					setUserLng(position.coords.longitude)
-				},
-				(error) => {
-					console.error("위치 정보를 가져오지 못했습니다.", error)
-				},
-			)
-		}
+	// useEffect(() => {
+	// 	const fetchUserLocation = () => {
+	// 		navigator.geolocation.getCurrentPosition(
+	// 			(position) => {
+	// 				setUserLat(position.coords.latitude)
+	// 				setUserLng(position.coords.longitude)
+	// 			},
+	// 			(error) => {
+	// 				console.error("위치 정보를 가져오지 못했습니다.", error)
+	// 			},
+	// 		)
+	// 	}
 
-		fetchUserLocation()
-	}, [])
+	// 	fetchUserLocation()
+	// }, [])
 
 	// API를 통해 흡연 구역 목록 가져오기
-	useEffect(() => {
-		const fetchSmokingAreas = async () => {
-			try {
-				const response = await fetch(
-					`http://localhost:3001/list`,
-					// `http://localhost:3001/api/smoking-area/list?userLat=${userLat}&userLng=${userLng}&filter=${filter}`,
-				)
-				const data = await response.json()
-				console.log(data)
-				setSmokingAreas(data || [])
-			} catch (error) {
-				console.error("흡연 구역 데이터를 가져오지 못했습니다.", error)
+	const { data, error, isLoading } = useQuery({
+		queryKey: [userLat, userLng, selectedFilter],
+		queryFn: async () => {
+			const response = await fetch(
+				"http://localhost:3001/list",
+				// "https://api.smoker.my/api/smoking-area/list",
+				{
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+					},
+				},
+			)
+			if (!response.ok) {
+				const errorMessage = await response.text()
+				throw new Error(`데이터 호출 실패: ${errorMessage}`)
 			}
-		}
-
-		if (userLat && userLng) {
-			fetchSmokingAreas()
-		}
-	}, [userLat, userLng])
+			const jsonResponse = await response.json()
+			return jsonResponse?.result?.smokingAreas
+		},
+		retry: false, // 재시도 방지
+		// retry: 2, // 2번만 재시도
+		// retryDelay: 2000, // 2초 간격으로 재시도
+	})
 
 	const handleMoveToHome = () => {
 		navigate("/")
 	}
+
+	// if (isLoading) {
+	// 	return <div>로딩 중...</div>
+	// }
+
+	// if (error) {
+	// 	return <div>에러 발생: {error.message}</div>
+	// }
 
 	return (
 		<div className="relative h-[100vh] bg-white">
@@ -79,7 +92,7 @@ export default function ListPage() {
 				<ul className="h-full w-full overflow-y-scroll pb-[11vh]">
 					<SmokingAreaList
 						selectedFilter={selectedFilter}
-						smokingAreas={smokingAreas}
+						smokingAreasData={data || []}
 					/>
 				</ul>
 			</div>

@@ -1,16 +1,19 @@
 import React, { useMemo } from "react"
 import SmokingAreaCard from "./SmokingAreaCard"
 
-export default function SmokingAreaList({ selectedFilter, smokingAreas = [] }) {
+export default function SmokingAreaList({
+	selectedFilter,
+	smokingAreasData = [],
+}) {
 	const sortedDataList = useMemo(() => {
 		return selectedFilter == "거리순"
-			? [...smokingAreas].sort((x, y) => x.distance - y.distance)
-			: [...smokingAreas].sort((x, y) => y.rating - x.rating)
-	}, [selectedFilter, smokingAreas.length])
+			? [...smokingAreasData].sort((x, y) => x.distance - y.distance)
+			: [...smokingAreasData].sort((x, y) => y.rating - x.rating)
+	}, [selectedFilter, smokingAreasData.length])
 
 	return (
 		<>
-			{smokingAreas.length ? (
+			{smokingAreasData.length ? (
 				sortedDataList.map((data) => (
 					<SmokingAreaCard key={data.smoking_id} {...data} />
 				))
