@@ -11,7 +11,7 @@ import { useQueries } from "@tanstack/react-query"
 
 export default function SmokingAreaPage() {
 	const location = useLocation()
-	const [currentPage, setCurrentPage] = useState("detail")
+	const [currentPage, setCurrentPage] = useState("review") //detail //review
 
 	const queryParams = new URLSearchParams(location.search)
 	const smokingAreaId = queryParams.get("id")
@@ -39,6 +39,7 @@ export default function SmokingAreaPage() {
 				queryKey: ["reviews", smokingAreaId],
 				queryFn: async () => {
 					const response = await fetch("http://localhost:3001/reviews")
+					// `/api/reviews/${smokingAreaId}`
 					if (!response.ok) throw new Error("데이터 호출 실패")
 					return response.json()
 				},
@@ -55,9 +56,8 @@ export default function SmokingAreaPage() {
 	})
 	const smokingAreasData = results[0].data
 	const detailData = results[1].data?.result
-	const reviewListData = results[2].data
-	const starRatingData = results[3].data
-	console.log(detailData) //
+	const reviewListData = results[2].data?.result
+	const starRatingData = results[3].data?.result
 
 	const isLoading = results.some((result) => result.isLoading)
 	const isError = results.some((result) => result.isError)

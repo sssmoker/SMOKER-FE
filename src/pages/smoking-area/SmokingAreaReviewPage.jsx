@@ -6,13 +6,14 @@ export default function SmokingAreaReviewPage({
 	starRatingData,
 	reviewListData = [],
 }) {
+	// 리뷰 없는 경우 스타일 추가 필요!!!
 	return (
 		<div className="pb-[20vh]">
-			{reviewListData.length ? (
+			{reviewListData.reviews.length > 0 ? (
 				<>
 					<StarRatingStatistics {...starRatingData} />
 
-					{reviewListData.map((review) => (
+					{reviewListData.reviews.map((review) => (
 						<ReviewCard key={review.id} {...review} />
 					))}
 				</>

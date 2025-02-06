@@ -175,39 +175,33 @@
 			}
 		}
 	},
-	"reviews": [
-		{
-			"id": 1,
-			"user_id": 1,
-			"rating": 4.5,
-			"body": "실내 흡연장이지만 환기가 잘 됩니다.",
-			"created_at": "2024-01-12",
-			"updated_at": "2024-01-12",
-			"smoking_id": 1
-		},
-		{
-			"id": 3,
-			"user_id": 1,
-			"rating": 5.0,
-			"body": "공원에 있어서 공기도 좋고 깨끗해요.",
-			"created_at": "2024-01-25",
-			"updated_at": "2024-01-25",
-			"smoking_id": 3
-		},
-		{
-			"id": 2,
-			"user_id": 2,
-			"rating": 4.0,
-			"body": "쓰레기통이 있어서 편리했어요.",
-			"created_at": "2024-01-18",
-			"updated_at": "2024-01-18",
-			"smoking_id": 2
+	"reviews": {
+		"isSuccess": true,
+		"code": "string",
+		"message": "string",
+		"result": {
+			"reviews": [
+				{
+					"score": 5,
+					"content": "string",
+					"imageUrl": "http://test.api.weniv.co.kr/asset/img/7/thumbnailImg.jpg",
+					"memberName": "string",
+					"creationDate": "2025-02-06T11:57:21.426Z"
+				}
+			],
+			"isLastPage": true,
+			"pageNumber": 0
 		}
-	],
+	},
 	"starRating": {
-		"review_num": 3,
-		"rating": 4.2,
-		"rating_list": [1, 2, 0, 0, 0]
+		"isSuccess": true,
+		"code": "string",
+		"message": "string",
+		"result": {
+			"stars": [1, 0, 0, 0, 0],
+			"avg": 5,
+			"count": 1
+		}
 	},
 	"savedSmokingAreas": [
 		{
