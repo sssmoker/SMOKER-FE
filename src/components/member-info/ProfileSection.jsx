@@ -1,10 +1,10 @@
-import React from "react"
+import React, { useState } from "react"
 import { Camera, Plus } from "lucide-react"
 
 export default function ProfileSection({ memberInfo, navigate }) {
-	const [profileImage, setProfileImage] = React.useState(null)
-
-	console.log("🔍 현재 memberInfo:", memberInfo) // ✅ 데이터 확인 로그
+	const [profileImage, setProfileImage] = useState(
+		memberInfo?.profileImageUrl || null,
+	)
 
 	const handleImageUpload = (event) => {
 		const file = event.target.files[0]
@@ -44,19 +44,20 @@ export default function ProfileSection({ memberInfo, navigate }) {
 				/>
 			</div>
 
-			{/* ✅ memberInfo에서 member_name 가져오기 */}
 			<div className="mt-2 flex flex-row items-center">
 				<div className="text-center text-lg font-bold">
-					{memberInfo ? memberInfo.member_name : "이름을 입력하시오"}
+					{memberInfo ? memberInfo.nickName : "이름을 입력해주세요"}
 				</div>
-				<div className="ml-2">
-					<span
-						className="cursor-pointer text-xs text-gray-500 underline hover:text-gray-700"
-						onClick={() => navigate("/my-page/info/edit-name")}
-					>
-						수정
-					</span>
-				</div>
+				{memberInfo && (
+					<div className="ml-2">
+						<span
+							className="cursor-pointer text-xs text-gray-500 underline hover:text-gray-700"
+							onClick={() => navigate("/my-page/info/edit-name")}
+						>
+							수정
+						</span>
+					</div>
+				)}
 			</div>
 		</div>
 	)
