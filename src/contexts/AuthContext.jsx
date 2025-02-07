@@ -11,20 +11,28 @@ export const AuthProvider = ({ children }) => {
 	})
 
 	useEffect(() => {
-		const storedMember = sessionStorage.getItem("member")
-		const storedTokens = sessionStorage.getItem("tokens")
+		try {
+			const storedMember = sessionStorage.getItem("member")
+			const storedTokens = sessionStorage.getItem("tokens")
 
-		if (storedMember && storedTokens) {
-			const parsedTokens = JSON.parse(storedTokens)
-			setMember(JSON.parse(storedMember))
-			setTokens(parsedTokens)
+			if (storedMember && storedTokens) {
+				const parsedTokens = JSON.parse(storedTokens)
+				const parsedMember = JSON.parse(storedMember)
 
-			if (!parsedTokens.accessToken) {
-				logout()
+				if (parsedMember && parsedMember.memberId) {
+					setMember(parsedMember)
+					setTokens(parsedTokens)
+				} else {
+					console.warn("⚠️ [AuthContext] 잘못된 member 데이터!")
+					sessionStorage.removeItem("member")
+					sessionStorage.removeItem("tokens")
+				}
 			}
+		} catch (error) {
+			console.error("❌ [AuthContext] 세션 데이터 불러오기 오류:", error)
+		} finally {
+			setLoading(false)
 		}
-
-		setLoading(false)
 	}, [])
 
 	const login = async (provider) => {
@@ -61,6 +69,7 @@ export const AuthProvider = ({ children }) => {
 
 			return true
 		} catch (error) {
+			console.error("❌ [AuthContext] 로그인 오류:", error)
 			return false
 		}
 	}
@@ -96,7 +105,15 @@ export const AuthProvider = ({ children }) => {
 
 	return (
 		<AuthContext.Provider
-			value={{ member, tokens, loading, login, logout, deactivateAccount }}
+			value={{
+				member,
+				setMember,
+				tokens,
+				loading,
+				login,
+				logout,
+				deactivateAccount,
+			}}
 		>
 			{children}
 		</AuthContext.Provider>
