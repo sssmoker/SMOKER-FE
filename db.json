@@ -63,22 +63,71 @@
 			"updateHistoryId": 1,
 			"memberId": 1,
 			"smokingAreaName": "사당역 2번 출구",
-			"createdAt": "2023-09-13",
+			"createdAt": "2023-09-13T10:00:00",
 			"content": "6번째 수정에 참여했어요!"
 		},
 		{
 			"updateHistoryId": 2,
 			"memberId": 1,
 			"smokingAreaName": "광운대학교 동해문화예술관",
-			"createdAt": "2023-09-13",
-			"content": "6번째 수정에 참여했어요!"
+			"createdAt": "2023-09-10T14:30:00",
+			"content": "5번째 수정에 참여했어요!"
 		},
 		{
 			"updateHistoryId": 3,
+			"memberId": 1,
+			"smokingAreaName": "강남역 1번 출구",
+			"createdAt": "2023-08-25T09:15:00",
+			"content": "4번째 수정에 참여했어요!"
+		},
+		{
+			"updateHistoryId": 4,
+			"memberId": 1,
+			"smokingAreaName": "홍대입구역 3번 출구",
+			"createdAt": "2023-07-19T11:45:00",
+			"content": "3번째 수정에 참여했어요!"
+		},
+		{
+			"updateHistoryId": 5,
+			"memberId": 1,
+			"smokingAreaName": "이태원역 4번 출구",
+			"createdAt": "2023-06-10T13:20:00",
+			"content": "2번째 수정에 참여했어요!"
+		},
+		{
+			"updateHistoryId": 6,
+			"memberId": 1,
+			"smokingAreaName": "서울숲 공원",
+			"createdAt": "2023-05-03T16:10:00",
+			"content": "1번째 수정에 참여했어요!"
+		},
+		{
+			"updateHistoryId": 7,
+			"memberId": 1,
+			"smokingAreaName": "한강공원",
+			"createdAt": "2023-04-01T18:00:00",
+			"content": "새로운 흡연 부스를 추가했어요!"
+		},
+		{
+			"updateHistoryId": 8,
 			"memberId": 2,
 			"smokingAreaName": "서울역",
-			"createdAt": "2023-09-01",
+			"createdAt": "2023-09-01T12:40:00",
 			"content": "3번째 수정에 참여했어요!"
+		},
+		{
+			"updateHistoryId": 9,
+			"memberId": 2,
+			"smokingAreaName": "건대입구역 2번 출구",
+			"createdAt": "2023-08-10T14:15:00",
+			"content": "2번째 수정에 참여했어요!"
+		},
+		{
+			"updateHistoryId": 10,
+			"memberId": 2,
+			"smokingAreaName": "한강공원",
+			"createdAt": "2023-07-20T10:05:00",
+			"content": "1번째 수정에 참여했어요!"
 		}
 	],
 	"authResponses": [

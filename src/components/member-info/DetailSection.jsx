@@ -5,26 +5,44 @@ export default function DetailSection({ memberInfo }) {
 	const itemsPerPage = 5
 	const containerRef = useRef(null)
 	const [containerHeight, setContainerHeight] = useState("auto")
+	const [updates, setUpdates] = useState([])
 
 	useEffect(() => {
 		if (containerRef.current) {
-			// 화면 높이에 맞춰 조정 (네비바 고려)
 			const screenHeight = window.innerHeight
-			setContainerHeight(`${screenHeight - 180}px`) // 적절한 여백 설정
+			setContainerHeight(`${screenHeight - 180}px`)
 		}
 	}, [])
 
-	if (!memberInfo || !memberInfo.details) {
+	useEffect(() => {
+		if (!memberInfo) return
+
+		// ✅ 업데이트 정보 불러오기
+		const fetchUpdates = async () => {
+			try {
+				const response = await fetch(
+					`http://localhost:3001/updates?memberId=${memberInfo.memberId}`,
+				)
+				const data = await response.json()
+
+				// 🔍 최신순 정렬
+				const sortedUpdates = data.sort(
+					(a, b) => new Date(b.createdAt) - new Date(a.createdAt),
+				)
+				setUpdates(sortedUpdates)
+			} catch (error) {
+				console.error("❌ [DetailSection] 업데이트 정보 불러오기 실패:", error)
+			}
+		}
+
+		fetchUpdates()
+	}, [memberInfo])
+
+	if (!updates.length) {
 		return (
-			<p className="mt-4 text-center text-gray-500">
-				상세 정보를 불러오는 중...
-			</p>
+			<p className="mt-4 text-center text-gray-500">수정 내역이 없습니다.</p>
 		)
 	}
-
-	const details = [...memberInfo.details].sort(
-		(a, b) => new Date(b.date) - new Date(a.date),
-	)
 
 	const formatDate = (dateString) => {
 		const date = new Date(dateString)
@@ -37,31 +55,32 @@ export default function DetailSection({ memberInfo }) {
 			.replace(/\./g, ".")
 	}
 
-	const totalPages = Math.ceil(details.length / itemsPerPage)
+	const totalPages = Math.ceil(updates.length / itemsPerPage)
 	const startIndex = (currentPage - 1) * itemsPerPage
-	const paginatedDetails = details.slice(startIndex, startIndex + itemsPerPage)
+	const paginatedUpdates = updates.slice(startIndex, startIndex + itemsPerPage)
 
 	return (
 		<div
 			className="relative flex h-full flex-col overflow-auto bg-white pb-20"
 			ref={containerRef}
 		>
-			{/* 🔹 리스트 영역 (배경 흰색, 스크롤 가능) */}
 			<div
 				className="flex-grow bg-white px-1"
 				style={{ maxHeight: containerHeight }}
 			>
 				<ul className="w-full border-b border-gray-300 bg-white">
-					{paginatedDetails.map((detail, index) => (
+					{paginatedUpdates.map((update, index) => (
 						<li
-							key={index}
+							key={update.updateHistoryId}
 							className="w-full border-t border-gray-300 bg-white px-4 py-2"
 						>
 							<h3 className="text-sm font-semibold text-gray-800">
-								{detail.location}
+								{update.smokingAreaName}
 							</h3>
-							<p className="text-xs text-gray-500">{formatDate(detail.date)}</p>
-							<p className="text-sm text-gray-600">{detail.description}</p>
+							<p className="text-xs text-gray-500">
+								{formatDate(update.createdAt)}
+							</p>
+							<p className="text-sm text-gray-600">{update.content}</p>
 						</li>
 					))}
 				</ul>
@@ -70,9 +89,7 @@ export default function DetailSection({ memberInfo }) {
 			{totalPages > 1 && (
 				<div className="bottom-0 left-0 right-0 flex items-center justify-center space-x-4 border-gray-300 bg-white py-3 text-sm">
 					<span
-						className={`cursor-pointer ${
-							currentPage === 1 ? "text-gray-400" : "hover:text-blue-500"
-						}`}
+						className={`cursor-pointer ${currentPage === 1 ? "text-gray-400" : "hover:text-blue-500"}`}
 						onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
 					>
 						{"<"}
@@ -81,9 +98,7 @@ export default function DetailSection({ memberInfo }) {
 					{[...Array(totalPages)].map((_, i) => (
 						<span
 							key={i}
-							className={`cursor-pointer px-2 ${
-								currentPage === i + 1 ? "font-bold" : "hover:text-blue-500"
-							}`}
+							className={`cursor-pointer px-2 ${currentPage === i + 1 ? "font-bold" : "hover:text-blue-500"}`}
 							onClick={() => setCurrentPage(i + 1)}
 						>
 							{i + 1}
@@ -91,11 +106,7 @@ export default function DetailSection({ memberInfo }) {
 					))}
 
 					<span
-						className={`cursor-pointer ${
-							currentPage === totalPages
-								? "text-gray-400"
-								: "hover:text-blue-500"
-						}`}
+						className={`cursor-pointer ${currentPage === totalPages ? "text-gray-400" : "hover:text-blue-500"}`}
 						onClick={() =>
 							setCurrentPage((prev) => Math.min(prev + 1, totalPages))
 						}
