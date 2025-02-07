@@ -5,25 +5,28 @@ const AuthContext = createContext()
 export const AuthProvider = ({ children }) => {
 	const [member, setMember] = useState(null)
 	const [loading, setLoading] = useState(true)
+	const [tokens, setTokens] = useState({
+		accessToken: null,
+		refreshToken: null,
+	})
 
-	// ✅ 로그인 상태 유지: sessionStorage에서 member 가져오기
 	useEffect(() => {
 		const storedMember = sessionStorage.getItem("member")
+		const storedTokens = sessionStorage.getItem("tokens")
 
-		if (storedMember) {
-			console.log(
-				"🔍 [AuthContext] sessionStorage에서 가져온 member:",
-				JSON.parse(storedMember),
-			)
-			setMember(JSON.parse(storedMember)) // ✅ 세션스토리지에서 멤버 정보 로드
-		} else {
-			console.log("⚠️ [AuthContext] sessionStorage에 저장된 member 없음!")
+		if (storedMember && storedTokens) {
+			const parsedTokens = JSON.parse(storedTokens)
+			setMember(JSON.parse(storedMember))
+			setTokens(parsedTokens)
+
+			if (!parsedTokens.accessToken) {
+				logout()
+			}
 		}
 
 		setLoading(false)
 	}, [])
 
-	// ✅ OAuth 로그인
 	const login = async (provider) => {
 		try {
 			const response = await fetch(
@@ -31,47 +34,57 @@ export const AuthProvider = ({ children }) => {
 			)
 			const data = await response.json()
 
-			if (data.length > 0) {
-				console.log(
-					`✅ ${provider} 로그인 성공! 저장할 member_id:`,
-					data[0].member_id,
-				)
-				sessionStorage.setItem("member", JSON.stringify(data[0])) // ✅ sessionStorage에 저장
-				setMember(data[0]) // ✅ 상태 업데이트
-			} else {
-				console.error(`${provider} 로그인 실패`)
+			if (data.length === 0) {
+				throw new Error(`${provider} 로그인 실패`)
 			}
+
+			const memberData = data.find((user) => user.loginType === provider)
+
+			if (!memberData) {
+				throw new Error("해당 로그인 타입의 사용자가 없습니다.")
+			}
+
+			const tokenResponse = await fetch(
+				`http://localhost:3001/authResponses?memberId=${memberData.memberId}`,
+			)
+			const tokenData = await tokenResponse.json()
+
+			if (tokenData.length === 0 || !tokenData[0].accessToken) {
+				throw new Error("토큰 발급 실패")
+			}
+
+			sessionStorage.setItem("tokens", JSON.stringify(tokenData[0]))
+			sessionStorage.setItem("member", JSON.stringify(memberData))
+
+			setTokens(tokenData[0])
+			setMember(memberData)
+
+			return true
 		} catch (error) {
-			console.error(`${provider} 로그인 오류:`, error)
+			return false
 		}
 	}
 
-	// ✅ 로그아웃
 	const logout = () => {
-		console.log("🚪 [AuthContext] 로그아웃 실행")
-		sessionStorage.removeItem("member") // ✅ sessionStorage에서도 삭제
-		setMember(null) // ✅ 상태 초기화
+		sessionStorage.removeItem("member")
+		sessionStorage.removeItem("tokens")
+		setMember(null)
+		setTokens({ accessToken: null, refreshToken: null })
 	}
 
-	// ✅ 탈퇴하기 기능
 	const deactivateAccount = async () => {
 		if (!member) return
 
-		const confirmDelete = window.confirm("정말 탈퇴하시겠습니까?")
-		if (!confirmDelete) return
-
 		try {
 			const response = await fetch(
-				`http://localhost:3001/members/${member.member_id}`,
+				`http://localhost:3001/members/${member.memberId}`,
 				{
 					method: "DELETE",
 				},
 			)
 
 			if (response.ok) {
-				console.log("✅ [AuthContext] 탈퇴 성공, 데이터 초기화!")
-				sessionStorage.removeItem("member")
-				setMember(null)
+				logout()
 				alert("회원 탈퇴가 완료되었습니다.")
 			} else {
 				console.error("회원 탈퇴 실패:", await response.json())
@@ -83,7 +96,7 @@ export const AuthProvider = ({ children }) => {
 
 	return (
 		<AuthContext.Provider
-			value={{ member, loading, login, logout, deactivateAccount }}
+			value={{ member, tokens, loading, login, logout, deactivateAccount }}
 		>
 			{children}
 		</AuthContext.Provider>

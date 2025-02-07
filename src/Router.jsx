@@ -19,7 +19,6 @@ import AddSmokingAreaImagePage from "@/pages/add-smoking-area/AddSmokingAreaImag
 import EditNamePage from "@/pages/auth/EditNamePage"
 import NoticePage from "@/pages/notices/NoticePage"
 
-// "list" 경로와 하위 페이지들
 const listRoutes = [
 	{
 		index: true,
@@ -38,7 +37,6 @@ const listRoutes = [
 	},
 ]
 
-// "my-page" 경로와 하위 페이지들
 const myPageRoutes = [
 	{
 		index: true,
@@ -54,20 +52,16 @@ const myPageRoutes = [
 	},
 ]
 
-// "add-smoking-area" 경로와 하위 페이지들
 const addSmokingAreaRoutes = [
 	{ path: "location", element: <AddSmokingAreaPage /> },
 	{ path: "name", element: <AddSmokingAreaNamePage /> },
 	{ path: "image", element: <AddSmokingAreaImagePage /> },
 ]
 
-// "favorites" 경로 추가
 const favoritesRoutes = [{ index: true, element: <SavedSmokingAreasPage /> }]
 
-// "notices" 경로 추가
 const noticesRoutes = [{ index: true, element: <NoticePage /> }] //	공지사항목록 단건조회, faq(자주묻는질문),자주묻는 질문 단건 조회 추가예정
 
-// 전체 루트와 경로 정의
 const routes = [
 	{ index: true, element: <HomePage /> },
 	{ path: "list", element: <Outlet />, children: listRoutes },
@@ -82,7 +76,6 @@ const routes = [
 	{ path: "login", element: <LoginPage /> },
 ]
 
-// createBrowserRouter로 전체 라우팅 설정
 export const router = createBrowserRouter([
 	{
 		path: "/",

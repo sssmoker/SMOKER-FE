@@ -7,73 +7,108 @@
 	},
 	"members": [
 		{
-			"member_id": 1,
-			"member_name": "즐거운 하마 134",
-			"login_type": "kakao",
-			"created_at": "2024-01-01T10:00:00",
-			"updated_at": "2024-01-15T10:00:00",
-			"update_count": 5,
+			"memberId": 1,
+			"nickName": "즐거운 하마 134",
+			"profileImageUrl": "https://example.com/profile1.jpg",
+			"loginType": "kakao",
+			"createdAt": "2024-01-01T10:00:00",
+			"updatedAt": "2024-01-15T10:00:00",
+			"updateCount": 5,
 			"status": "active",
-			"inactive_date": null,
-			"details": [
-				{
-					"location": "사당역 2번 출구",
-					"date": "2023-09-13",
-					"description": "6번째 수정에 참여했어요!"
-				},
-				{
-					"location": "광운대학교 동해문화예술관",
-					"date": "2023-09-13",
-					"description": "6번째 수정에 참여했어요!"
-				},
-				{
-					"location": "강남역 1번 출구",
-					"date": "2023-08-25",
-					"description": "5번째 수정에 참여했어요!"
-				},
-				{
-					"location": "홍대입구역 3번 출구",
-					"date": "2023-07-19",
-					"description": "4번째 수정에 참여했어요!"
-				},
-				{
-					"location": "이태원역 4번 출구",
-					"date": "2023-06-10",
-					"description": "3번째 수정에 참여했어요!"
-				},
-				{
-					"location": "서울숲 공원",
-					"date": "2023-05-03",
-					"description": "2번째 수정에 참여했어요!"
-				}
-			]
+			"inactiveDate": null
 		},
 		{
-			"member_id": 2,
-			"member_name": "행복한 고양이 567",
-			"login_type": "google",
-			"created_at": "2024-01-05T12:00:00",
-			"updated_at": "2024-01-20T12:00:00",
-			"update_count": 3,
+			"memberId": 2,
+			"nickName": "행복한 고양이 567",
+			"profileImageUrl": "https://example.com/profile2.jpg",
+			"loginType": "google",
+			"createdAt": "2024-01-05T12:00:00",
+			"updatedAt": "2024-01-20T12:00:00",
+			"updateCount": 3,
 			"status": "inactive",
-			"inactive_date": "2024-02-01T12:00:00",
-			"details": [
-				{
-					"location": "서울역",
-					"date": "2023-09-01",
-					"description": "3번째 수정에 참여했어요!"
-				},
-				{
-					"location": "건대입구역 2번 출구",
-					"date": "2023-08-10",
-					"description": "2번째 수정에 참여했어요!"
-				},
-				{
-					"location": "한강공원",
-					"date": "2023-07-20",
-					"description": "1번째 수정에 참여했어요!"
-				}
-			]
+			"inactiveDate": "2024-02-01T12:00:00"
+		}
+	],
+	"reviews": [
+		{
+			"reviewId": 1,
+			"memberId": 1,
+			"createdAt": "2024-01-12T14:00:00",
+			"smokingArea": "사당역 2번 출구 앞 흡연 부스",
+			"reviewScore": 4.5,
+			"imgUrl": "https://example.com/review1.jpg",
+			"content": "실내 흡연장이지만 환기가 잘 됩니다."
+		},
+		{
+			"reviewId": 2,
+			"memberId": 2,
+			"createdAt": "2024-01-18T15:00:00",
+			"smokingArea": "카페 앞 흡연 구역",
+			"reviewScore": 4.0,
+			"imgUrl": "https://example.com/review2.jpg",
+			"content": "쓰레기통이 있어서 편리했어요."
+		},
+		{
+			"reviewId": 3,
+			"memberId": 1,
+			"createdAt": "2024-01-25T16:00:00",
+			"smokingArea": "공원 흡연 부스",
+			"reviewScore": 5.0,
+			"imgUrl": "https://example.com/review3.jpg",
+			"content": "공원에 있어서 공기도 좋고 깨끗해요."
+		}
+	],
+	"updates": [
+		{
+			"updateHistoryId": 1,
+			"memberId": 1,
+			"smokingAreaName": "사당역 2번 출구",
+			"createdAt": "2023-09-13",
+			"content": "6번째 수정에 참여했어요!"
+		},
+		{
+			"updateHistoryId": 2,
+			"memberId": 1,
+			"smokingAreaName": "광운대학교 동해문화예술관",
+			"createdAt": "2023-09-13",
+			"content": "6번째 수정에 참여했어요!"
+		},
+		{
+			"updateHistoryId": 3,
+			"memberId": 2,
+			"smokingAreaName": "서울역",
+			"createdAt": "2023-09-01",
+			"content": "3번째 수정에 참여했어요!"
+		}
+	],
+	"authResponses": [
+		{
+			"memberId": 1,
+			"accessToken": "sample-access-token-1",
+			"refreshToken": "sample-refresh-token-1"
+		},
+		{
+			"memberId": 2,
+			"accessToken": "sample-access-token-2",
+			"refreshToken": "sample-refresh-token-2"
+		}
+	],
+	"tokens": [
+		{
+			"refreshToken": "sample-refresh-token-1"
+		},
+		{
+			"refreshToken": "sample-refresh-token-2"
+		}
+	],
+	"nicknameChangeRequests": [
+		{
+			"memberId": 1,
+			"nickname": "기쁜 너구리 888"
+		},
+		{
+			"memberId": 2,
+			"nickname": "멋진 판다 999"
 		}
 	],
 	"smokingAreas": [
@@ -132,35 +167,6 @@
 			"created_at": "2024-01-25T18:00:00",
 			"updated_at": "2024-02-01T18:00:00",
 			"region_id": 1
-		}
-	],
-	"reviews": [
-		{
-			"id": 1,
-			"user_id": 1,
-			"rating": 4.5,
-			"body": "실내 흡연장이지만 환기가 잘 됩니다.",
-			"created_at": "2024-01-12T14:00:00",
-			"updated_at": "2024-01-12T14:00:00",
-			"smoking_id": 1
-		},
-		{
-			"id": 2,
-			"user_id": 2,
-			"rating": 4.0,
-			"body": "쓰레기통이 있어서 편리했어요.",
-			"created_at": "2024-01-18T15:00:00",
-			"updated_at": "2024-01-18T15:00:00",
-			"smoking_id": 2
-		},
-		{
-			"id": 3,
-			"user_id": 1,
-			"rating": 5.0,
-			"body": "공원에 있어서 공기도 좋고 깨끗해요.",
-			"created_at": "2024-01-25T16:00:00",
-			"updated_at": "2024-01-25T16:00:00",
-			"smoking_id": 3
 		}
 	],
 	"savedSmokingAreas": [
