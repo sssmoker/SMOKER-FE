@@ -294,29 +294,29 @@
 					"smokingAreaId": 0,
 					"smokingAreaName": "string",
 					"imageUrl": "",
-					"distance": 0,
+					"distance": 123,
 					"location": {
 						"address": "string",
-						"latitude": 0,
-						"longitude": 0
+						"latitude": 23,
+						"longitude": 23
 					},
-					"reviewCount": 0,
-					"savedCount": 0,
-					"rating": 0
+					"reviewCount": 123,
+					"savedCount": 123,
+					"rating": 4
 				},
 				{
 					"smokingAreaId": 1,
 					"smokingAreaName": "string",
 					"imageUrl": "http://test.api.weniv.co.kr/asset/img/7/thumbnailImg.jpg",
-					"distance": 0,
+					"distance": 456,
 					"location": {
 						"address": "string",
-						"latitude": 0,
-						"longitude": 0
+						"latitude": 56,
+						"longitude": 45
 					},
-					"reviewCount": 0,
-					"savedCount": 0,
-					"rating": 0
+					"reviewCount": 56,
+					"savedCount": 45,
+					"rating": 5
 				}
 			]
 		}

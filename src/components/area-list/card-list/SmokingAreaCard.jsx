@@ -7,8 +7,8 @@ export default function SmokingAreaCard({
 	smokingAreaName,
 	isBookmarked,
 	rating,
-	ratingCount,
-	bookmarkCount,
+	reviewCount,
+	savedCount,
 	distance,
 	imageUrl,
 	smokingAreaId,
@@ -40,17 +40,17 @@ export default function SmokingAreaCard({
 						<div className="flex items-center gap-0.5">
 							<Star className="h-3 w-3 fill-[#4517FF] text-[#4517FF]" />
 							<p className="text-[10px] font-normal text-[#252525]">
-								{`${rating}(${ratingCount}) ꞏ 저장 ${bookmarkCount}`}
+								{`${rating}(${reviewCount}) ꞏ 저장 ${savedCount}`}
 							</p>
 							{!imageUrl && (
 								<p className="ml-1 text-[8px] font-normal text-[#B5B5B5]">
-									{`내 위치에서 ${distance}`}
+									{`내 위치에서 ${distance}m`}
 								</p>
 							)}
 						</div>
 						{imageUrl && (
 							<p className="ml-1 text-[8px] font-normal text-[#B5B5B5]">
-								{`내 위치에서 ${distance}`}
+								{`내 위치에서 ${distance}m`}
 							</p>
 						)}
 					</div>
