@@ -41,8 +41,6 @@ export default function SmokingAreaHistoryPage() {
 		// retryDelay: 2000, // 2초 간격으로 재시도
 	})
 
-	console.log("data: ", data) //
-
 	// if (isLoading) {
 	// 	return <div>로딩 중...</div>
 	// }
