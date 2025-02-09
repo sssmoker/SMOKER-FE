@@ -106,7 +106,6 @@ export default function HomePage() {
 				currentLocation={currentLocation}
 				moveToLocation={moveToLocation}
 				onMarkerClick={handleMarkerClick}
-				결
 			/>
 
 			{selectedMarker && <MarkerPopup marker={selectedMarker} />}

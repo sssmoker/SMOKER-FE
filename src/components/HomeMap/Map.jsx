@@ -37,7 +37,7 @@ const loadKakaoMapScript = () => {
 		}
 
 		const script = document.createElement("script")
-		script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=YOUR_KAKAO_API_KEY&libraries=services`
+		script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=081b17dcc860e4a545cc095e0e255dcd&libraries=services`
 		script.async = true
 		document.head.appendChild(script)
 
