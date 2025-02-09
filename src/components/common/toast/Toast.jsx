@@ -48,8 +48,8 @@ export default function Toast({
 
 Toast.propTypes = {
 	isVisible: PropTypes.bool.isRequired,
-	message: PropTypes.string.isRequired,
-	subMessage: PropTypes.string,
+	message: PropTypes.node.isRequired,
+	subMessage: PropTypes.node,
 	icon: PropTypes.node,
 	duration: PropTypes.number,
 	onClose: PropTypes.func.isRequired,

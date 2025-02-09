@@ -89,17 +89,34 @@ export default function HomePage() {
 	}
 
 	return (
-		<div className="relative h-[100vh] w-full bg-gray-100">
-			<div className="absolute left-0 top-[env(safe-area-inset-top)] z-50 w-full px-4">
-				<SearchBar />
-			</div>
-
-			<div className="absolute top-0 z-10 h-[calc(100%-60px)] w-full">
-				<Map
-					markers={markerData}
-					currentLocation={currentLocation}
-					onMarkerClick={handleMarkerClick}
+		<div className="relative h-screen w-full bg-gray-100">
+			{showAgreementToast && (
+				<AgreementToast
+					isVisible={showAgreementToast}
+					onConfirm={handleAgreementConfirm}
+					onCancel={() => navigate("/login")}
 				/>
+			)}
+
+			<SearchBar onMoveToCurrentLocation={handleMoveToCurrentLocation} />
+
+			<Map
+				markers={markerData}
+				currentLocation={currentLocation}
+				moveToLocation={moveToLocation}
+				onMarkerClick={handleMarkerClick}
+			/>
+
+			{selectedMarker && <MarkerPopup marker={selectedMarker} />}
+
+			<div
+				className={`fixed bottom-[12vh] left-1/2 z-50 flex w-auto max-w-[380px] -translate-x-1/2 justify-center px-4 transition-opacity duration-300 ${
+					showInfoCard ? "pointer-events-none opacity-0" : "opacity-100"
+				}`}
+			>
+				<ComButton size="m" color="purple" onClick={handleListPageNavigation}>
+					목록 보기
+				</ComButton>
 			</div>
 
 			{!isMarkerSelected && (
