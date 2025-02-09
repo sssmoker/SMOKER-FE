@@ -84,6 +84,3 @@ export const logout = async () => await apiRequest(`/api/token/logout`)
 // 오픈 API
 export const fetchOpenApi = async (key) =>
 	await apiRequest(`/api/open-api/${key}`)
-
-// 헬스 체크
-export const healthCheck = async () => await apiRequest(`/health`)

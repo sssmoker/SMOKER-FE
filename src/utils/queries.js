@@ -22,7 +22,6 @@ import {
 	reissueToken,
 	logout,
 	fetchOpenApi,
-	healthCheck,
 } from "@/utils/api"
 
 //  흡연 구역 목록 가져오기
@@ -251,13 +250,4 @@ export const useOpenApi = (key) =>
 		enabled: !!key,
 		retry: 1,
 		onError: (error) => console.error("Open API 조회 실패:", error),
-	})
-
-//  서버 헬스 체크
-export const useHealthCheck = () =>
-	useQuery({
-		queryKey: ["healthCheck"],
-		queryFn: healthCheck,
-		retry: 1,
-		onError: (error) => console.error("서버 헬스 체크 실패:", error),
 	})

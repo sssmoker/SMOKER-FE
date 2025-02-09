@@ -9,13 +9,19 @@ import BackButton from "@/components/common/button/BackButton"
 import { motion, AnimatePresence } from "framer-motion"
 
 const options = [
-	"환풍시설이 있어요",
-	"깔끔해요",
-	"쓰레기통이 있어요",
-	"의자가 있어요",
-	"장애인 편의시설이에요",
-	"냉난방이 가능해요",
-	"야외에 있어요",
+	"공기 청정 기능",
+	"냉난방 기능",
+	"쓰레기통",
+	"비상버튼",
+	"환기 시스템",
+	"휠체어 진입 가능",
+	"음성 안내 시스템",
+	"CCTV 설치",
+	"담배꽁초 처리함",
+	"햇빛 차단 시설",
+	"소화기 비치",
+	"정기적인 청소",
+	"비바람 차단 시설",
 ]
 
 export default function AddSmokingAreaNamePage() {
