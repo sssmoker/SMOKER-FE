@@ -1,10 +1,11 @@
-import React from "react"
+import React, { useState } from "react"
+import PropTypes from "prop-types"
 import { MapPin, PencilLine, Star, User } from "lucide-react"
-import { useNavigate, useLocation } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
-export default function Navbar() {
+export default function Navbar({ onRefresh }) {
+	const [activeIndex, setActiveIndex] = useState(0)
 	const navigate = useNavigate()
-	const location = useLocation()
 
 	const menuItems = [
 		{ icon: <MapPin className="h-6 w-6" />, label: "지도", path: "/" },
@@ -20,9 +21,6 @@ export default function Navbar() {
 			path: "/my-page",
 		},
 	]
-	const activeIndex = menuItems.findIndex(
-		(item) => location.pathname === item.path,
-	)
 
 	return (
 		<div className="fixed bottom-0 left-0 right-0 z-10 mx-auto w-full">
@@ -33,7 +31,13 @@ export default function Navbar() {
 					return (
 						<button
 							key={index}
-							onClick={() => navigate(item.path)}
+							onClick={() => {
+								setActiveIndex(index)
+								navigate(item.path)
+								if (item.path === "/" && onRefresh) {
+									onRefresh()
+								}
+							}}
 							className={`flex w-full flex-col items-center justify-center rounded-lg transition-all duration-300 ${
 								isActive
 									? "h-[6vh] bg-[#F6F3FF] text-[#4517FF]"
@@ -52,4 +56,8 @@ export default function Navbar() {
 			</div>
 		</div>
 	)
+}
+
+Navbar.propTypes = {
+	onRefresh: PropTypes.func,
 }
