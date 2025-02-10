@@ -13,110 +13,86 @@ import MemberInfoPage from "@/pages/auth/MemberInfoPage"
 import LoginPage from "@/pages/auth/LoginPage"
 import SavedSmokingAreasPage from "@/pages/favorites/SavedSmokingAreasPage"
 import AddSmokingAreaImagePage from "@/pages/add-smoking-area/AddSmokingAreaImagePage"
+import EditNamePage from "@/pages/auth/EditNamePage"
+import NoticePage from "@/pages/notices/NoticePage"
 import SmokingAreaHistoryPage from "./pages/smoking-area/SmokingAreaHistoryPage"
-// "list" 경로와 하위 페이지들
 const listRoutes = [
 	{
-		index: true, // 기본 ListPage
+		index: true,
 		element: <ListPage />,
 	},
 	{
 		path: "smoking-area",
-		element: <Outlet />, // 하위 smoking-area 페이지들
+		element: <Outlet />,
 		children: [
+			{ index: true, element: <SmokingAreaPage /> },
+			{ path: "detail", element: <SmokingAreaDetailPage /> },
+			{ path: "review", element: <SmokingAreaReviewPage /> },
+			{ path: "update", element: <SmokingAreaUpdatePage /> },
+			{ path: "writing-review", element: <WritingReviewPage /> },
 			{
 				index: true,
-				element: <SmokingAreaPage />, // 상세 정보 및 후기 페이지
+				element: <SmokingAreaPage />,
 			},
 			{
 				path: "history",
-				element: <SmokingAreaHistoryPage />, // 히스토리 페이지
+				element: <SmokingAreaHistoryPage />,
 			},
 			{
 				path: "update",
-				element: <SmokingAreaUpdatePage />, // 흡연 구역 업데이트 페이지
+				element: <SmokingAreaUpdatePage />,
 			},
 			{
 				path: "writing-review",
-				element: <WritingReviewPage />, // 리뷰 작성 페이지
+				element: <WritingReviewPage />,
 			},
 		],
 	},
 ]
 
-// "my-page" 경로와 하위 페이지들
 const myPageRoutes = [
 	{
 		index: true,
-		element: <MyPage />, // 기본 마이 페이지
-	},
-	{
-		path: "login",
-		element: <LoginPage />, // 로그인 페이지
+		element: <MyPage />,
 	},
 	{
 		path: "info",
-		element: <MemberInfoPage />, // 회원 정보 페이지
-	},
-]
-
-// "add-smoking-area" 경로와 하위 페이지들
-const addSmokingAreaRoutes = [
-	{
-		path: "location",
-		element: <AddSmokingAreaPage />, // 위치 설정 페이지
-	},
-	{
-		path: "name",
-		element: <AddSmokingAreaNamePage />, // 이름 입력 페이지
-	},
-	{
-		path: "image",
-		element: <AddSmokingAreaImagePage />, // 이름 입력 페이지
-	},
-]
-
-// "favorites" 경로 추가
-const favoritesRoutes = [
-	{
-		index: true,
-		element: <SavedSmokingAreasPage />, // 저장된 흡연 구역 페이지
-	},
-]
-
-// 전체 루트와 경로 정의
-const routes = [
-	{
-		index: true,
-		element: <HomePage />, // 홈 페이지
-	},
-	{
-		path: "list",
 		element: <Outlet />,
-		children: listRoutes, // "list"와 하위 경로
+		children: [
+			{ index: true, element: <MemberInfoPage /> },
+			{ path: "edit-name", element: <EditNamePage /> },
+		],
 	},
+]
+
+const addSmokingAreaRoutes = [
+	{ path: "location", element: <AddSmokingAreaPage /> },
+	{ path: "name", element: <AddSmokingAreaNamePage /> },
+	{ path: "image", element: <AddSmokingAreaImagePage /> },
+]
+
+const favoritesRoutes = [{ index: true, element: <SavedSmokingAreasPage /> }]
+
+const noticesRoutes = [{ index: true, element: <NoticePage /> }] //	공지사항목록 단건조회, faq(자주묻는질문),자주묻는 질문 단건 조회 추가예정
+
+const routes = [
+	{ index: true, element: <HomePage /> },
+	{ path: "list", element: <Outlet />, children: listRoutes },
 	{
 		path: "add-smoking-area",
 		element: <Outlet />,
-		children: addSmokingAreaRoutes, // "add-smoking-area"와 하위 경로
+		children: addSmokingAreaRoutes,
 	},
-	{
-		path: "my-page",
-		element: <Outlet />,
-		children: myPageRoutes, // "my-page"와 하위 경로
-	},
-	{
-		path: "favorites",
-		element: <Outlet />,
-		children: favoritesRoutes, // "favorites" 경로와 하위 경로
-	},
+	{ path: "my-page", element: <Outlet />, children: myPageRoutes },
+	{ path: "favorites", element: <Outlet />, children: favoritesRoutes },
+	{ path: "notices", element: <Outlet />, children: noticesRoutes },
+	{ path: "login", element: <LoginPage /> },
 ]
 
-// createBrowserRouter로 전체 라우팅 설정
 export const router = createBrowserRouter([
 	{
 		path: "/",
-		element: <RootLayout />, // 레이아웃 컴포넌트
+		element: <RootLayout />,
 		children: routes,
 	},
 ])

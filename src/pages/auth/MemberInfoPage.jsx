@@ -1,99 +1,85 @@
 import React, { useState, useEffect } from "react"
+import { useNavigate } from "react-router-dom"
+import BackButton from "@/components/common/button/BackButton"
+import ProfileSection from "@/components/member-info/ProfileSection"
+import DetailSection from "@/components/member-info/DetailSection"
+import ReviewSection from "@/components/member-info/ReviewSection"
+import { useAuthContext } from "@/contexts/AuthContext"
 
 export default function MemberInfoPage() {
+	const navigate = useNavigate()
+	const { member } = useAuthContext()
 	const [memberInfo, setMemberInfo] = useState(null)
 	const [reviews, setReviews] = useState([])
-	const [tab, setTab] = useState("info") // "info" or "reviews"
+	const [tab, setTab] = useState("info")
 
 	useEffect(() => {
-		// Fetch member information
+		if (!member) return
+
 		const fetchMemberInfo = async () => {
 			try {
-				const response = await fetch("http://localhost:3001/member")
+				const response = await fetch(
+					`http://localhost:3001/members?memberId=${member.memberId}`,
+				)
 				const data = await response.json()
-				setMemberInfo(data)
+				if (data.length > 0) setMemberInfo(data[0])
 			} catch (error) {
-				console.error("Failed to fetch member info:", error)
+				console.error("회원 정보 불러오기 실패:", error)
 			}
 		}
 
-		// Fetch member reviews
 		const fetchReviews = async () => {
 			try {
-				const response = await fetch("http://localhost:3001/member/reviews")
+				const response = await fetch(
+					`http://localhost:3001/reviews?memberId=${member.memberId}`,
+				)
 				const data = await response.json()
 				setReviews(data)
 			} catch (error) {
-				console.error("Failed to fetch reviews:", error)
+				console.error("리뷰 정보 불러오기 실패:", error)
 			}
 		}
 
 		fetchMemberInfo()
 		fetchReviews()
-	}, [])
+	}, [member])
 
 	return (
-		<div className="flex h-screen flex-col bg-gray-100">
-			<header className="border-b border-gray-300 p-4 text-lg font-bold">
-				회원정보
+		<div className="flex h-screen flex-col bg-white">
+			<header className="flex items-center bg-white p-4 text-lg font-bold">
+				<BackButton className="mr-2" />
+				<span>회원정보</span>
 			</header>
-			<div className="mt-4 flex justify-center">
+
+			<ProfileSection memberInfo={memberInfo} navigate={navigate} />
+
+			<div className="mt-2 flex w-full justify-center border-b bg-white">
 				<button
 					onClick={() => setTab("info")}
-					className={`px-4 py-2 ${
-						tab === "info" ? "border-b-2 border-blue-500 text-blue-500" : ""
+					className={`w-1/2 bg-white px-4 py-2 ${
+						tab === "info"
+							? "border-b-2 border-blue-500 text-sm text-blue-500"
+							: "text-sm"
 					}`}
 				>
 					상세 정보
 				</button>
 				<button
 					onClick={() => setTab("reviews")}
-					className={`px-4 py-2 ${
-						tab === "reviews" ? "border-b-2 border-blue-500 text-blue-500" : ""
+					className={`w-1/2 px-4 py-2 text-center ${
+						tab === "reviews"
+							? "border-b-2 border-blue-500 text-sm text-blue-500"
+							: "text-sm"
 					}`}
 				>
 					리뷰
 				</button>
 			</div>
-			{tab === "info" && memberInfo && (
-				<div className="p-4">
-					<h2 className="text-xl font-bold">{memberInfo.user_name}</h2>
-					<p className="text-gray-600">{memberInfo.email}</p>
-					<ul className="mt-4 space-y-2">
-						<li>
-							회원 가입일:{" "}
-							{new Date(memberInfo.created_at).toLocaleDateString()}
-						</li>
-						<li>
-							마지막 업데이트:{" "}
-							{new Date(memberInfo.updated_at).toLocaleDateString()}
-						</li>
-						<li>업데이트 횟수: {memberInfo.update_count}</li>
-					</ul>
-				</div>
-			)}
-			{tab === "reviews" && (
-				<div className="p-4">
-					{reviews.length > 0 ? (
-						reviews.map((review) => (
-							<div
-								key={review.id}
-								className="mb-4 rounded-md border bg-white p-4"
-							>
-								<h3 className="font-bold">{review.smoking_area_name}</h3>
-								<p className="text-sm text-gray-500">{review.body}</p>
-								<div className="flex justify-between text-gray-400">
-									<span>⭐ {review.score}</span>
-									<span>
-										{new Date(review.created_at).toLocaleDateString()}
-									</span>
-								</div>
-							</div>
-						))
-					) : (
-						<p className="text-center text-gray-500">작성한 리뷰가 없습니다.</p>
-					)}
-				</div>
+
+			{tab === "info" ? (
+				<DetailSection memberInfo={memberInfo} />
+			) : (
+				<ReviewSection reviews={reviews} />
 			)}
 		</div>
 	)

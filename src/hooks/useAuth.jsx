@@ -1,15 +1,34 @@
 import { useAuthContext } from "@/contexts/AuthContext"
 
 export const useAuth = () => {
-	const { user, loading, login, logout } = useAuthContext()
+	const authContext = useAuthContext()
 
-	const isLoggedIn = !!user
+	const {
+		member = null,
+		loading = false,
+		login,
+		logout,
+		deactivateAccount,
+	} = authContext || {}
+
+	const isLoggedIn = Boolean(member && member.memberId)
+
+	const authResponse = isLoggedIn
+		? authContext.authResponses?.find(
+				(auth) => auth.memberId === member.memberId,
+			)
+		: null
+
+	const refreshToken = authResponse ? authResponse.refreshToken : null
 
 	return {
-		user,
+		member,
 		isLoggedIn,
 		loading,
 		login,
 		logout,
+		deactivateAccount,
+		authResponse,
+		refreshToken,
 	}
 }
