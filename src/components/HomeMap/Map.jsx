@@ -122,7 +122,7 @@ const addCurrentLocationMarker = (map, currentLocation) => {
       justify-content: center;
       width: 35px;
       height: 35px;
-      background: rgba(248, 150, 179, 0.4);
+      background: rgba(255, 100, 179, 0.6);
       border-radius: 50%;
       position: absolute;
       z-index: 300;
@@ -130,8 +130,8 @@ const addCurrentLocationMarker = (map, currentLocation) => {
 
 		markerDiv.innerHTML = `
       <div style="
-        width: 16px;
-        height: 16px;
+        width: 14px;
+        height: 14px;
         background: yellow;
         border-radius: 50%;
         display: flex;
@@ -139,8 +139,8 @@ const addCurrentLocationMarker = (map, currentLocation) => {
         justify-content: center;
       ">
         <div style="
-          width: 10px;
-          height: 10px;
+          width: 9px;
+          height: 9px;
           background: blue;
           border-radius: 50%;
           display: flex;
@@ -148,8 +148,8 @@ const addCurrentLocationMarker = (map, currentLocation) => {
           justify-content: center;
         ">
           <div style="
-            width: 4px;
-            height: 4px;
+            width: 5px;
+            height: 5px;
             background: yellow;
             border-radius: 50%;
           "></div>
