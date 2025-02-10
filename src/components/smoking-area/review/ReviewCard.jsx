@@ -21,14 +21,17 @@ export default function ReviewCard({ user_id, rating, body, created_at }) {
 							후기 1 ꞏ {created_at}
 						</span>
 					</div>
-					<div className="font-regular text-[10px]">
+					<ul className="font-regular mt-[6px] flex text-[10px]">
 						{Array.from({ length: rating }, (_, index) => (
-							<span key={index} className="mx-[-1px]">
-								⭐
-							</span>
+							<Star
+								key={index}
+								className="h-3 w-3 fill-[#FFDD00] text-[#FFDD00]"
+							/>
 						))}
-					</div>
-					<p className="font-regular text-[10px] text-[#252525]">{body}</p>
+					</ul>
+					<p className="font-regular mt-[2px] text-[10px] text-[#252525]">
+						{body}
+					</p>
 				</div>
 
 				<img

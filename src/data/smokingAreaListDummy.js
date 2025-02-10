@@ -8,7 +8,7 @@ const smokingAreaListDummy = [
 		ratingCount: 3,
 		bookmarkCount: 30,
 		distance: "197m",
-		imgList: [SmokingAreaPng, SmokingAreaPng],
+		img: SmokingAreaPng,
 	},
 	{
 		title: "사당역 2번 출구 앞 흡연 부스",
@@ -17,7 +17,7 @@ const smokingAreaListDummy = [
 		ratingCount: 3,
 		bookmarkCount: 30,
 		distance: "197m",
-		imgList: [SmokingAreaPng, SmokingAreaPng, SmokingAreaPng, SmokingAreaPng],
+		img: SmokingAreaPng,
 	},
 	{
 		title: "사당역 3번 출구 앞 흡연 부스",
@@ -26,7 +26,7 @@ const smokingAreaListDummy = [
 		ratingCount: 3,
 		bookmarkCount: 30,
 		distance: "197m",
-		imgList: [SmokingAreaPng, SmokingAreaPng, SmokingAreaPng, SmokingAreaPng],
+		img: false,
 	},
 	{
 		title: "사당역 4번 출구 앞 흡연 부스",
@@ -35,7 +35,7 @@ const smokingAreaListDummy = [
 		ratingCount: 3,
 		bookmarkCount: 30,
 		distance: "197m",
-		imgList: [SmokingAreaPng, SmokingAreaPng, SmokingAreaPng, SmokingAreaPng],
+		img: false,
 	},
 	{
 		title: "사당역 4번 출구 앞 흡연 부스",
@@ -44,7 +44,7 @@ const smokingAreaListDummy = [
 		ratingCount: 3,
 		bookmarkCount: 30,
 		distance: "197m",
-		imgList: [SmokingAreaPng, SmokingAreaPng, SmokingAreaPng, SmokingAreaPng],
+		img: SmokingAreaPng,
 	},
 	{
 		title: "사당역 4번 출구 앞 흡연 부스",
@@ -53,7 +53,7 @@ const smokingAreaListDummy = [
 		ratingCount: 3,
 		bookmarkCount: 30,
 		distance: "197m",
-		imgList: [SmokingAreaPng, SmokingAreaPng, SmokingAreaPng, SmokingAreaPng],
+		img: SmokingAreaPng,
 	},
 	{
 		title: "사당역 4번 출구 앞 흡연 부스",
@@ -62,7 +62,7 @@ const smokingAreaListDummy = [
 		ratingCount: 3,
 		bookmarkCount: 30,
 		distance: "197m",
-		imgList: [SmokingAreaPng, SmokingAreaPng, SmokingAreaPng, SmokingAreaPng],
+		img: SmokingAreaPng,
 	},
 ]
 

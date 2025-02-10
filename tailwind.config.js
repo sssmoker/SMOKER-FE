@@ -1,7 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-	darkMode: ["class"], // 다크모드 설정
-	content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"], // Tailwind가 적용될 파일 경로
+	content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
 	theme: {
 		extend: {
 			gradientColorStops: {
@@ -9,7 +8,7 @@ export default {
 				white: "rgba(255,255,255,1)",
 			},
 			colors: {
-				primary: "#1D4ED8", // 메인 색상 추가
+				primary: "#1D4ED8",
 				secondary: "#9333EA",
 				background: "hsl(var(--background))",
 				foreground: "hsl(var(--foreground))",
@@ -20,14 +19,6 @@ export default {
 				popover: {
 					DEFAULT: "hsl(var(--popover))",
 					foreground: "hsl(var(--popover-foreground))",
-				},
-				primary: {
-					DEFAULT: "hsl(var(--primary))",
-					foreground: "hsl(var(--primary-foreground))",
-				},
-				secondary: {
-					DEFAULT: "hsl(var(--secondary))",
-					foreground: "hsl(var(--secondary-foreground))",
 				},
 				muted: {
 					DEFAULT: "hsl(var(--muted))",
@@ -53,10 +44,10 @@ export default {
 				},
 			},
 			screens: {
-				xs: "375px", // 작은 모바일 화면
+				xs: "375px",
 			},
 			spacing: {
-				25.5: "6.375rem", // 102px
+				// 25.5: "6.375rem", // 102px
 			},
 			fontSize: {
 				2: "0.5rem", // 8px
@@ -69,5 +60,6 @@ export default {
 			},
 		},
 	},
+	// eslint-disable-next-line no-undef
 	plugins: [require("tailwindcss-animate")], // 플러그인 설정
 }
