@@ -3,9 +3,11 @@ import PropTypes from "prop-types"
 import { AlertCircle } from "lucide-react"
 import ComButton from "@/components/common/button/ComButton"
 import Toast from "@/components/common/toast/Toast"
+import { useNavigate } from "react-router-dom"
 
 export default function AgreementToast({ isVisible, onConfirm, onCancel }) {
 	const [isChecked, setIsChecked] = useState(false)
+	const navigate = useNavigate()
 
 	const handleCheckboxChange = () => {
 		setIsChecked((prev) => !prev)
@@ -16,7 +18,7 @@ export default function AgreementToast({ isVisible, onConfirm, onCancel }) {
 	}
 
 	const handleLoginClick = () => {
-		onCancel()
+		navigate("login")
 	}
 
 	return (
