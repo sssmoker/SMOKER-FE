@@ -1,7 +1,7 @@
 import React from "react"
 import { Star } from "lucide-react"
 
-import DummyPng from "@/assets/dummy/SM_01_img1.png" // imageUrl
+import DummyPng from "@/assets/dummy/sample-list.png"
 
 export default function ReviewCard({ user_id, rating, body, created_at }) {
 	return (
