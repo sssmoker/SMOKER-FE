@@ -4,7 +4,7 @@ import BackgroundImg from "@/components/smoking-area/upper-info/BackgroundImg"
 import SmokingAreaInfo from "@/components/smoking-area/upper-info/SmokingAreaInfo"
 import PageNavButton from "@/components/smoking-area/PageNavButton"
 import SmokingAreaDetailPage from "./SmokingAreaDetailPage"
-import SmokingAreaReviewPage from "./SmokingAreaReviewPage"
+import SmokingAreaReviewPage from "../update-smoking-area/SmokingAreaHistoryPage"
 import FloatingButton from "@/components/smoking-area/review/FloatingButton"
 
 export default function SmokingAreaPage() {

@@ -1,8 +1,8 @@
 import React, { useState } from "react"
 import BackButton from "@/components/common/button/BackButton"
 import ComButton from "@/components/common/button/ComButton"
-import CompleteToast from "@/components/smoking-add/completeToast"
-import AlertToast from "@/components/smoking-add/alertToast"
+import CompleteToast from "@/components/smoking-add/CompleteToast"
+import AlertToast from "@/components/smoking-add/AlertToast"
 
 export default function AddSmokingAreaImagePage() {
 	const [image, setImage] = useState(null)
