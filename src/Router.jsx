@@ -16,6 +16,10 @@ import AddSmokingAreaImagePage from "@/pages/add-smoking-area/AddSmokingAreaImag
 import EditNamePage from "@/pages/auth/EditNamePage"
 import NoticePage from "@/pages/notices/NoticePage"
 import SmokingAreaHistoryPage from "./pages/smoking-area/SmokingAreaHistoryPage"
+import SmokingAreaDetailPage from "./pages/smoking-area/SmokingAreaDetailPage"
+import SmokingAreaReviewPage from "./pages/smoking-area/SmokingAreaReviewPage"
+import OAuthRedirectHandler from "@/pages/auth/OAuthRedirectHandler"
+
 const listRoutes = [
 	{
 		index: true,
@@ -87,6 +91,7 @@ const routes = [
 	{ path: "favorites", element: <Outlet />, children: favoritesRoutes },
 	{ path: "notices", element: <Outlet />, children: noticesRoutes },
 	{ path: "login", element: <LoginPage /> },
+	{ path: "oauth/callback", element: <OAuthRedirectHandler /> },
 ]
 
 export const router = createBrowserRouter([
