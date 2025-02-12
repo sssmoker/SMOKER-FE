@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import Map from "@/components/HomeMap/Map"
+import Map from "@/components/home-map/Map"
 import ComButton from "@/components/common/button/ComButton"
 import { ChevronLeft } from "lucide-react"
 

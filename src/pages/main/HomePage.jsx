@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import SearchBar from "@/components/common/SearchBar"
-import Map from "@/components/HomeMap/Map"
-import AgreementToast from "@/components/common/toast/AgreementToast"
+import Map from "@/components/home-map/Map"
+import AgreementToast from "@/components/home-map/AgreementToast"
 import ComButton from "@/components/common/button/ComButton"
-import MarkerInfoCard from "@/components/HomeMap/MarkerInfoCard"
-import MarkerPopup from "@/components/HomeMap/MarkerPopup"
+import MarkerInfoCard from "@/components/home-map/MarkerInfoCard"
+import MarkerPopup from "@/components/home-map/MarkerPopup"
 
 export default function HomePage() {
 	const [markerData, setMarkerData] = useState([])

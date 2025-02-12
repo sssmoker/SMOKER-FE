@@ -18,7 +18,7 @@ export default function AgreementToast({ isVisible, onConfirm, onCancel }) {
 	}
 
 	const handleLoginClick = () => {
-		navigate("login")
+		navigate("/login")
 	}
 
 	return (
