@@ -37,26 +37,25 @@ export default function ListPage() {
 	const { data, error, isLoading } = useQuery({
 		queryKey: ["smokingAreaList", userLat, userLng, selectedFilter],
 		queryFn: async () => {
-			const response = await fetch(
-				"http://localhost:3001/list",
-				// "https://api.smoker.my/api/smoking-area/list",
-				{
-					method: "GET",
-					headers: {
-						"Content-Type": "application/json",
-					},
-				},
-			)
+			const url = new URL("https://api.smoker.my/api/smoking-area/list")
+			url.searchParams.append("userLat", userLat.toString())
+			url.searchParams.append("userLng", userLng.toString())
+			url.searchParams.append("filter", selectedFilter)
+
+			const response = await fetch(url.toString(), {
+				method: "GET",
+			})
+
 			if (!response.ok) {
 				const errorMessage = await response.text()
+				console.log(`데이터 호출 실패: ${errorMessage}`)
 				throw new Error(`데이터 호출 실패: ${errorMessage}`)
 			}
+			//
 			const jsonResponse = await response.json()
 			return jsonResponse?.result?.smokingAreas
 		},
-		retry: false, // 재시도 방지
-		// retry: 2, // 2번만 재시도
-		// retryDelay: 2000, // 2초 간격으로 재시도
+		retry: 2, // 2번만 재시도
 	})
 
 	const handleMoveToHome = () => {
