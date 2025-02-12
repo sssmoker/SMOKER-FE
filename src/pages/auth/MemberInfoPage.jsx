@@ -34,13 +34,14 @@ export default function MemberInfoPage() {
 
 			<ProfileSection memberInfo={memberInfo} navigate={navigate} />
 
-			<div className="mt-2 flex w-full justify-center border-b bg-white">
-				<button className="w-1/2 border-b-2 border-blue-500 px-4 py-2 text-sm text-blue-500">
+			<div className="relative mt-2 flex w-full justify-center border-b bg-white">
+				<button className="font-regular relative w-1/2 px-4 py-2 text-[12px] text-[#252525]">
 					상세 정보
+					<span className="absolute bottom-0 left-1/2 h-[0.1px] w-[50px] -translate-x-1/2 bg-[#252525]"></span>
 				</button>
 				<button
 					onClick={() => navigate(`/my-page/${memberId}/reviews`)}
-					className="w-1/2 px-4 py-2 text-sm text-gray-500"
+					className="font-regular w-1/2 px-4 py-2 text-[12px] text-[#252525]"
 				>
 					리뷰
 				</button>

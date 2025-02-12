@@ -17,7 +17,6 @@ export default function DetailSection({ memberInfo }) {
 	useEffect(() => {
 		if (!memberInfo) return
 
-		// ✅ 업데이트 정보 불러오기
 		const fetchUpdates = async () => {
 			try {
 				const response = await fetch(
@@ -25,13 +24,12 @@ export default function DetailSection({ memberInfo }) {
 				)
 				const data = await response.json()
 
-				// 🔍 최신순 정렬
 				const sortedUpdates = data.sort(
 					(a, b) => new Date(b.createdAt) - new Date(a.createdAt),
 				)
 				setUpdates(sortedUpdates)
 			} catch (error) {
-				console.error("❌ [DetailSection] 업데이트 정보 불러오기 실패:", error)
+				console.error("[DetailSection] 업데이트 정보 불러오기 실패:", error)
 			}
 		}
 
@@ -40,7 +38,9 @@ export default function DetailSection({ memberInfo }) {
 
 	if (!updates.length) {
 		return (
-			<p className="mt-4 text-center text-gray-500">수정 내역이 없습니다.</p>
+			<p className="mt-4 text-center text-gray-500">
+				업데이트 내역이 없습니다.
+			</p>
 		)
 	}
 
