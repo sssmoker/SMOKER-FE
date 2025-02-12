@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { ChevronRight } from "lucide-react"
 import BackButton from "@/components/common/button/BackButton"
@@ -8,15 +8,16 @@ export default function MyPage() {
 	const navigate = useNavigate()
 	const { member, logout, deactivateAccount } = useAuthContext()
 
-	if (!member) {
-		navigate("/login")
-		return null
-	}
+	useEffect(() => {
+		if (!member) navigate("/login")
+	}, [member, navigate])
+
+	if (!member) return null
 
 	const menuItems = [
-		{ label: "회원 정보", path: "/my-page/info" },
-		{ label: "공지사항", path: "/notices" },
-		{ label: "자주 묻는 질문", path: "/faq" },
+		{ label: "회원 정보", path: `/my-page/${member.memberId}/info` },
+		{ label: "공지사항", path: "/my-page/notices" },
+		{ label: "자주 묻는 질문", path: "/my-page/questions" },
 		{ label: "1:1 문의", path: "/inquiry" },
 		{ label: "서비스 이용 약관", path: "/terms" },
 		{ label: "위치 기반 서비스 이용 약관", path: "/location-terms" },

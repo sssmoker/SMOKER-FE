@@ -10,11 +10,13 @@ import AddSmokingAreaPage from "@/pages/add-smoking-area/AddSmokingAreaPage"
 import AddSmokingAreaNamePage from "@/pages/add-smoking-area/AddSmokingAreaNamePage"
 import MyPage from "@/pages/auth/MyPage"
 import MemberInfoPage from "@/pages/auth/MemberInfoPage"
+import MemberReviewsPage from "@/pages/auth/MemberReviewsPage"
+import EditNamePage from "@/pages/auth/EditNamePage"
+import QuestionsPage from "@/pages/questions/QuestionsPage"
+import NoticesPage from "@/pages/notices/NoticesPage"
 import LoginPage from "@/pages/auth/LoginPage"
 import SavedSmokingAreasPage from "@/pages/favorites/SavedSmokingAreasPage"
 import AddSmokingAreaImagePage from "@/pages/add-smoking-area/AddSmokingAreaImagePage"
-import EditNamePage from "@/pages/auth/EditNamePage"
-import NoticePage from "@/pages/notices/NoticePage"
 import SmokingAreaHistoryPage from "./pages/smoking-area/SmokingAreaHistoryPage"
 import SmokingAreaDetailPage from "./pages/smoking-area/SmokingAreaDetailPage"
 import SmokingAreaReviewPage from "./pages/smoking-area/SmokingAreaReviewPage"
@@ -34,22 +36,7 @@ const listRoutes = [
 			{ path: "review", element: <SmokingAreaReviewPage /> },
 			{ path: "update", element: <SmokingAreaUpdatePage /> },
 			{ path: "writing-review", element: <WritingReviewPage /> },
-			{
-				index: true,
-				element: <SmokingAreaPage />,
-			},
-			{
-				path: "history",
-				element: <SmokingAreaHistoryPage />,
-			},
-			{
-				path: "update",
-				element: <SmokingAreaUpdatePage />,
-			},
-			{
-				path: "writing-review",
-				element: <WritingReviewPage />,
-			},
+			{ path: "history", element: <SmokingAreaHistoryPage /> },
 		],
 	},
 ]
@@ -60,13 +47,16 @@ const myPageRoutes = [
 		element: <MyPage />,
 	},
 	{
-		path: "info",
+		path: ":memberId",
 		element: <Outlet />,
 		children: [
-			{ index: true, element: <MemberInfoPage /> },
-			{ path: "edit-name", element: <EditNamePage /> },
+			{ path: "info", element: <MemberInfoPage /> },
+			{ path: "reviews", element: <MemberReviewsPage /> },
+			{ path: "name", element: <EditNamePage /> },
 		],
 	},
+	{ path: "questions", element: <QuestionsPage /> },
+	{ path: "notices", element: <NoticesPage /> },
 ]
 
 const addSmokingAreaRoutes = [
@@ -76,8 +66,6 @@ const addSmokingAreaRoutes = [
 ]
 
 const favoritesRoutes = [{ index: true, element: <SavedSmokingAreasPage /> }]
-
-const noticesRoutes = [{ index: true, element: <NoticePage /> }] //	공지사항목록 단건조회, faq(자주묻는질문),자주묻는 질문 단건 조회 추가예정
 
 const routes = [
 	{ index: true, element: <HomePage /> },
@@ -89,7 +77,6 @@ const routes = [
 	},
 	{ path: "my-page", element: <Outlet />, children: myPageRoutes },
 	{ path: "favorites", element: <Outlet />, children: favoritesRoutes },
-	{ path: "notices", element: <Outlet />, children: noticesRoutes },
 	{ path: "login", element: <LoginPage /> },
 	{ path: "oauth/callback", element: <OAuthRedirectHandler /> },
 ]

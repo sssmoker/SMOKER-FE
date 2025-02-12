@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import BackButton from "@/components/common/button/BackButton"
 
-export default function NoticePage() {
+export default function NoticesPage() {
 	const navigate = useNavigate()
 	const [notices, setNotices] = useState([])
 	const [currentPage, setCurrentPage] = useState(1)
