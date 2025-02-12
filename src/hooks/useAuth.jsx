@@ -13,14 +13,6 @@ export const useAuth = () => {
 
 	const isLoggedIn = Boolean(member && member.memberId)
 
-	const authResponse = isLoggedIn
-		? authContext.authResponses?.find(
-				(auth) => auth.memberId === member.memberId,
-			)
-		: null
-
-	const refreshToken = authResponse ? authResponse.refreshToken : null
-
 	return {
 		member,
 		isLoggedIn,
@@ -28,7 +20,5 @@ export const useAuth = () => {
 		login,
 		logout,
 		deactivateAccount,
-		authResponse,
-		refreshToken,
 	}
 }

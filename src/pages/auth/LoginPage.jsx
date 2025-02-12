@@ -5,6 +5,26 @@ import KakaoSymbol from "@/assets/KakaoSymbol.svg"
 import GoogleSymbol from "@/assets/GoogleSymbol.svg"
 import { useAuthContext } from "@/contexts/AuthContext"
 
+//서버 연결시
+/*
+export default function LoginPage() {
+  const navigate = useNavigate()
+  
+  const KAKAO_AUTH_URL = `http://localhost:8080/oauth2/authorization/kakao`
+  const GOOGLE_AUTH_URL = `http://localhost:8080/oauth2/authorization/google`
+
+  const kakaoLogin = () => {
+    window.location.href = KAKAO_AUTH_URL;
+  };
+
+  // 구글 로그인 요청
+  const googleLogin = () => {
+    window.location.href = GOOGLE_AUTH_URL;
+  };
+
+*/
+
+//현재 JSON서버
 export default function LoginPage() {
 	const navigate = useNavigate()
 	const { login } = useAuthContext()
@@ -21,14 +41,13 @@ export default function LoginPage() {
 				setError("로그인 실패! 다시 시도해주세요.")
 				return
 			}
-			navigate("/") //로그인 후 홈으로 이동
+			navigate("/")
 		} catch (err) {
 			setError(`${provider} 로그인 중 오류가 발생했습니다.`)
 		}
 
 		setTimeout(() => setIsGoogleClicked(false), 300)
 	}
-
 	return (
 		<div className="flex min-h-screen flex-col items-center gap-y-8 bg-white px-6">
 			<div className="w-full p-4">

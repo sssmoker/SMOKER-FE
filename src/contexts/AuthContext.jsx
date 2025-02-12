@@ -16,60 +16,86 @@ export const AuthProvider = ({ children }) => {
 			const storedTokens = sessionStorage.getItem("tokens")
 
 			if (storedMember && storedTokens) {
-				const parsedTokens = JSON.parse(storedTokens)
 				const parsedMember = JSON.parse(storedMember)
+				const parsedTokens = JSON.parse(storedTokens)
 
-				if (parsedMember && parsedMember.memberId) {
+				if (parsedMember?.memberId) {
 					setMember(parsedMember)
 					setTokens(parsedTokens)
 				} else {
-					console.warn("⚠️ [AuthContext] 잘못된 member 데이터!")
 					sessionStorage.removeItem("member")
 					sessionStorage.removeItem("tokens")
 				}
 			}
 		} catch (error) {
-			console.error("❌ [AuthContext] 세션 데이터 불러오기 오류:", error)
+			console.error("[AuthContext] 세션 데이터 불러오기 오류:", error)
 		} finally {
 			setLoading(false)
 		}
 	}, [])
 
+	/* 서버 연결 후 login 함수
+
+	const login = async (provider, code) => {
+	try {
+		const response = await fetch(
+			`http://localhost:8080/api/auth/login/${provider}?code=${code}`
+		)
+		const data = await response.json()
+
+		if (!data.accessToken) {
+			throw new Error("로그인 실패")
+		}
+
+		sessionStorage.setItem("accessToken", data.accessToken)
+		sessionStorage.setItem("refreshToken", data.refreshToken)
+		sessionStorage.setItem("member", JSON.stringify(data.member))
+
+		setTokens({ accessToken: data.accessToken, refreshToken: data.refreshToken })
+		setMember(data.member)
+
+		return true
+	} catch (error) {
+		console.error("[AuthContext] 로그인 오류:", error)
+		return false
+	}
+}
+ */
+
+	//백엔드 서버와 연결시 그거에 맞게 수정 (현재 JSON)
 	const login = async (provider) => {
 		try {
-			const response = await fetch(
-				`http://localhost:3001/members?login_type=${provider}`,
+			const memberResponse = await fetch(
+				`http://localhost:3001/members?loginType=${provider}`,
 			)
-			const data = await response.json()
+			const memberData = await memberResponse.json()
 
-			if (data.length === 0) {
-				throw new Error(`${provider} 로그인 실패`)
+			if (memberData.length === 0) {
+				throw new Error(`${provider} 로그인 실패 (해당 사용자 없음)`)
 			}
 
-			const memberData = data.find((user) => user.loginType === provider)
+			const member = memberData[0]
 
-			if (!memberData) {
-				throw new Error("해당 로그인 타입의 사용자가 없습니다.")
-			}
-
-			const tokenResponse = await fetch(
-				`http://localhost:3001/authResponses?memberId=${memberData.memberId}`,
+			const authResponse = await fetch(
+				`http://localhost:3001/authResponses?memberId=${member.memberId}`,
 			)
-			const tokenData = await tokenResponse.json()
+			const authData = await authResponse.json()
 
-			if (tokenData.length === 0 || !tokenData[0].accessToken) {
-				throw new Error("토큰 발급 실패")
+			if (authData.length === 0) {
+				throw new Error("로그인 정보가 없습니다.")
 			}
 
-			sessionStorage.setItem("tokens", JSON.stringify(tokenData[0]))
-			sessionStorage.setItem("member", JSON.stringify(memberData))
+			const authTokens = authData[0]
 
-			setTokens(tokenData[0])
-			setMember(memberData)
+			sessionStorage.setItem("tokens", JSON.stringify(authTokens))
+			sessionStorage.setItem("member", JSON.stringify(member))
+
+			setTokens(authTokens)
+			setMember(member)
 
 			return true
 		} catch (error) {
-			console.error("❌ [AuthContext] 로그인 오류:", error)
+			console.error("[AuthContext] 로그인 오류:", error)
 			return false
 		}
 	}
@@ -81,40 +107,8 @@ export const AuthProvider = ({ children }) => {
 		setTokens({ accessToken: null, refreshToken: null })
 	}
 
-	const deactivateAccount = async () => {
-		if (!member) return
-
-		try {
-			const response = await fetch(
-				`http://localhost:3001/members/${member.memberId}`,
-				{
-					method: "DELETE",
-				},
-			)
-
-			if (response.ok) {
-				logout()
-				alert("회원 탈퇴가 완료되었습니다.")
-			} else {
-				console.error("회원 탈퇴 실패:", await response.json())
-			}
-		} catch (error) {
-			console.error("회원 탈퇴 오류:", error)
-		}
-	}
-
 	return (
-		<AuthContext.Provider
-			value={{
-				member,
-				setMember,
-				tokens,
-				loading,
-				login,
-				logout,
-				deactivateAccount,
-			}}
-		>
+		<AuthContext.Provider value={{ member, loading, login, logout }}>
 			{children}
 		</AuthContext.Provider>
 	)
