@@ -1,53 +1,91 @@
-const BASE_URL = "http://localhost:3001"
+const BASE_URL = import.meta.env.VITE_API_BASE_URL
 
-// 저장된 흡연 구역 가져오기
-export async function fetchSavedSmokingAreas() {
+// 공통 요청 함수
+async function apiRequest(endpoint, method = "GET", body = null) {
 	try {
-		const response = await fetch(`${BASE_URL}/savedSmokingAreas`)
-		return response.json()
+		const options = {
+			method,
+			headers: { "Content-Type": "application/json" },
+		}
+		if (body) options.body = JSON.stringify(body)
+
+		const response = await fetch(`${BASE_URL}${endpoint}`, options)
+		if (!response.ok) {
+			const errorData = await response.json().catch(() => ({}))
+			console.error(`API ERROR: ${endpoint}`, {
+				status: response.status,
+				statusText: response.statusText,
+				error: errorData,
+			})
+			throw new Error(`${response.status}: ${response.statusText}`)
+		}
+		return await response.json()
 	} catch (error) {
-		console.error("저장된 흡연 구역 데이터를 가져오지 못했습니다:", error)
+		console.error(`API REQUEST FAILED: ${endpoint}`, error)
 		throw error
 	}
 }
 
-// 특정 흡연 구역의 상세 정보 가져오기
-export async function fetchSmokingAreaDetails(id) {
-	try {
-		const response = await fetch(`${BASE_URL}/smokingAreas/${id}`)
-		return response.json()
-	} catch (error) {
-		console.error(
-			`ID가 ${id}인 흡연 구역의 상세 정보를 가져오지 못했습니다:`,
-			error,
-		)
-		throw error
-	}
-}
+// 흡연 구역 관련 API
+export const fetchSmokingAreas = async ({ userLat, userLng, selectedFilter }) =>
+	await apiRequest(
+		`/api/smoking-area/list?userLat=${userLat}&userLng=${userLng}&filter=${selectedFilter}`,
+	)
+export const fetchSmokingAreaDetails = async (smokingAreaId) =>
+	await apiRequest(`/api/smoking-area/${smokingAreaId}`)
+export const registerSmokingArea = async (data) =>
+	await apiRequest(`/api/smoking-area/register`, "POST", data)
+export const updateSmokingArea = async (smokingAreaId, data) =>
+	await apiRequest(`/api/smoking-area/update/${smokingAreaId}`, "PATCH", data)
+export const fetchSmokingAreaMarkers = async () =>
+	await apiRequest(`/api/smoking-area/marker`)
 
-// 흡연 구역의 리뷰 데이터 가져오기
-export async function fetchReviews(smokingAreaId) {
-	try {
-		const response = await fetch(
-			`${BASE_URL}/reviews?smoking_id=${smokingAreaId}`,
-		)
-		return response.json()
-	} catch (error) {
-		console.error(
-			`흡연 구역 ID가 ${smokingAreaId}인 리뷰 데이터를 가져오지 못했습니다:`,
-			error,
-		)
-		throw error
-	}
-}
+// 리뷰 관련 API
+export const fetchReviews = async (smokingAreaId) =>
+	await apiRequest(`/api/reviews/${smokingAreaId}`)
+export const postReview = async (smokingAreaId, data) =>
+	await apiRequest(`/api/reviews/${smokingAreaId}`, "POST", data)
+export const fetchReviewStars = async (smokingAreaId) =>
+	await apiRequest(`/api/reviews/${smokingAreaId}/starInfo`)
 
-// 사용자 정보 가져오기
-export async function fetchUserInfo() {
-	try {
-		const response = await fetch(`${BASE_URL}/users/1`) // 로그인된 사용자 ID가 1이라고 가정
-		return response.json()
-	} catch (error) {
-		console.error("사용자 정보를 가져오지 못했습니다:", error)
-		throw error
-	}
-}
+// 회원 관련 API
+export const fetchUserInfo = async () => await apiRequest(`/api/member/`)
+export const updateProfileImage = async (data) =>
+	await apiRequest(`/api/member/profileImage`, "PATCH", data)
+export const updateNickname = async (data) =>
+	await apiRequest(`/api/member/nickname`, "PATCH", data)
+export const fetchUserReviews = async () =>
+	await apiRequest(`/api/member/reviews`)
+
+// 저장된 흡연 구역
+export const fetchSavedSmokingAreas = async () =>
+	await apiRequest(`/api/saved-smoking-area`)
+export const saveSmokingArea = async (smokingAreaId) =>
+	await apiRequest(`/api/saved-smoking-area/${smokingAreaId}`, "POST")
+export const deleteSavedSmokingArea = async (smokingAreaId) =>
+	await apiRequest(`/api/saved-smoking-area/${smokingAreaId}`, "DELETE")
+
+// 공지사항
+export const fetchNotices = async () => await apiRequest(`/api/member/notices`)
+export const fetchNoticeDetail = async (noticeId) =>
+	await apiRequest(`/api/member/notices/detail/${noticeId}`)
+
+// 업데이트 내역
+export const fetchSmokingAreaUpdateHistory = async (smokingAreaId, page = 1) =>
+	await apiRequest(
+		`/api/updated-history/${smokingAreaId}/smokingArea?page=${page}`,
+	)
+export const fetchMemberUpdateHistory = async (memberId, page = 1) =>
+	await apiRequest(`/api/updated-history/${memberId}/member?page=${page}`)
+
+// 토큰 관련 API
+export const reissueToken = async () =>
+	await apiRequest(`/api/token/reissue`, "POST")
+export const logout = async () => await apiRequest(`/api/token/logout`)
+
+// 오픈 API
+export const fetchOpenApi = async (key) =>
+	await apiRequest(`/api/open-api/${key}`)
+
+// 헬스 체크
+export const healthCheck = async () => await apiRequest(`/health`)

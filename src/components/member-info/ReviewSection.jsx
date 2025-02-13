@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react"
 import { Star } from "lucide-react"
 
-export default function ReviewSection({ reviews }) {
+export default function ReviewSection({ memberReviews }) {
 	const [currentPage, setCurrentPage] = useState(1)
 	const itemsPerPage = 5
 	const containerRef = useRef(null)
@@ -14,7 +14,11 @@ export default function ReviewSection({ reviews }) {
 		}
 	}, [])
 
-	if (!Array.isArray(reviews) || reviews.length === 0) {
+	if (
+		!memberReviews ||
+		!memberReviews.result ||
+		memberReviews.result.reviews.length === 0
+	) {
 		return (
 			<p className="mt-4 text-center text-gray-500">작성한 리뷰가 없습니다.</p>
 		)
@@ -22,18 +26,25 @@ export default function ReviewSection({ reviews }) {
 
 	const formatDate = (dateString) => {
 		const date = new Date(dateString)
-		return date
-			.toLocaleDateString("ko-KR", {
-				year: "2-digit",
-				month: "2-digit",
-				day: "2-digit",
-			})
-			.replace(/\./g, ".")
+		return date.toLocaleString("ko-KR", {
+			year: "2-digit",
+			month: "2-digit",
+			day: "2-digit",
+			hourCycle: "h23",
+			hour: "2-digit",
+			minute: "2-digit",
+		})
 	}
 
-	const totalPages = Math.max(1, Math.ceil(reviews.length / itemsPerPage))
+	const totalPages = Math.max(
+		1,
+		Math.ceil(memberReviews.result.reviews.length / itemsPerPage),
+	)
 	const startIndex = (currentPage - 1) * itemsPerPage
-	const paginatedReviews = reviews.slice(startIndex, startIndex + itemsPerPage)
+	const paginatedReviews = memberReviews.result.reviews.slice(
+		startIndex,
+		startIndex + itemsPerPage,
+	)
 
 	return (
 		<div className="relative flex h-full flex-col overflow-auto bg-white pb-20">
@@ -45,23 +56,21 @@ export default function ReviewSection({ reviews }) {
 				<ul className="w-full bg-white">
 					{paginatedReviews.map((review, index) => (
 						<li
-							key={review.reviewId}
-							className={`flex items-center justify-between border-t border-gray-300 bg-white px-4 py-3 ${
-								index === paginatedReviews.length - 1 ? "border-b" : ""
-							}`}
+							key={index}
+							className="flex items-center justify-between border-t border-gray-300 bg-white px-4 py-3"
 						>
 							<div className="flex-1">
 								<div className="flex items-center gap-2">
 									<h3 className="text-sm font-semibold text-gray-800">
-										{review.smokingAreaName}
+										{review.memberName}
 									</h3>
 									<p className="text-xs text-gray-300">
-										{formatDate(review.createdAt)}
+										{formatDate(review.creationDate)}
 									</p>
 								</div>
 
 								<div className="mt-1 flex">
-									{Array.from({ length: review.rating }, (_, index) => (
+									{Array.from({ length: review.score }, (_, index) => (
 										<Star
 											key={index}
 											className="h-3 w-3 fill-[#FFDD00] text-[#FFDD00]"
@@ -69,13 +78,13 @@ export default function ReviewSection({ reviews }) {
 									))}
 								</div>
 
-								<p className="text-sm text-gray-600">{review.body}</p>
+								<p className="text-sm text-gray-600">{review.content}</p>
 							</div>
 
-							{review.imgUrl ? (
+							{review.imageUrl ? (
 								<img
-									src={review.imgUrl}
-									alt="이미지"
+									src={review.imageUrl}
+									alt="리뷰 이미지"
 									className="ml-4 h-[50px] w-[50px] rounded-md border object-cover"
 								/>
 							) : (

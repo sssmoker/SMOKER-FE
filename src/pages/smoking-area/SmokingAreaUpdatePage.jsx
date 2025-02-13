@@ -7,30 +7,47 @@ import {
 	OptionsList,
 } from "@/components/smoking-update/OptionsSelection"
 
-const options = [
-	"환풍시설이 있어요",
-	"깔끔해요",
-	"쓰레기통이 있어요",
-	"의자가 있어요",
-	"장애인 편의시설이에요",
-	"냉난방이 가능해요",
-	"야외에 있어요",
-]
+const optionMap = {
+	"담배꽁초 처리함": "hasCigaretteDisposal",
+	"의자 ": "hasChair",
+	"쓰레기통 ": "hasTrashBin",
+	"환기 시스템": "hasVentilationSystem",
+	"정기적인 청소": "isRegularlyCleaned",
+	"공기 청정 기능": "hasAirPurifier",
+	"냉난방 기능": "hasAirConditioning",
+	"휠체어 진입 가능": "isAccessible",
+	"음성 안내 시스템": "hasVoiceGuidance",
+	"CCTV 설치": "hasCCTV",
+	"소화기 비치": "hasFireExtinguisher",
+	"햇빛 차단 시설": "hasSunshade",
+	"비바람 차단 시설": "hasRainProtection",
+	"비상버튼 ": "hasEmergencyButton",
+}
+
+const optionKeys = Object.fromEntries(
+	Object.values(optionMap).map((key) => [key, false]),
+)
 
 export default function SmokingAreaUpdatePage() {
+	// /api/smoking-area/update/{smokingAreaId}
 	const navigate = useNavigate()
-	const [selectedOptions, setSelectedOptions] = useState([])
+	// const [selectedOptions, setSelectedOptions] = useState([])
+	const [selectedOptionsData, setSelectedOptionsData] = useState(optionKeys)
 
 	const toggleOption = (option) => {
-		setSelectedOptions((prev) =>
-			prev.includes(option)
-				? prev.filter((o) => o !== option)
-				: [...prev, option],
-		)
+		const key = optionMap[option]
+		if (!key) return
+
+		setSelectedOptionsData((prev) => ({
+			...prev,
+			[key]: !prev[key],
+		}))
 	}
 
 	const handleSubmit = () => {
+		alert("업데이트가 완료되었습니다!")
 		navigate("/list/smoking-area")
+		console.log("optionKeys: ", selectedOptionsData)
 	}
 
 	return (
@@ -52,8 +69,10 @@ export default function SmokingAreaUpdatePage() {
 				<div className="mb-[8px] mt-[32px] w-full rounded-2xl border border-white bg-white px-6 py-8">
 					<Title text="흡연 부스의 정보를 수정해주세요." />
 					<OptionsList
-						options={options}
-						selectedOptions={selectedOptions}
+						options={Object.keys(optionMap)}
+						selectedOptions={Object.keys(optionMap).filter(
+							(option) => selectedOptionsData[optionMap[option]],
+						)}
 						onToggle={toggleOption}
 					/>
 				</div>

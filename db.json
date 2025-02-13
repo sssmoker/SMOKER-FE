@@ -108,7 +108,7 @@
 			"content": "2번째 수정에 참여했어요!"
 		}
 	],
-	"reviews": [
+	"memberReviews": [
 		{
 			"reviewId": 1,
 			"memberId": 1,
@@ -412,15 +412,106 @@
 				"냉난방이 가능해요",
 				"야외에 있어요"
 			],
-			"is_bookmarked": true,
-			"id": "2901"
+			"is_bookmarked": true
 		}
 	],
-
+	"detail": {
+		"isSuccess": true,
+		"code": "string",
+		"message": "string",
+		"result": {
+			"smokingAreaName": "string",
+			"location": {
+				"address": "string",
+				"latitude": 0,
+				"longitude": 0
+			},
+			"feature": {
+				"hasAirPurifier": false,
+				"hasAirConditioning": false,
+				"hasChair": true,
+				"hasTrashBin": true,
+				"hasVentilationSystem": false,
+				"isAccessible": false,
+				"hasCCTV": false,
+				"hasEmergencyButton": false,
+				"hasVoiceGuidance": false,
+				"hasFireExtinguisher": false,
+				"isRegularlyCleaned": false,
+				"hasCigaretteDisposal": true,
+				"hasSunshade": true,
+				"hasRainProtection": true
+			}
+		}
+	},
+	"reviews": {
+		"isSuccess": true,
+		"code": "string",
+		"message": "string",
+		"result": {
+			"reviews": [
+				{
+					"score": 5,
+					"content": "string",
+					"imageUrl": "http://test.api.weniv.co.kr/asset/img/7/thumbnailImg.jpg",
+					"memberName": "string",
+					"creationDate": "2025-02-06T11:57:21.426Z"
+				}
+			],
+			"isLastPage": true,
+			"pageNumber": 0
+		}
+	},
 	"starRating": {
-		"review_num": 3,
-		"rating": 4.2,
-		"rating_list": [1, 2, 0, 0, 0]
+		"isSuccess": true,
+		"code": "string",
+		"message": "string",
+		"result": {
+			"stars": [1, 0, 0, 0, 0],
+			"avg": 5,
+			"count": 1
+		}
+	},
+	"updated-history": {
+		"isSuccess": true,
+		"code": "string",
+		"message": "string",
+		"result": {
+			"updatedHistories": [
+				{
+					"memberName": "string",
+					"updateCount": 0,
+					"updatedAt": "2025-02-06T12:58:29.635Z"
+				},
+				{
+					"memberName": "string",
+					"updateCount": 0,
+					"updatedAt": "2025-02-06T12:58:29.635Z"
+				},
+				{
+					"memberName": "string",
+					"updateCount": 0,
+					"updatedAt": "2025-02-06T12:58:29.635Z"
+				},
+				{
+					"memberName": "string",
+					"updateCount": 0,
+					"updatedAt": "2025-02-06T12:58:29.635Z"
+				},
+				{
+					"memberName": "string",
+					"updateCount": 0,
+					"updatedAt": "2025-02-06T12:58:29.635Z"
+				},
+				{
+					"memberName": "string",
+					"updateCount": 0,
+					"updatedAt": "2025-02-06T12:58:29.635Z"
+				}
+			],
+			"isLastPage": true,
+			"pageNumber": 0
+		}
 	},
 	"savedSmokingAreas": [
 		{
@@ -450,127 +541,41 @@
 			"id": "6d5e"
 		}
 	],
-	"list": [
-		{
-			"title": "사당역 1번 출구 앞 흡연 부스",
-			"isBookmarked": true,
-			"rating": 4.3,
-			"ratingCount": 3,
-			"bookmarkCount": 30,
-			"distance": 197,
-			"img": false,
-			"smoking_id": 1,
-			"id": "f92b"
-		},
-		{
-			"title": "사당역 2번 출구 앞 흡연 부스",
-			"isBookmarked": true,
-			"rating": 3.9,
-			"ratingCount": 5,
-			"bookmarkCount": 30,
-			"distance": 12,
-			"img": false,
-			"smoking_id": 2,
-			"id": "a6d4"
-		},
-		{
-			"title": "사당역 3번 출구 앞 흡연 부스",
-			"isBookmarked": false,
-			"rating": 3.2,
-			"ratingCount": 3,
-			"bookmarkCount": 30,
-			"distance": 453,
-			"img": false,
-			"smoking_id": 3,
-			"id": "15a8"
-		},
-		{
-			"title": "사당역 4번 출구 앞 흡연 부스",
-			"isBookmarked": true,
-			"rating": 4.8,
-			"ratingCount": 3,
-			"bookmarkCount": 30,
-			"distance": 42,
-			"img": false,
-			"smoking_id": 4,
-			"id": "c590"
-		},
-		{
-			"title": "사당역 5번 출구 앞 흡연 부스",
-			"isBookmarked": false,
-			"rating": 2.4,
-			"ratingCount": 5,
-			"bookmarkCount": 30,
-			"distance": 156,
-			"img": false,
-			"smoking_id": 5,
-			"id": "8275"
-		},
-		{
-			"title": "사당역 6번 출구 앞 흡연 부스",
-			"isBookmarked": false,
-			"rating": 4.2,
-			"ratingCount": 3,
-			"bookmarkCount": 30,
-			"distance": 137,
-			"img": false,
-			"smoking_id": 6,
-			"id": "6d25"
-		},
-		{
-			"title": "사당역 7번 출구 앞 흡연 부스",
-			"isBookmarked": false,
-			"rating": 5,
-			"ratingCount": 3,
-			"bookmarkCount": 30,
-			"distance": 152,
-			"img": false,
-			"smoking_id": 7,
-			"id": "8285"
-		},
-		{
-			"title": "사당역 8번 출구 앞 흡연 부스",
-			"isBookmarked": false,
-			"rating": 1.9,
-			"ratingCount": 3,
-			"bookmarkCount": 30,
-			"distance": 123,
-			"img": false,
-			"smoking_id": 8,
-			"id": "29fb"
-		},
-		{
-			"title": "사당역 9번 출구 앞 흡연 부스",
-			"isBookmarked": false,
-			"rating": 4.2,
-			"ratingCount": 3,
-			"bookmarkCount": 30,
-			"distance": 175,
-			"img": false,
-			"smoking_id": 9,
-			"id": "b28e"
-		},
-		{
-			"title": "사당역 10번 출구 앞 흡연 부스",
-			"isBookmarked": false,
-			"rating": 2.3,
-			"ratingCount": 3,
-			"bookmarkCount": 30,
-			"distance": 165,
-			"img": false,
-			"smoking_id": 10,
-			"id": "8d19"
-		},
-		{
-			"title": "사당역 11번 출구 앞 흡연 부스",
-			"isBookmarked": false,
-			"rating": 1,
-			"ratingCount": 3,
-			"bookmarkCount": 30,
-			"distance": 245,
-			"img": false,
-			"smoking_id": 11,
-			"id": "cb6d"
+	"list": {
+		"isSuccess": true,
+		"code": "string",
+		"message": "string",
+		"result": {
+			"smokingAreas": [
+				{
+					"smokingAreaId": 0,
+					"smokingAreaName": "string",
+					"imageUrl": "",
+					"distance": 123,
+					"location": {
+						"address": "string",
+						"latitude": 23,
+						"longitude": 23
+					},
+					"reviewCount": 123,
+					"savedCount": 123,
+					"rating": 4
+				},
+				{
+					"smokingAreaId": 1,
+					"smokingAreaName": "string",
+					"imageUrl": "http://test.api.weniv.co.kr/asset/img/7/thumbnailImg.jpg",
+					"distance": 456,
+					"location": {
+						"address": "string",
+						"latitude": 56,
+						"longitude": 45
+					},
+					"reviewCount": 56,
+					"savedCount": 45,
+					"rating": 5
+				}
+			]
 		}
-	]
+	}
 }
