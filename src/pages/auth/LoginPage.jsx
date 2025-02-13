@@ -5,31 +5,14 @@ import KakaoSymbol from "@/assets/KakaoSymbol.svg"
 import GoogleSymbol from "@/assets/GoogleSymbol.svg"
 import { useAuthContext } from "@/contexts/AuthContext"
 
-//서버 연결시
-/*
-export default function LoginPage() {
-  const navigate = useNavigate()
-  
-  const KAKAO_AUTH_URL = `http://localhost:8080/oauth2/authorization/kakao`
-  const GOOGLE_AUTH_URL = `http://localhost:8080/oauth2/authorization/google`
-
-  const kakaoLogin = () => {
-    window.location.href = KAKAO_AUTH_URL;
-  };
-
-  // 구글 로그인 요청
-  const googleLogin = () => {
-    window.location.href = GOOGLE_AUTH_URL;
-  };
-
-*/
-
-//현재 JSON서버
 export default function LoginPage() {
 	const navigate = useNavigate()
 	const { login } = useAuthContext()
+
 	const [error, setError] = useState(null)
 	const [isGoogleClicked, setIsGoogleClicked] = useState(false)
+	const KAKAO_AUTH_URL = `http://localhost:8080/oauth2/authorization/kakao`
+	const GOOGLE_AUTH_URL = `http://localhost:8080/oauth2/authorization/google`
 
 	const handleLogin = async (provider) => {
 		setIsGoogleClicked(provider === "google")
@@ -48,6 +31,7 @@ export default function LoginPage() {
 
 		setTimeout(() => setIsGoogleClicked(false), 300)
 	}
+
 	return (
 		<div className="flex min-h-screen flex-col items-center gap-y-8 bg-white px-6">
 			<div className="w-full p-4">
@@ -99,6 +83,7 @@ export default function LoginPage() {
 						</div>
 						<span className="text-center font-bold">구글로 로그인하기</span>
 					</button>
+
 					<button
 						className="flex h-[2.75rem] min-w-[10rem] max-w-[50vw] flex-1 items-center justify-center whitespace-nowrap rounded-[0.75rem] bg-[#FEE500] px-4 text-xs font-medium text-black sm:text-sm"
 						onClick={() => handleLogin("kakao")}

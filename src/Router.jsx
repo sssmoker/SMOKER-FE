@@ -21,6 +21,7 @@ import SmokingAreaHistoryPage from "./pages/smoking-area/SmokingAreaHistoryPage"
 import SmokingAreaDetailPage from "./pages/smoking-area/SmokingAreaDetailPage"
 import SmokingAreaReviewPage from "./pages/smoking-area/SmokingAreaReviewPage"
 import OAuthRedirectHandler from "@/pages/auth/OAuthRedirectHandler"
+import NoticeDetailPage from "@/pages/notices/NoticeDetailPage"
 
 const listRoutes = [
 	{
@@ -57,6 +58,7 @@ const myPageRoutes = [
 	},
 	{ path: "questions", element: <QuestionsPage /> },
 	{ path: "notices", element: <NoticesPage /> },
+	{ path: "notices/details/:noticeId", element: <NoticeDetailPage /> },
 ]
 
 const addSmokingAreaRoutes = [
