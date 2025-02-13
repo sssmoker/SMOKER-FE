@@ -2,11 +2,11 @@ import React from "react"
 import { Star } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 
-function UpdateButton() {
+function UpdateButton({ smokingAreaId }) {
 	const navigate = useNavigate()
 
 	const handleMoveToUpdate = () => {
-		navigate("/list/smoking-area/history")
+		navigate(`/list/smoking-area/history?id=${smokingAreaId}`)
 	}
 
 	return (
@@ -22,6 +22,7 @@ function UpdateButton() {
 }
 
 export default function SmokingAreaInfo({
+	smokingAreaId,
 	smoking_name,
 	region,
 	distance,
@@ -37,7 +38,7 @@ export default function SmokingAreaInfo({
 				</p>
 				<div className="mt-[-3px] flex items-center justify-between">
 					<h2 className="text-[16px] font-bold">{smoking_name}</h2>
-					<UpdateButton />
+					<UpdateButton smokingAreaId={smokingAreaId} />
 				</div>
 
 				<p className="font-regular text-[10px]">{region}</p>
