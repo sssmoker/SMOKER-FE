@@ -50,7 +50,6 @@ export default function ReviewSection({ reviews }) {
 								index === paginatedReviews.length - 1 ? "border-b" : ""
 							}`}
 						>
-							{/* 왼쪽 리뷰 정보 */}
 							<div className="flex-1">
 								<div className="flex items-center gap-2">
 									<h3 className="text-sm font-semibold text-gray-800">
@@ -61,7 +60,6 @@ export default function ReviewSection({ reviews }) {
 									</p>
 								</div>
 
-								{/* 별점 */}
 								<div className="mt-1 flex">
 									{Array.from({ length: review.rating }, (_, index) => (
 										<Star
@@ -74,7 +72,6 @@ export default function ReviewSection({ reviews }) {
 								<p className="text-sm text-gray-600">{review.body}</p>
 							</div>
 
-							{/* 이미지가 있으면 표시, 없으면 기본 UI 유지 */}
 							{review.imgUrl ? (
 								<img
 									src={review.imgUrl}
@@ -91,7 +88,6 @@ export default function ReviewSection({ reviews }) {
 				</ul>
 			</div>
 
-			{/* 페이지네이션 (1페이지라도 항상 보이도록 설정) */}
 			{totalPages > 1 && (
 				<div className="bottom-0 left-0 right-0 flex items-center justify-center space-x-4 bg-white py-3 text-sm">
 					<span
