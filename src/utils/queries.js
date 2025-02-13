@@ -26,10 +26,10 @@ import {
 } from "@/api/api"
 
 //  흡연 구역 목록 가져오기
-export const useSmokingAreas = () =>
+export const useSmokingAreas = ({ userLat, userLng, selectedFilter }) =>
 	useQuery({
 		queryKey: ["smokingAreas"],
-		queryFn: fetchSmokingAreas,
+		queryFn: fetchSmokingAreas({ userLat, userLng, selectedFilter }),
 		retry: 1,
 		onError: (error) =>
 			console.error("흡연 구역 목록을 불러오는 데 실패했습니다.", error),

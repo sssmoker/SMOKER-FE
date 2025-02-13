@@ -5,6 +5,7 @@ import SmokingAreaList from "@/components/area-list/card-list/SmokingAreaList"
 import Filter from "@/components/area-list/filter/Filter"
 import { useNavigate } from "react-router-dom"
 import { useQuery } from "@tanstack/react-query"
+import { fetchSmokingAreas } from "@/utils/api"
 
 export default function ListPage() {
 	const navigate = useNavigate()
@@ -33,43 +34,11 @@ export default function ListPage() {
 	// 	fetchUserLocation()
 	// }, [])
 
-	// 공용 api 함수 // api.js 머지하면 삭제 예정
-	async function apiRequest(endpoint, method = "GET", body = null) {
-		try {
-			const options = {
-				method,
-				headers: { "Content-Type": "application/json" },
-			}
-			if (body) options.body = JSON.stringify(body)
-
-			const response = await fetch(`https://api.smoker.my${endpoint}`, options)
-			if (!response.ok) {
-				const errorData = await response.json().catch(() => ({}))
-				console.error(`API ERROR: ${endpoint}`, {
-					status: response.status,
-					statusText: response.statusText,
-					error: errorData,
-				})
-				throw new Error(`${response.status}: ${response.statusText}`)
-			}
-			return await response.json()
-		} catch (error) {
-			console.error(`API REQUEST FAILED: ${endpoint}`, error)
-			throw error
-		}
-	}
-
-	// api.js 머지하면 삭제 예정
-	const fetchSmokingAreas = async () =>
-		await apiRequest(
-			`/api/smoking-area/list?userLat=${userLat}&userLng=${userLng}&filter=${selectedFilter}`,
-		)
-
 	//  흡연 구역 목록 가져오기 // api.js 머지하면 삭제 예정
 	const useSmokingAreas = () =>
 		useQuery({
 			queryKey: ["smokingAreas", userLat, userLng], // (추가)
-			queryFn: fetchSmokingAreas,
+			queryFn: () => fetchSmokingAreas({ userLat, userLng, selectedFilter }),
 			retry: 1,
 			onError: (error) =>
 				console.error("흡연 구역 목록을 불러오는 데 실패했습니다.", error),

@@ -27,8 +27,10 @@ async function apiRequest(endpoint, method = "GET", body = null) {
 }
 
 // 흡연 구역 관련 API
-export const fetchSmokingAreas = async () =>
-	await apiRequest(`/api/smoking-area/list`)
+export const fetchSmokingAreas = async ({ userLat, userLng, selectedFilter }) =>
+	await apiRequest(
+		`/api/smoking-area/list?userLat=${userLat}&userLng=${userLng}&filter=${selectedFilter}`,
+	)
 export const fetchSmokingAreaDetails = async (smokingAreaId) =>
 	await apiRequest(`/api/smoking-area/${smokingAreaId}`)
 export const registerSmokingArea = async (data) =>
