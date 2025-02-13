@@ -8,8 +8,8 @@ import { useQuery } from "@tanstack/react-query"
 
 export default function ListPage() {
 	const navigate = useNavigate()
-	const [userLat, setUserLat] = useState(37.477) // 사용자 위도 // 임시 데이터
-	const [userLng, setUserLng] = useState(126.9812) // 사용자 경도 // 임시 데이터
+	const userLat = 37.2937909 // 사용자 위도 // 임시 데이터
+	const userLng = 127.2026415 // 사용자 경도 // 임시 데이터
 	const FILTER_OPTIONS = {
 		DISTANCE: "거리순",
 		RATING: "평점순",
@@ -33,42 +33,62 @@ export default function ListPage() {
 	// 	fetchUserLocation()
 	// }, [])
 
-	// API를 통해 흡연 구역 목록 가져오기
-	const { data, error, isLoading } = useQuery({
-		queryKey: ["smokingAreaList", userLat, userLng, selectedFilter],
-		queryFn: async () => {
-			const url = new URL("https://api.smoker.my/api/smoking-area/list")
-			url.searchParams.append("userLat", userLat.toString())
-			url.searchParams.append("userLng", userLng.toString())
-			url.searchParams.append("filter", selectedFilter)
-
-			const response = await fetch(url.toString(), {
-				method: "GET",
-			})
-
-			if (!response.ok) {
-				const errorMessage = await response.text()
-				console.log(`데이터 호출 실패: ${errorMessage}`)
-				throw new Error(`데이터 호출 실패: ${errorMessage}`)
+	// 공용 api 함수 // api.js 머지하면 삭제 예정
+	async function apiRequest(endpoint, method = "GET", body = null) {
+		try {
+			const options = {
+				method,
+				headers: { "Content-Type": "application/json" },
 			}
-			//
-			const jsonResponse = await response.json()
-			return jsonResponse?.result?.smokingAreas
-		},
-		retry: 2, // 2번만 재시도
-	})
+			if (body) options.body = JSON.stringify(body)
+
+			const response = await fetch(`https://api.smoker.my${endpoint}`, options)
+			if (!response.ok) {
+				const errorData = await response.json().catch(() => ({}))
+				console.error(`API ERROR: ${endpoint}`, {
+					status: response.status,
+					statusText: response.statusText,
+					error: errorData,
+				})
+				throw new Error(`${response.status}: ${response.statusText}`)
+			}
+			return await response.json()
+		} catch (error) {
+			console.error(`API REQUEST FAILED: ${endpoint}`, error)
+			throw error
+		}
+	}
+
+	// api.js 머지하면 삭제 예정
+	const fetchSmokingAreas = async () =>
+		await apiRequest(
+			`/api/smoking-area/list?userLat=${userLat}&userLng=${userLng}&filter=${selectedFilter}`,
+		)
+
+	//  흡연 구역 목록 가져오기 // api.js 머지하면 삭제 예정
+	const useSmokingAreas = () =>
+		useQuery({
+			queryKey: ["smokingAreas", userLat, userLng], // (추가)
+			queryFn: fetchSmokingAreas,
+			retry: 1,
+			onError: (error) =>
+				console.error("흡연 구역 목록을 불러오는 데 실패했습니다.", error),
+		})
+	// 여기까지~~ // api.js 머지하면 삭제 예정
+
+	const { data, error, isLoading } = useSmokingAreas()
 
 	const handleMoveToHome = () => {
 		navigate("/")
 	}
 
-	// if (isLoading) {
-	// 	return <div>로딩 중...</div>
-	// }
+	if (isLoading) {
+		return <div>로딩 중...</div>
+	}
 
-	// if (error) {
-	// 	return <div>에러 발생: {error.message}</div>
-	// }
+	if (error) {
+		return <div>에러 발생: {error.message}</div>
+	}
 
 	return (
 		<div className="relative h-[100vh] bg-white">
@@ -91,7 +111,7 @@ export default function ListPage() {
 				<ul className="h-full w-full overflow-y-scroll pb-[11vh]">
 					<SmokingAreaList
 						selectedFilter={selectedFilter}
-						smokingAreasData={data || []}
+						smokingAreasData={data?.result?.smokingAreas || []}
 					/>
 				</ul>
 			</div>
