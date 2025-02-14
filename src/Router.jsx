@@ -58,7 +58,7 @@ const myPageRoutes = [
 	},
 	{ path: "questions", element: <QuestionsPage /> },
 	{ path: "notices", element: <NoticesPage /> },
-	{ path: "notices/details/:noticeId", element: <NoticeDetailPage /> },
+	{ path: "notices/detail/:noticeId", element: <NoticeDetailPage /> },
 ]
 
 const addSmokingAreaRoutes = [
