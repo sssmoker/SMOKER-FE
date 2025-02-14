@@ -52,7 +52,7 @@ export default function EditNamePage() {
 	}
 
 	return (
-		<div className="flex h-screen flex-col bg-gray-100">
+		<div className="flex h-screen flex-col bg-white">
 			<header className="flex items-center p-4 text-lg font-bold">
 				<BackButton className="mr-2" />
 				<span>이름 수정</span>

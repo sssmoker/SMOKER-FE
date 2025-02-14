@@ -14,6 +14,8 @@ export default function ProfileSection({ memberInfo, navigate }) {
 		}
 	}
 
+	const memberId = memberInfo?.memberId
+
 	return (
 		<div className="flex flex-col items-center bg-white py-6">
 			<div className="relative flex flex-col items-center">
@@ -48,11 +50,11 @@ export default function ProfileSection({ memberInfo, navigate }) {
 				<div className="text-center text-lg font-bold">
 					{memberInfo ? memberInfo.nickName : "이름을 입력해주세요"}
 				</div>
-				{memberInfo && (
+				{memberInfo && memberId && (
 					<div className="ml-2">
 						<span
 							className="cursor-pointer text-xs text-gray-500 underline hover:text-gray-700"
-							onClick={() => navigate("/my-page/info/edit-name")}
+							onClick={() => navigate(`/my-page/${memberId}/name`)}
 						>
 							수정
 						</span>
