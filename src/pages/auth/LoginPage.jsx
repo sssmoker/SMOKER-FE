@@ -4,6 +4,7 @@ import BackButton from "@/components/common/button/BackButton"
 import KakaoSymbol from "@/assets/KakaoSymbol.svg"
 import GoogleSymbol from "@/assets/GoogleSymbol.svg"
 import { useAuthContext } from "@/contexts/AuthContext"
+import { KAKAO_AUTH_URL } from "@/pages/auth/KakaoOAuth"
 
 export default function LoginPage() {
 	const navigate = useNavigate()
@@ -11,8 +12,7 @@ export default function LoginPage() {
 
 	const [error, setError] = useState(null)
 	const [isGoogleClicked, setIsGoogleClicked] = useState(false)
-	const KAKAO_AUTH_URL = `http://localhost:8080/oauth2/authorization/kakao`
-	const GOOGLE_AUTH_URL = `http://localhost:8080/oauth2/authorization/google`
+	const GOOGLE_AUTH_URL = `http://localhost:8080/oauth/authorization/google`
 
 	const handleLogin = async (provider) => {
 		setIsGoogleClicked(provider === "google")
@@ -88,14 +88,21 @@ export default function LoginPage() {
 						className="flex h-[2.75rem] min-w-[10rem] max-w-[50vw] flex-1 items-center justify-center whitespace-nowrap rounded-[0.75rem] bg-[#FEE500] px-4 text-xs font-medium text-black sm:text-sm"
 						onClick={() => handleLogin("kakao")}
 					>
-						<div className="flex items-center gap-[0.5rem]">
-							<img
-								src={KakaoSymbol}
-								alt="Kakao"
-								className="h-[1.125rem] w-[1.125rem] sm:h-5 sm:w-5"
-							/>
-							<span className="text-center font-bold">카카오로 로그인하기</span>
-						</div>
+						<a
+							href={KAKAO_AUTH_URL}
+							className="flex h-[2.75rem] min-w-[10rem] max-w-[50vw] flex-1 items-center justify-center whitespace-nowrap rounded-[0.75rem] bg-[#FEE500] px-4 text-xs font-medium text-black sm:text-sm"
+						>
+							<div className="flex items-center gap-[0.5rem]">
+								<img
+									src={KakaoSymbol}
+									alt="Kakao"
+									className="h-[1.125rem] w-[1.125rem] sm:h-5 sm:w-5"
+								/>
+								<span className="text-center font-bold">
+									카카오로 로그인하기
+								</span>
+							</div>
+						</a>
 					</button>
 				</div>
 			</div>

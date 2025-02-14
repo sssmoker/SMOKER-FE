@@ -20,8 +20,8 @@ import AddSmokingAreaImagePage from "@/pages/add-smoking-area/AddSmokingAreaImag
 import SmokingAreaHistoryPage from "./pages/smoking-area/SmokingAreaHistoryPage"
 import SmokingAreaDetailPage from "./pages/smoking-area/SmokingAreaDetailPage"
 import SmokingAreaReviewPage from "./pages/smoking-area/SmokingAreaReviewPage"
-import OAuthRedirectHandler from "@/pages/auth/OAuthRedirectHandler"
 import NoticeDetailPage from "@/pages/notices/NoticeDetailPage"
+import KakaoOAuthRedirectHandler from "@/pages/auth/KakaoOAuthRedirectHandler"
 
 const listRoutes = [
 	{
@@ -80,7 +80,7 @@ const routes = [
 	{ path: "my-page", element: <Outlet />, children: myPageRoutes },
 	{ path: "favorites", element: <Outlet />, children: favoritesRoutes },
 	{ path: "login", element: <LoginPage /> },
-	{ path: "oauth/callback", element: <OAuthRedirectHandler /> },
+	{ path: "/login/oauth/code/kakao", element: <KakaoOAuthRedirectHandler /> },
 ]
 
 export const router = createBrowserRouter([
