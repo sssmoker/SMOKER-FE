@@ -5,30 +5,304 @@
 		"address": "서울 동작구 남부순환로 2090",
 		"description": "사용자의 현재 위치"
 	},
-	"users": [
+	"members": [
 		{
-			"user_id": 1,
-			"user_name": "즐거운 하마 134",
-			"email": "hama134@gmail.com",
-			"password": "password123",
-			"created_at": "2024-01-01T10:00:00",
-			"updated_at": "2024-01-15T10:00:00",
-			"update_count": 5,
+			"id": "1",
+			"memberId": 1,
+			"nickName": "즐거운 하마 134",
+			"profileImageUrl": "https://example.com/profile1.jpg",
+			"loginType": "google",
+			"createdAt": "2024-01-01T10:00:00",
+			"updatedAt": "2024-01-15T10:00:00",
+			"updateCount": 5,
 			"status": "active",
-			"inactive_date": null
+			"inactiveDate": null
 		},
 		{
-			"user_id": 2,
-			"user_name": "행복한 고양이 567",
-			"email": "cat567@gmail.com",
-			"password": "securepass",
-			"created_at": "2024-01-05T12:00:00",
-			"updated_at": "2024-01-20T12:00:00",
-			"update_count": 3,
-			"status": "inactive",
-			"inactive_date": "2024-02-01T12:00:00"
+			"id": "2",
+			"memberId": 2,
+			"nickName": "웃는 고양이 567",
+			"profileImageUrl": "https://example.com/profile2.jpg",
+			"loginType": "kakao",
+			"createdAt": "2024-02-01T11:00:00",
+			"updatedAt": "2024-02-15T12:00:00",
+			"updateCount": 3,
+			"status": "active",
+			"inactiveDate": null
 		}
 	],
+	"authResponses": [
+		{
+			"memberId": 1,
+			"accessToken": "sample-access-token-google",
+			"refreshToken": "sample-refresh-token-google"
+		},
+		{
+			"memberId": 2,
+			"accessToken": "sample-access-token-kakao",
+			"refreshToken": "sample-refresh-token-kakao"
+		}
+	],
+	"updates": [
+		{
+			"updateHistoryId": 1,
+			"memberId": 1,
+			"smokingAreaName": "사당역 2번 출구",
+			"createdAt": "2023-09-13T10:00:00",
+			"content": "6번째 수정에 참여했어요!"
+		},
+		{
+			"updateHistoryId": 2,
+			"memberId": 1,
+			"smokingAreaName": "광운대학교 동해문화예술관",
+			"createdAt": "2023-09-10T14:30:00",
+			"content": "5번째 수정에 참여했어요!"
+		},
+		{
+			"updateHistoryId": 3,
+			"memberId": 1,
+			"smokingAreaName": "강남역 1번 출구",
+			"createdAt": "2023-08-25T09:15:00",
+			"content": "4번째 수정에 참여했어요!"
+		},
+		{
+			"updateHistoryId": 4,
+			"memberId": 1,
+			"smokingAreaName": "홍대입구역 3번 출구",
+			"createdAt": "2023-07-19T11:45:00",
+			"content": "3번째 수정에 참여했어요!"
+		},
+		{
+			"updateHistoryId": 5,
+			"memberId": 1,
+			"smokingAreaName": "이태원역 4번 출구",
+			"createdAt": "2023-06-10T13:20:00",
+			"content": "2번째 수정에 참여했어요!"
+		},
+		{
+			"updateHistoryId": 6,
+			"memberId": 1,
+			"smokingAreaName": "서울숲 공원",
+			"createdAt": "2023-05-03T16:10:00",
+			"content": "1번째 수정에 참여했어요!"
+		},
+		{
+			"updateHistoryId": 7,
+			"memberId": 1,
+			"smokingAreaName": "한강공원",
+			"createdAt": "2023-04-01T18:00:00",
+			"content": "새로운 흡연 부스를 추가했어요!"
+		},
+		{
+			"updateHistoryId": 8,
+			"memberId": 2,
+			"smokingAreaName": "서울역",
+			"createdAt": "2023-09-01T12:40:00",
+			"content": "3번째 수정에 참여했어요!"
+		},
+		{
+			"updateHistoryId": 9,
+			"memberId": 2,
+			"smokingAreaName": "건대입구역 2번 출구",
+			"createdAt": "2023-08-10T14:15:00",
+			"content": "2번째 수정에 참여했어요!"
+		}
+	],
+	"memberReviews": [
+		{
+			"reviewId": 1,
+			"memberId": 1,
+			"smokingAreaName": "사당역 2번 출구",
+			"createdAt": "2024-02-12T15:00:00",
+			"rating": 5,
+			"body": "실내 흡연장이라 따뜻합니다.",
+			"imgUrl": ""
+		},
+		{
+			"reviewId": 2,
+			"memberId": 1,
+			"smokingAreaName": "강남역 1번 출구",
+			"createdAt": "2024-02-10T10:30:00",
+			"rating": 4,
+			"body": "흡연 공간이 넓어서 좋아요.",
+			"imgUrl": ""
+		},
+		{
+			"reviewId": 3,
+			"memberId": 1,
+			"smokingAreaName": "홍대입구역 3번 출구",
+			"createdAt": "2024-02-08T18:45:00",
+			"rating": 3,
+			"body": "사람이 많아서 혼잡하네요.",
+			"imgUrl": ""
+		},
+		{
+			"reviewId": 4,
+			"memberId": 1,
+			"smokingAreaName": "서울역",
+			"createdAt": "2024-02-05T13:10:00",
+			"rating": 4,
+			"body": "흡연장소 깨끗하고 좋아요.",
+			"imgUrl": ""
+		},
+		{
+			"reviewId": 5,
+			"memberId": 1,
+			"smokingAreaName": "이태원역 4번 출구",
+			"createdAt": "2024-02-03T16:30:00",
+			"rating": 5,
+			"body": "흡연구역이 정리 잘 되어 있어서 좋습니다.",
+			"imgUrl": ""
+		},
+		{
+			"reviewId": 6,
+			"memberId": 1,
+			"smokingAreaName": "서울숲 공원",
+			"createdAt": "2024-02-01T11:15:00",
+			"rating": 2,
+			"body": "흡연장소가 너무 작고 불편해요.",
+			"imgUrl": ""
+		},
+		{
+			"reviewId": 7,
+			"memberId": 1,
+			"smokingAreaName": "한강공원",
+			"createdAt": "2024-01-28T09:45:00",
+			"rating": 3,
+			"body": "경치는 좋지만 흡연구역이 좁아요.",
+			"imgUrl": ""
+		},
+		{
+			"reviewId": 8,
+			"memberId": 2,
+			"smokingAreaName": "건대입구역 2번 출구",
+			"createdAt": "2024-02-05T13:10:00",
+			"rating": 4,
+			"body": "흡연장소 깨끗하고 좋아요.",
+			"imgUrl": ""
+		},
+		{
+			"reviewId": 9,
+			"memberId": 2,
+			"smokingAreaName": "서울역",
+			"createdAt": "2024-01-25T14:20:00",
+			"rating": 5,
+			"body": "흡연구역이 넓어서 편해요.",
+			"imgUrl": ""
+		}
+	],
+	"nicknameChangeRequests": [
+		{
+			"memberId": 1,
+			"nickname": "기쁜 너구리 888",
+			"id": "701b"
+		},
+		{
+			"memberId": 2,
+			"nickname": "멋진 판다 999",
+			"id": "aaf2"
+		}
+	],
+	"notices": [
+		{
+			"noticeId": 1,
+			"title": "서버 점검 예정 안내",
+			"content": "서비스 안정화를 위한 서버 점검이 예정되어 있습니다.",
+			"updatedAt": "2025-01-28T14:28:30"
+		},
+		{
+			"noticeId": 2,
+			"title": "새로운 기능 추가 안내",
+			"content": "새로운 기능이 업데이트되었습니다!",
+			"updatedAt": "2025-02-01T10:00:00"
+		},
+		{
+			"noticeId": 3,
+			"title": "설 연휴 고객센터 운영 안내",
+			"content": "설 연휴 기간 동안 고객센터 운영 시간이 조정됩니다.",
+			"updatedAt": "2025-01-25T09:00:00"
+		},
+		{
+			"noticeId": 4,
+			"title": "흡연 구역 개선 및 위치 변경 안내",
+			"content": "더 나은 환경을 제공하기 위해 일부 흡연 구역의 위치를 변경합니다.",
+			"updatedAt": "2025-01-20T18:30:00"
+		},
+		{
+			"noticeId": 5,
+			"title": "앱 업데이트 예정 공지",
+			"content": "다양한 기능 개선이 포함될 예정입니다.",
+			"updatedAt": "2025-01-15T12:00:00"
+		},
+		{
+			"noticeId": 6,
+			"title": "커뮤니티 가이드라인 개정 안내",
+			"content": "커뮤니티의 원활한 운영을 위해 가이드라인이 개정됩니다.",
+			"updatedAt": "2025-01-10T15:00:00"
+		},
+		{
+			"noticeId": 7,
+			"title": "일부 지역 서비스 점검 공지",
+			"content": "일부 지역에서 서비스 점검이 예정되어 있습니다.",
+			"updatedAt": "2025-01-05T08:00:00"
+		},
+		{
+			"noticeId": 8,
+			"title": "이용약관 및 개인정보 처리방침 개정 안내",
+			"content": "이용약관 및 개인정보 처리방침이 개정되었습니다.",
+			"updatedAt": "2025-01-01T17:45:00"
+		}
+	],
+	"noticeDetails": {
+		"1": {
+			"noticeId": 1,
+			"title": "서버 점검 예정 안내",
+			"content": "서비스 안정화를 위한 서버 점검이 예정되어 있습니다.",
+			"updatedAt": "2025-01-28T14:28:30"
+		},
+		"2": {
+			"noticeId": 2,
+			"title": "새로운 기능 추가 안내",
+			"content": "새로운 기능이 업데이트되었습니다!",
+			"updatedAt": "2025-02-01T10:00:00"
+		},
+		"3": {
+			"noticeId": 3,
+			"title": "설 연휴 고객센터 운영 안내",
+			"content": "설 연휴 기간 동안 고객센터 운영 시간이 조정됩니다.",
+			"updatedAt": "2025-01-25T09:00:00"
+		},
+		"4": {
+			"noticeId": 4,
+			"title": "흡연 구역 개선 및 위치 변경 안내",
+			"content": "더 나은 환경을 제공하기 위해 일부 흡연 구역의 위치를 변경합니다.",
+			"updatedAt": "2025-01-20T18:30:00"
+		},
+		"5": {
+			"noticeId": 5,
+			"title": "앱 업데이트 예정 공지",
+			"content": "다양한 기능 개선이 포함될 예정입니다.",
+			"updatedAt": "2025-01-15T12:00:00"
+		},
+		"6": {
+			"noticeId": 6,
+			"title": "커뮤니티 가이드라인 개정 안내",
+			"content": "커뮤니티의 원활한 운영을 위해 가이드라인이 개정됩니다.",
+			"updatedAt": "2025-01-10T15:00:00"
+		},
+		"7": {
+			"noticeId": 7,
+			"title": "일부 지역 서비스 점검 공지",
+			"content": "일부 지역에서 서비스 점검이 예정되어 있습니다.",
+			"updatedAt": "2025-01-05T08:00:00"
+		},
+		"8": {
+			"noticeId": 8,
+			"title": "이용약관 및 개인정보 처리방침 개정 안내",
+			"content": "이용약관 및 개인정보 처리방침이 개정되었습니다.",
+			"updatedAt": "2025-01-01T17:45:00"
+		}
+	},
 	"smokingAreas": [
 		{
 			"smoking_id": 1,
@@ -56,7 +330,8 @@
 				"냉난방이 가능해요",
 				"야외에 있어요"
 			],
-			"is_bookmarked": true
+			"is_bookmarked": true,
+			"id": "b32c"
 		},
 		{
 			"smoking_id": 2,
@@ -85,7 +360,8 @@
 				"냉난방이 가능해요",
 				"야외에 있어요"
 			],
-			"is_bookmarked": true
+			"is_bookmarked": true,
+			"id": "5151"
 		},
 		{
 			"smoking_id": 3,
@@ -114,7 +390,8 @@
 				"냉난방이 가능해요",
 				"야외에 있어요"
 			],
-			"is_bookmarked": true
+			"is_bookmarked": true,
+			"id": "1400"
 		},
 		{
 			"smoking_id": 4,
@@ -249,39 +526,27 @@
 			"scrap_id": 1,
 			"created_at": "2024-01-10T10:00:00",
 			"user_id": 1,
-			"smoking_id": 1
+			"smoking_id": 1,
+			"id": "a5ed"
 		},
 		{
 			"scrap_id": 2,
 			"created_at": "2024-01-15T12:00:00",
 			"user_id": 1,
-			"smoking_id": 2
+			"smoking_id": 2,
+			"id": "9c0f"
 		}
 	],
 	"regions": [
 		{
 			"region_id": 1,
-			"region": "서울 동작구"
+			"region": "서울 동작구",
+			"id": "8cef"
 		},
 		{
 			"region_id": 2,
-			"region": "서울 강남구"
-		}
-	],
-	"notices": [
-		{
-			"id": 1,
-			"title": "새로운 흡연 부스가 추가되었습니다!",
-			"body": "사당역 인근에 새로운 흡연 부스가 설치되었습니다. 많은 이용 바랍니다.",
-			"created_at": "2024-01-20T10:00:00",
-			"updated_at": "2024-01-20T10:00:00"
-		},
-		{
-			"id": 2,
-			"title": "흡연 구역 유지보수 안내",
-			"body": "흡연 구역의 유지보수가 2월 1일에 예정되어 있습니다.",
-			"created_at": "2024-01-25T12:00:00",
-			"updated_at": "2024-01-25T12:00:00"
+			"region": "서울 강남구",
+			"id": "6d5e"
 		}
 	],
 	"list": {

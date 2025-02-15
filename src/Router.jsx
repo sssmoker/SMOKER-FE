@@ -10,113 +10,88 @@ import AddSmokingAreaPage from "@/pages/add-smoking-area/AddSmokingAreaPage"
 import AddSmokingAreaNamePage from "@/pages/add-smoking-area/AddSmokingAreaNamePage"
 import MyPage from "@/pages/auth/MyPage"
 import MemberInfoPage from "@/pages/auth/MemberInfoPage"
+import MemberReviewsPage from "@/pages/auth/MemberReviewsPage"
+import EditNamePage from "@/pages/auth/EditNamePage"
+import QuestionsPage from "@/pages/questions/QuestionsPage"
+import NoticesPage from "@/pages/notices/NoticesPage"
 import LoginPage from "@/pages/auth/LoginPage"
 import SavedSmokingAreasPage from "@/pages/favorites/SavedSmokingAreasPage"
 import AddSmokingAreaImagePage from "@/pages/add-smoking-area/AddSmokingAreaImagePage"
 import SmokingAreaHistoryPage from "./pages/smoking-area/SmokingAreaHistoryPage"
-// "list" 경로와 하위 페이지들
+import SmokingAreaDetailPage from "./pages/smoking-area/SmokingAreaDetailPage"
+import SmokingAreaReviewPage from "./pages/smoking-area/SmokingAreaReviewPage"
+import NoticeDetailPage from "@/pages/notices/NoticeDetailPage"
+import KakaoOAuthRedirectHandler from "@/pages/auth/KakaoOAuthRedirectHandler"
+import GoogleOAuth2RedirectHandler from "./pages/auth/GoogleOAuth2RedirectHandler"
+
 const listRoutes = [
 	{
-		index: true, // 기본 ListPage
+		index: true,
 		element: <ListPage />,
 	},
 	{
 		path: "smoking-area",
-		element: <Outlet />, // 하위 smoking-area 페이지들
+		element: <Outlet />,
 		children: [
-			{
-				index: true,
-				element: <SmokingAreaPage />, // 상세 정보 및 후기 페이지
-			},
-			{
-				path: "history",
-				element: <SmokingAreaHistoryPage />, // 히스토리 페이지
-			},
-			{
-				path: "update",
-				element: <SmokingAreaUpdatePage />, // 흡연 구역 업데이트 페이지
-			},
-			{
-				path: "writing-review",
-				element: <WritingReviewPage />, // 리뷰 작성 페이지
-			},
+			{ index: true, element: <SmokingAreaPage /> },
+			{ path: "detail", element: <SmokingAreaDetailPage /> },
+			{ path: "review", element: <SmokingAreaReviewPage /> },
+			{ path: "update", element: <SmokingAreaUpdatePage /> },
+			{ path: "writing-review", element: <WritingReviewPage /> },
+			{ path: "history", element: <SmokingAreaHistoryPage /> },
 		],
 	},
 ]
 
-// "my-page" 경로와 하위 페이지들
 const myPageRoutes = [
 	{
 		index: true,
-		element: <MyPage />, // 기본 마이 페이지
+		element: <MyPage />,
 	},
 	{
-		path: "login",
-		element: <LoginPage />, // 로그인 페이지
-	},
-	{
-		path: "info",
-		element: <MemberInfoPage />, // 회원 정보 페이지
-	},
-]
-
-// "add-smoking-area" 경로와 하위 페이지들
-const addSmokingAreaRoutes = [
-	{
-		path: "location",
-		element: <AddSmokingAreaPage />, // 위치 설정 페이지
-	},
-	{
-		path: "name",
-		element: <AddSmokingAreaNamePage />, // 이름 입력 페이지
-	},
-	{
-		path: "image",
-		element: <AddSmokingAreaImagePage />, // 이름 입력 페이지
-	},
-]
-
-// "favorites" 경로 추가
-const favoritesRoutes = [
-	{
-		index: true,
-		element: <SavedSmokingAreasPage />, // 저장된 흡연 구역 페이지
-	},
-]
-
-// 전체 루트와 경로 정의
-const routes = [
-	{
-		index: true,
-		element: <HomePage />, // 홈 페이지
-	},
-	{
-		path: "list",
+		path: ":memberId",
 		element: <Outlet />,
-		children: listRoutes, // "list"와 하위 경로
+		children: [
+			{ path: "info", element: <MemberInfoPage /> },
+			{ path: "reviews", element: <MemberReviewsPage /> },
+			{ path: "name", element: <EditNamePage /> },
+		],
 	},
+	{ path: "questions", element: <QuestionsPage /> },
+	{ path: "notices", element: <NoticesPage /> },
+	{ path: "notices/detail/:noticeId", element: <NoticeDetailPage /> },
+]
+
+const addSmokingAreaRoutes = [
+	{ path: "location", element: <AddSmokingAreaPage /> },
+	{ path: "name", element: <AddSmokingAreaNamePage /> },
+	{ path: "image", element: <AddSmokingAreaImagePage /> },
+]
+
+const favoritesRoutes = [{ index: true, element: <SavedSmokingAreasPage /> }]
+
+const routes = [
+	{ index: true, element: <HomePage /> },
+	{ path: "list", element: <Outlet />, children: listRoutes },
 	{
 		path: "add-smoking-area",
 		element: <Outlet />,
-		children: addSmokingAreaRoutes, // "add-smoking-area"와 하위 경로
+		children: addSmokingAreaRoutes,
 	},
+	{ path: "my-page", element: <Outlet />, children: myPageRoutes },
+	{ path: "favorites", element: <Outlet />, children: favoritesRoutes },
+	{ path: "login", element: <LoginPage /> },
+	{ path: "/login/oauth/code/kakao", element: <KakaoOAuthRedirectHandler /> },
 	{
-		path: "my-page",
-		element: <Outlet />,
-		children: myPageRoutes, // "my-page"와 하위 경로
-	},
-	{
-		path: "favorites",
-		element: <Outlet />,
-		children: favoritesRoutes, // "favorites" 경로와 하위 경로
+		path: "/login/oauth/code/google",
+		element: <GoogleOAuth2RedirectHandler />,
 	},
 ]
 
-// createBrowserRouter로 전체 라우팅 설정
 export const router = createBrowserRouter([
 	{
 		path: "/",
-		element: <RootLayout />, // 레이아웃 컴포넌트
+		element: <RootLayout />,
 		children: routes,
 	},
 ])

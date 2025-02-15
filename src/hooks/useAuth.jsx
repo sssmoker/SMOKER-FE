@@ -1,15 +1,24 @@
 import { useAuthContext } from "@/contexts/AuthContext"
 
 export const useAuth = () => {
-	const { user, loading, login, logout } = useAuthContext()
+	const authContext = useAuthContext()
 
-	const isLoggedIn = !!user
+	const {
+		member = null,
+		loading = false,
+		login,
+		logout,
+		deactivateAccount,
+	} = authContext || {}
+
+	const isLoggedIn = Boolean(member && member.memberId)
 
 	return {
-		user,
+		member,
 		isLoggedIn,
 		loading,
 		login,
 		logout,
+		deactivateAccount,
 	}
 }

@@ -23,7 +23,7 @@ import {
 	logout,
 	fetchOpenApi,
 	healthCheck,
-} from "@/api/api"
+} from "@/utils/api"
 
 //  흡연 구역 목록 가져오기
 export const useSmokingAreas = ({ userLat, userLng, selectedFilter }) =>
