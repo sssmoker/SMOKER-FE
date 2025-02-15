@@ -3,33 +3,19 @@ import { useNavigate } from "react-router-dom"
 import BackButton from "@/components/common/button/BackButton"
 import KakaoSymbol from "@/assets/KakaoSymbol.svg"
 import GoogleSymbol from "@/assets/GoogleSymbol.svg"
-import { useAuthContext } from "@/contexts/AuthContext"
 import { KAKAO_AUTH_URL } from "@/pages/auth/KakaoOAuth"
+import { GOOGLE_AUTH_URL } from "@/pages/auth/GoogleOAuth2"
 
 export default function LoginPage() {
 	const navigate = useNavigate()
-	const { login } = useAuthContext()
-
-	const [error, setError] = useState(null)
 	const [isGoogleClicked, setIsGoogleClicked] = useState(false)
-	const GOOGLE_AUTH_URL = `http://localhost:8080/oauth/authorization/google`
 
-	const handleLogin = async (provider) => {
-		setIsGoogleClicked(provider === "google")
-		setError(null)
-
-		try {
-			const success = await login(provider)
-			if (!success) {
-				setError("로그인 실패! 다시 시도해주세요.")
-				return
-			}
-			navigate("/")
-		} catch (err) {
-			setError(`${provider} 로그인 중 오류가 발생했습니다.`)
+	const handleLogin = (provider) => {
+		if (provider === "google") {
+			window.location.href = GOOGLE_AUTH_URL
+		} else if (provider === "kakao") {
+			window.location.href = KAKAO_AUTH_URL
 		}
-
-		setTimeout(() => setIsGoogleClicked(false), 300)
 	}
 
 	return (
@@ -84,30 +70,21 @@ export default function LoginPage() {
 						<span className="text-center font-bold">구글로 로그인하기</span>
 					</button>
 
-					<button
-						className="flex h-[2.75rem] min-w-[10rem] max-w-[50vw] flex-1 items-center justify-center whitespace-nowrap rounded-[0.75rem] bg-[#FEE500] px-4 text-xs font-medium text-black sm:text-sm"
-						onClick={() => handleLogin("kakao")}
+					<a
+						href={KAKAO_AUTH_URL}
+						className="flex h-[2.75rem] min-w-[10rem] max-w-[50vw] flex-1 items-center justify-center whitespace-nowrap rounded-[0.75rem] bg-[#FEE500] px-4 text-xs font-bold text-black sm:text-sm"
 					>
-						<a
-							href={KAKAO_AUTH_URL}
-							className="flex h-[2.75rem] min-w-[10rem] max-w-[50vw] flex-1 items-center justify-center whitespace-nowrap rounded-[0.75rem] bg-[#FEE500] px-4 text-xs font-medium text-black sm:text-sm"
-						>
-							<div className="flex items-center gap-[0.5rem]">
-								<img
-									src={KakaoSymbol}
-									alt="Kakao"
-									className="h-[1.125rem] w-[1.125rem] sm:h-5 sm:w-5"
-								/>
-								<span className="text-center font-bold">
-									카카오로 로그인하기
-								</span>
-							</div>
-						</a>
-					</button>
+						<div className="flex items-center gap-[0.5rem]">
+							<img
+								src={KakaoSymbol}
+								alt="Kakao"
+								className="h-[1.125rem] w-[1.125rem] sm:h-5 sm:w-5"
+							/>
+							<span className="text-center">카카오로 로그인하기</span>
+						</div>
+					</a>
 				</div>
 			</div>
-
-			{error && <p className="mt-4 text-sm text-red-500">{error}</p>}
 
 			<p className="text-center text-xs text-gray-500">
 				회원가입하면{" "}

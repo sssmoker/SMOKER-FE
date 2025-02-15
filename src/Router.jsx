@@ -22,6 +22,7 @@ import SmokingAreaDetailPage from "./pages/smoking-area/SmokingAreaDetailPage"
 import SmokingAreaReviewPage from "./pages/smoking-area/SmokingAreaReviewPage"
 import NoticeDetailPage from "@/pages/notices/NoticeDetailPage"
 import KakaoOAuthRedirectHandler from "@/pages/auth/KakaoOAuthRedirectHandler"
+import GoogleOAuth2RedirectHandler from "./pages/auth/GoogleOAuth2RedirectHandler"
 
 const listRoutes = [
 	{
@@ -81,6 +82,10 @@ const routes = [
 	{ path: "favorites", element: <Outlet />, children: favoritesRoutes },
 	{ path: "login", element: <LoginPage /> },
 	{ path: "/login/oauth/code/kakao", element: <KakaoOAuthRedirectHandler /> },
+	{
+		path: "/login/oauth/code/google",
+		element: <GoogleOAuth2RedirectHandler />,
+	},
 ]
 
 export const router = createBrowserRouter([
