@@ -1,18 +1,19 @@
 import { defineConfig } from "vite"
+import react from "@vitejs/plugin-react"
 import { VitePWA } from "vite-plugin-pwa"
 import path from "path"
 
 export default defineConfig({
 	resolve: {
 		alias: {
-			// eslint-disable-next-line no-undef
-			"@": path.resolve(__dirname, "src"), // @ 경로를 src로 매핑
+			"@": path.resolve(__dirname, "src"), // `@`를 `src` 경로로 설정
 		},
 	},
 	server: {
 		port: 5000, // 개발 서버 포트 설정
 	},
 	plugins: [
+		react(), // React 최적화 플러그인
 		VitePWA({
 			registerType: "autoUpdate",
 			manifest: {
@@ -40,18 +41,47 @@ export default defineConfig({
 			workbox: {
 				runtimeCaching: [
 					{
-						urlPattern: /^https:\/\/api\.yourdomain\.com\/.*$/, // API 요청 캐시
-						handler: "NetworkFirst", // 네트워크 우선
+						urlPattern: ({ request }) =>
+							request.destination === "script" ||
+							request.destination === "style" ||
+							request.destination === "document",
+						handler: "StaleWhileRevalidate",
+						options: {
+							cacheName: "static-resources",
+							expiration: {
+								maxEntries: 50,
+								maxAgeSeconds: 60 * 60 * 24 * 30, // 30일
+							},
+						},
+					},
+					{
+						urlPattern: /^https:\/\/api\.yourdomain\.com\/.*$/, // API 캐싱
+						handler: "NetworkFirst",
 						options: {
 							cacheName: "api-cache",
 							expiration: {
 								maxAgeSeconds: 60 * 60 * 24 * 7, // 7일
 							},
-							networkTimeoutSeconds: 10, // 네트워크 응답 대기 시간
+							networkTimeoutSeconds: 10,
 						},
 					},
 				],
 			},
 		}),
 	],
+	optimizeDeps: {
+		exclude: ["@tanstack/react-query", "framer-motion"], // 불필요한 번들링 제외
+	},
+	build: {
+		rollupOptions: {
+			output: {
+				manualChunks(id) {
+					if (id.includes("node_modules")) {
+						return id.split("node_modules/")[1].split("/")[0]
+					}
+				},
+			},
+		},
+		chunkSizeWarningLimit: 600, // 큰 번들 경고 제한 증가
+	},
 })
