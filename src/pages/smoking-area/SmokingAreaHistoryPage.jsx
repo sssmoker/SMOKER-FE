@@ -4,6 +4,7 @@ import HistoryCard from "@/components/smoking-history/HistoryCard"
 import ComButton from "@/components/common/button/ComButton"
 import { useLocation, useNavigate } from "react-router-dom"
 import { useQuery } from "@tanstack/react-query"
+import { useSmokingAreaUpdateHistory } from "@/utils/queries"
 
 export default function SmokingAreaHistoryPage() {
 	const location = useLocation()
@@ -16,30 +17,12 @@ export default function SmokingAreaHistoryPage() {
 		navigate(`/list/smoking-area/update?id=${smokingAreaId}`)
 	}
 
-	const { data, error, isLoading } = useQuery({
-		queryKey: ["updatedHistory", smokingAreaId],
-		queryFn: async () => {
-			const response = await fetch(
-				"http://localhost:3001/updated-history",
-				// `/api/updated-history/${smokingAreaId}/smokingArea`
-				{
-					method: "GET",
-					headers: {
-						"Content-Type": "application/json",
-					},
-				},
-			)
-			if (!response.ok) {
-				const errorMessage = await response.text()
-				throw new Error(`데이터 호출 실패: ${errorMessage}`)
-			}
-			const jsonResponse = await response.json()
-			return jsonResponse?.result
-		},
-		retry: false, // 재시도 방지
-		// retry: 2, // 2번만 재시도
-		// retryDelay: 2000, // 2초 간격으로 재시도
-	})
+	// 토근 없을 시 로그인 화면으로 이동 플로우 추가하기
+	// api 연결
+	const { data, error, isLoading } = useSmokingAreaUpdateHistory(
+		smokingAreaId,
+		0,
+	)
 
 	// if (isLoading) {
 	// 	return <div>로딩 중...</div>
