@@ -67,6 +67,7 @@ export default function ListPage() {
 			<div className="absolute left-0 top-[env(safe-area-inset-top)] z-50 w-full px-4">
 				<SearchBar
 					setData={setData}
+					isList={true}
 					placeholder="내 주변에 흡연구역을 검색해보세요 (예시) LG타워 사당역"
 				/>
 			</div>
