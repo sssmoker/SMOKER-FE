@@ -15,6 +15,7 @@ export default function ListPage() {
 		RATING: "평점순",
 	}
 	const [selectedFilter, setSelectedFilter] = useState(FILTER_OPTIONS.DISTANCE) // "거리순", "평점순"
+	const [data, setData] = useState()
 
 	// 현재 위치 가져오기
 	// useEffect(() => {
@@ -33,11 +34,20 @@ export default function ListPage() {
 	// 	fetchUserLocation()
 	// }, [])
 
-	const { data, error, isLoading } = useSmokingAreas({
+	const {
+		data: apiData,
+		error,
+		isLoading,
+	} = useSmokingAreas({
 		userLat,
 		userLng,
 		selectedFilter,
 	})
+	useEffect(() => {
+		if (apiData) {
+			setData(apiData)
+		}
+	}, [apiData])
 
 	const handleMoveToHome = () => {
 		navigate("/")
@@ -55,7 +65,10 @@ export default function ListPage() {
 		<div className="relative h-[100vh] bg-white">
 			{/* 상단 검색바 */}
 			<div className="absolute left-0 top-[env(safe-area-inset-top)] z-50 w-full px-4">
-				<SearchBar placeholder="내 주변에 흡연구역을 검색해보세요 (예시) LG타워 사당역" />
+				<SearchBar
+					setData={setData}
+					placeholder="내 주변에 흡연구역을 검색해보세요 (예시) LG타워 사당역"
+				/>
 			</div>
 
 			{/* 필터 버튼 */}
