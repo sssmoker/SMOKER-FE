@@ -42,7 +42,7 @@ export const fetchSmokingAreaMarkers = async () =>
 
 // 리뷰 관련 API
 export const fetchReviews = async (smokingAreaId) =>
-	await apiRequest(`/api/reviews/${smokingAreaId}`)
+	await apiRequest(`/api/reviews/${smokingAreaId}?pageNumber=1`)
 export const postReview = async (smokingAreaId, data) =>
 	await apiRequest(`/api/reviews/${smokingAreaId}`, "POST", data)
 export const fetchReviewStars = async (smokingAreaId) =>
