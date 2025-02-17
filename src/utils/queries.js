@@ -28,6 +28,7 @@ import {
 	logout,
 	fetchOpenApi,
 	healthCheck,
+	searchSmokingArea,
 } from "@/utils/api"
 
 //  흡연 구역 목록 가져오기
@@ -39,6 +40,18 @@ export const useSmokingAreas = ({ userLat, userLng, selectedFilter }) =>
 		onError: (error) =>
 			console.error("흡연 구역 목록을 불러오는 데 실패했습니다.", error),
 	})
+
+//  흡연 구역 검색 목록
+export const useSearchSmokingAreas = () => {
+	const queryClient = useQueryClient()
+	return useMutation({
+		mutationFn: searchSmokingArea,
+		onSuccess: () => {
+			queryClient.invalidateQueries(["smokingAreas"])
+		},
+		onError: (error) => console.error("흡연 구역 검색 실패:", error),
+	})
+}
 
 // 특정 흡연 구역 상세 조회, 리뷰 목록 조회, 총 별점 및 개수 조회
 export const useSmokingAreaDetailsPage = (smokingAreaId) =>

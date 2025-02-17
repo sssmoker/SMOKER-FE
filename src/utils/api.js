@@ -33,6 +33,8 @@ export const fetchSmokingAreas = async ({ userLat, userLng, selectedFilter }) =>
 	)
 export const fetchSmokingAreaDetails = async (smokingAreaId) =>
 	await apiRequest(`/api/smoking-area/${smokingAreaId}`)
+export const searchSmokingArea = async (data) =>
+	await apiRequest(`/api/smoking-area/search`, "POST", data)
 export const registerSmokingArea = async (data) =>
 	await apiRequest(`/api/smoking-area/register`, "POST", data)
 export const updateSmokingArea = async (smokingAreaId, data) =>
