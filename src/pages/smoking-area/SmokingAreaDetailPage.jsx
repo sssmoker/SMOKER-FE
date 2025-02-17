@@ -22,11 +22,11 @@ export default function SmokingAreaDetailPage({ detailInfoList }) {
 		<>
 			<div className="mx-[20px] mt-[16px] flex-wrap justify-center gap-x-[12px] gap-y-[8px]">
 				{Object.entries(options)
-					.filter(([key]) => detailInfoList.feature[key])
+					.filter(([key]) => detailInfoList?.feature?.[key])
 					.map(([key, value]) => (
 						<div
 							key={key}
-							className={`mx-[6px] my-[4px] inline-block rounded-[10px] border border-gray-300 bg-white px-4 py-2 text-[12px] text-gray-700 shadow-[0px_2px_2px_0px_rgba(69,23,255,0.20)] transition-all`}
+							className="mx-[6px] my-[4px] inline-block rounded-[10px] border border-gray-300 bg-white px-4 py-2 text-[12px] text-gray-700 shadow-[0px_2px_2px_0px_rgba(69,23,255,0.20)] transition-all"
 						>
 							{value}
 						</div>

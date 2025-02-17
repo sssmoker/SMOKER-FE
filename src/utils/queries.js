@@ -1,4 +1,9 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
+import {
+	useQuery,
+	useMutation,
+	useQueryClient,
+	useQueries,
+} from "@tanstack/react-query"
 import {
 	fetchSmokingAreas,
 	fetchSmokingAreaDetails,
@@ -28,22 +33,49 @@ import {
 //  흡연 구역 목록 가져오기
 export const useSmokingAreas = ({ userLat, userLng, selectedFilter }) =>
 	useQuery({
-		queryKey: ["smokingAreas"],
-		queryFn: fetchSmokingAreas({ userLat, userLng, selectedFilter }),
+		queryKey: ["smokingAreas", userLat, userLng],
+		queryFn: () => fetchSmokingAreas({ userLat, userLng, selectedFilter }),
 		retry: 1,
 		onError: (error) =>
 			console.error("흡연 구역 목록을 불러오는 데 실패했습니다.", error),
 	})
 
-//  특정 흡연 구역 상세 조회
-export const useSmokingAreaDetails = (smokingAreaId) =>
-	useQuery({
-		queryKey: ["smokingAreaDetails", smokingAreaId],
-		queryFn: () => fetchSmokingAreaDetails(smokingAreaId),
-		enabled: !!smokingAreaId,
-		retry: 1,
-		onError: (error) => console.error("흡연 구역 상세 조회 실패:", error),
+// 특정 흡연 구역 상세 조회, 리뷰 목록 조회, 총 별점 및 개수 조회
+export const useSmokingAreaDetailsPage = (smokingAreaId) =>
+	useQueries({
+		queries: [
+			{
+				queryKey: ["smokingAreaDetails", smokingAreaId],
+				queryFn: () => fetchSmokingAreaDetails(smokingAreaId),
+				enabled: !!smokingAreaId,
+				retry: 1,
+				onError: (error) => console.error("흡연 구역 상세 조회 실패:", error),
+			},
+			{
+				queryKey: ["reviews", smokingAreaId],
+				queryFn: () => fetchReviews(smokingAreaId),
+				enabled: !!smokingAreaId,
+				retry: 1,
+				onError: (error) => console.error("리뷰 목록 조회 실패:", error),
+			},
+			{
+				queryKey: ["reviewStars", smokingAreaId],
+				queryFn: () => fetchReviewStars(smokingAreaId),
+				enabled: !!smokingAreaId,
+				retry: 1,
+				onError: (error) => console.error("별점 조회 실패:", error),
+			},
+		],
 	})
+//  특정 흡연 구역 상세 조회
+// export const useSmokingAreaDetails = (smokingAreaId) =>
+// 	useQuery({
+// 		queryKey: ["smokingAreaDetails", smokingAreaId],
+// 		queryFn: () => fetchSmokingAreaDetails(smokingAreaId),
+// 		enabled: !!smokingAreaId,
+// 		retry: 1,
+// 		onError: (error) => console.error("흡연 구역 상세 조회 실패:", error),
+// 	})
 
 //  흡연 구역 등록
 export const useRegisterSmokingArea = () => {
@@ -80,14 +112,14 @@ export const useSmokingAreaMarkers = () =>
 	})
 
 //  리뷰 목록 조회
-export const useReviews = (smokingAreaId) =>
-	useQuery({
-		queryKey: ["reviews", smokingAreaId],
-		queryFn: () => fetchReviews(smokingAreaId),
-		enabled: !!smokingAreaId,
-		retry: 1,
-		onError: (error) => console.error("리뷰 목록 조회 실패:", error),
-	})
+// export const useReviews = (smokingAreaId) =>
+// 	useQuery({
+// 		queryKey: ["reviews", smokingAreaId],
+// 		queryFn: () => fetchReviews(smokingAreaId),
+// 		enabled: !!smokingAreaId,
+// 		retry: 1,
+// 		onError: (error) => console.error("리뷰 목록 조회 실패:", error),
+// 	})
 
 //  리뷰 등록
 export const usePostReview = (smokingAreaId) => {
@@ -102,14 +134,14 @@ export const usePostReview = (smokingAreaId) => {
 }
 
 //  총 별점 및 개수 조회
-export const useReviewStars = (smokingAreaId) =>
-	useQuery({
-		queryKey: ["reviewStars", smokingAreaId],
-		queryFn: () => fetchReviewStars(smokingAreaId),
-		enabled: !!smokingAreaId,
-		retry: 1,
-		onError: (error) => console.error("별점 조회 실패:", error),
-	})
+// export const useReviewStars = (smokingAreaId) =>
+// 	useQuery({
+// 		queryKey: ["reviewStars", smokingAreaId],
+// 		queryFn: () => fetchReviewStars(smokingAreaId),
+// 		enabled: !!smokingAreaId,
+// 		retry: 1,
+// 		onError: (error) => console.error("별점 조회 실패:", error),
+// 	})
 
 //  사용자 정보 조회
 export const useUserInfo = () =>
