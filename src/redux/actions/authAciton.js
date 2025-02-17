@@ -1,15 +1,15 @@
-// 인가 코드 백엔드에 넘기고 토큰 받기
+const BASE_URL = import.meta.env.VITE_API_BASE_URL
+
+// 인가 코드 백엔드에 넘기고 토큰 받기 (카카오 로그인)
 export const kakaoLogin = (code) => async (dispatch) => {
 	dispatch({ type: "KAKAO_LOGIN_REQUEST" })
 
 	try {
 		const response = await fetch(
-			`http://localhost:8080/api/auth/login/kakao?code=${code}`,
+			`${BASE_URL}/api/auth/login/kakao?code=${code}`,
 			{
 				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-				},
+				headers: { "Content-Type": "application/json" },
 			},
 		)
 
@@ -35,12 +35,17 @@ export const kakaoLogin = (code) => async (dispatch) => {
 	}
 }
 
+// 인가 코드 백엔드에 넘기고 토큰 받기 (구글 로그인)
 export const googleLogin = (code) => async (dispatch) => {
 	dispatch({ type: "GOOGLE_LOGIN_REQUEST" })
 
 	try {
 		const response = await fetch(
-			`http://localhost:8080/api/auth/login/google?code=${code}`,
+			`${BASE_URL}/api/auth/login/google?code=${code}`,
+			{
+				method: "GET",
+				headers: { "Content-Type": "application/json" },
+			},
 		)
 		const data = await response.json()
 
@@ -64,7 +69,7 @@ export const googleLogin = (code) => async (dispatch) => {
 	}
 }
 
-// 로그아웃 함수 수정 (세션 데이터 완전 삭제)
+// 로그아웃 함수 (세션 데이터 완전 삭제)
 export const logout = () => (dispatch) => {
 	sessionStorage.removeItem("tokens")
 	sessionStorage.removeItem("member")
