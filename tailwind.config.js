@@ -3,6 +3,22 @@ export default {
 	content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
 	theme: {
 		extend: {
+			keyframes: {
+				yellowLeftMove: {
+					"0%": { left: "0.5rem" },
+					"50%": { left: "8rem" },
+					"100%": { left: "0.5rem" },
+				},
+				purpleLeftMove: {
+					"0%": { left: "4rem" },
+					"50%": { left: "-4rem" },
+					"100%": { left: "4rem" },
+				},
+			},
+			animation: {
+				yellowBounce: "yellowLeftMove 3s ease-in-out forwards",
+				purpleBounce: "purpleLeftMove 3s ease-in-out forwards",
+			},
 			gradientColorStops: {
 				transparent: "rgba(255,255,255,0)",
 				white: "rgba(255,255,255,1)",

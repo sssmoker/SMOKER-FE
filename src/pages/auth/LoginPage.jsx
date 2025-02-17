@@ -19,26 +19,26 @@ export default function LoginPage() {
 	}
 
 	return (
-		<div className="flex min-h-screen flex-col items-center gap-y-8 bg-white px-6">
+		<div className="flex min-h-screen flex-col items-center gap-y-8 bg-white px-6 pt-16">
 			<div className="w-full p-4">
 				<BackButton className="absolute left-4 top-4" />
 			</div>
 
-			<div className="relative w-full max-w-xs">
-				<div className="absolute left-7 top-8 h-4 w-4 rounded-full bg-[#FDFF72]"></div>
-				<div className="absolute left-32 top-8 h-4 w-4 rounded-full bg-[#4517FF]"></div>
+			<div className="relative mt-2 w-full max-w-lg">
+				<div className="animate-yellowBounce absolute left-2 top-2 h-4 w-4 rounded-full bg-[#FDFF72]"></div>
+				<div className="animate-purpleBounce absolute left-16 top-2 h-4 w-4 translate-x-10 rounded-full bg-[#4517FF]"></div>{" "}
 			</div>
 
-			<h1 className="mt-6 bg-gradient-to-l from-[#2A0E99] to-[#4517FF] bg-clip-text text-center text-4xl font-bold text-transparent">
-				만나서 반가워요!
-			</h1>
-
-			<p className="-mt-6 ml-12 w-full max-w-sm text-left text-sm text-gray-600">
-				로그인 후 스모커의 <br />
-				모든 기능을 이용해보세요!
-			</p>
-
-			<div className="mt-36 w-full max-w-sm text-center">
+			<div className="ml-2 mt-0 w-full text-left">
+				<p className="mb-4 bg-gradient-to-l from-[#2A0E99] to-[#4517FF] bg-clip-text text-4xl font-bold text-transparent">
+					만나서 반가워요!
+				</p>
+				<p className="max-w-sm text-sm font-bold text-gray-600 sm:ml-4">
+					로그인 후 스모커의 <br />
+					모든 기능을 이용해보세요!
+				</p>
+			</div>
+			<div className="mt-80 w-full max-w-sm text-center">
 				<div className="flex items-center">
 					<div className="flex-grow border-t-2 border-[#E8ECF4]"></div>
 					<span className="px-3 text-sm font-bold text-[#6A707C]">
@@ -87,11 +87,11 @@ export default function LoginPage() {
 			</div>
 
 			<p className="text-center text-xs text-gray-500">
-				회원가입하면{" "}
+				회원가입하면
 				<span className="font-bold text-gray-700 underline">
 					서비스 이용 약관
-				</span>{" "}
-				및{" "}
+				</span>
+				및
 				<span className="font-bold text-gray-700 underline">
 					개인정보 이용 약관
 				</span>
