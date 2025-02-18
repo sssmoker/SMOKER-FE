@@ -1,7 +1,7 @@
 import React, { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
-import { logout, deactivateAccount } from "@/redux/actions/authAciton"
+import { logout, deactivateAccount } from "@/redux/actions/authAction"
 import { ChevronRight } from "lucide-react"
 import BackButton from "@/components/common/button/BackButton"
 

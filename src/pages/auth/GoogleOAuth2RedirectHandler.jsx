@@ -1,7 +1,7 @@
 import React, { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { useDispatch } from "react-redux"
-import { googleLogin } from "@/redux/actions/authAciton" // 액션 호출
+import { googleLogin } from "@/redux/actions/authAction" // 액션 호출
 
 export default function GoogleOAuth2RedirectHandler() {
 	const navigate = useNavigate()

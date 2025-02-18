@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 import { useDispatch } from "react-redux"
-import { kakaoLogin } from "@/redux/actions/authAciton"
+import { kakaoLogin } from "@/redux/actions/authAction"
 import { useNavigate } from "react-router-dom"
 
 export default function KakaoOAuthRedirectHandler() {
