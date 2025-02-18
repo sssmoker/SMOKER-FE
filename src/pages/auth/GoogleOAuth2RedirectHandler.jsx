@@ -8,13 +8,17 @@ export default function GoogleOAuth2RedirectHandler() {
 	const dispatch = useDispatch()
 
 	useEffect(() => {
-		const urlParams = new URLSearchParams(window.location.search)
+		const urlParams = new URLSearchParams(window.location.search) // URL에서 code & state 가져오기
 		const code = urlParams.get("code")
+		const state = urlParams.get("state")
 
 		if (code) {
-			dispatch(googleLogin(code))
+			dispatch(googleLogin(code, state))
 				.then(() => navigate("/")) // 로그인 성공 시 홈으로 이동
 				.catch(() => navigate("/login")) // 실패 시 로그인 페이지로 이동
+		} else {
+			console.error("OAuth 코드 또는 state 없음!")
+			navigate("/login")
 		}
 	}, [dispatch, navigate])
 
