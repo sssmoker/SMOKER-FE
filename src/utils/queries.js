@@ -24,6 +24,7 @@ import {
 	fetchNoticeDetail,
 	fetchSmokingAreaUpdateHistory,
 	fetchMemberUpdateHistory,
+	apiRequestWithAuth,
 	reissueToken,
 	logout,
 	fetchOpenApi,
@@ -273,20 +274,51 @@ export const useMemberUpdateHistory = (memberId, page = 0) =>
 	})
 
 //  JWT 액세스 토큰 재발급
-export const useReissueToken = () =>
-	useMutation({
+export const useReissueToken = () => {
+	const queryClient = useQueryClient()
+
+	return useMutation({
 		mutationFn: reissueToken,
-		onSuccess: (data) => console.log("토큰 재발급 성공:", data),
+		onSuccess: (data) => {
+			console.log("토큰 재발급 성공:", data)
+
+			// 세션 스토리지에 최신 토큰 저장
+			sessionStorage.setItem(
+				"tokens",
+				JSON.stringify({
+					accessToken: data.result.accessToken,
+					refreshToken: data.result.refreshToken,
+				}),
+			)
+
+			// 모든 사용자 관련 데이터 새로고침
+			queryClient.invalidateQueries(["userInfo"])
+			queryClient.invalidateQueries(["savedSmokingAreas"]) // 저장된 흡연 구역
+			queryClient.invalidateQueries(["userReviews"]) // 사용자가 작성한 리뷰
+		},
 		onError: (error) => console.error("토큰 재발급 실패:", error),
 	})
+}
 
-//  로그아웃
-export const useLogout = () =>
-	useMutation({
+// 로그아웃
+export const useLogout = () => {
+	const queryClient = useQueryClient()
+
+	return useMutation({
 		mutationFn: logout,
-		onSuccess: () => console.log("로그아웃 성공"),
+		onSuccess: () => {
+			console.log("로그아웃 성공")
+
+			// 세션 스토리지 정리
+			sessionStorage.removeItem("tokens")
+			sessionStorage.removeItem("member")
+
+			// React Query 캐시 전체 삭제 (사용자 정보 및 관련 데이터 초기화)
+			queryClient.clear()
+		},
 		onError: (error) => console.error("로그아웃 실패:", error),
 	})
+}
 
 //  Open API 조회
 export const useOpenApi = (key) =>
