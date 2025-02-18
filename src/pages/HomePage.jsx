@@ -33,7 +33,7 @@ export default function HomePage() {
 		}
 	}, [])
 
-	// "내 주변" 버튼 클릭 시 사용 위치(동의 여부에 따라)를 moveToLocation에 업데이트
+	// "내 주변" 버튼 클릭 시, 동의 여부에 따라 현재 위치 또는 기본 좌표를 moveToLocation에 업데이트
 	const handleMoveToCurrentLocation = () => {
 		const loc =
 			localStorage.getItem("locationAgreement") === "true" && currentLocation
@@ -54,7 +54,7 @@ export default function HomePage() {
 		setShowAgreementToast(false)
 	}
 
-	// 마커 클릭 시 API에서 받은 maker 데이터를 MarkerPopup/MarkerInfoCard에서 요구하는 형태로 변환
+	// 마커 클릭 시, API에서 받은 데이터를 MarkerPopup/MarkerInfoCard에 맞게 변환
 	const handleMarkerClick = (maker) => {
 		const marker = {
 			id: maker.smokingId,
@@ -62,17 +62,23 @@ export default function HomePage() {
 			rating: maker.rating || 0,
 			reviews: maker.reviews || 0,
 			distance: maker.distance || 0,
-			latitude: maker.latitude, // 필요시 maker.Location.latitude로 수정
-			longitude: maker.longitude,
+			latitude: maker.location.latitude,
+			longitude: maker.location.longitude,
 		}
 		console.log("Converted marker:", marker)
 		setSelectedMarker(marker)
 		setShowInfoCard(true)
+		// 마커 클릭 시 지도 중심 이동 (Map 컴포넌트에서 처리됨)
+		setMoveToLocation({
+			lat: maker.location.latitude,
+			lng: maker.location.longitude,
+		})
 	}
 
+	// MarkerInfoCard를 닫을 때 (MarkerPopup은 유지)
 	const handleCloseMarkerInfo = () => {
 		setShowInfoCard(false)
-		setTimeout(() => setSelectedMarker(null), 300)
+		// 만약 MarkerPopup도 닫고 싶다면 setSelectedMarker(null)로 처리하세요.
 	}
 
 	// API 조회 및 지도 중심에 사용할 좌표:
@@ -98,9 +104,7 @@ export default function HomePage() {
 					onMarkerClick={handleMarkerClick}
 				/>
 			</div>
-			{selectedMarker && (
-				<MarkerPopup marker={selectedMarker} currentLocation={apiLocation} />
-			)}
+			{selectedMarker && <MarkerPopup marker={selectedMarker} />}
 			<div className="fixed bottom-[12vh] left-1/2 z-50 flex w-auto max-w-[380px] -translate-x-1/2 justify-center px-4">
 				<ComButton size="m" color="purple" onClick={() => navigate("/list")}>
 					목록 보기

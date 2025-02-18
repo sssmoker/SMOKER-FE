@@ -176,17 +176,17 @@ export default function Map({
 				const markerDiv = document.createElement("div")
 				markerDiv.id = `marker-${marker.smokingId}`
 				markerDiv.style.cssText = `
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                width: 30px;
-                height: 30px;
-                background: #4517FF;
-                border-radius: 10px;
-                box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-                cursor: pointer;
-                transition: transform 0.3s ease-out;
-            `
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				width: 30px;
+				height: 30px;
+				background: #4517FF;
+				border-radius: 10px;
+				box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+				cursor: pointer;
+				transition: transform 0.3s ease-out;
+			`
 				markerDiv.innerHTML = renderToString(
 					<Cigarette
 						className="text-white"
@@ -194,16 +194,19 @@ export default function Map({
 					/>,
 				)
 
-				const overlay = new window.kakao.maps.CustomOverlay({
-					position,
-					content: markerDiv,
-					zIndex: 100,
-				})
-
+				// 마커 클릭 시 해당 위치로 지도의 중심 이동
 				markerDiv.addEventListener("click", () => {
 					markerDiv.style.transform = "rotateY(180deg)"
 					setSelectedMarker(marker)
 					onMarkerClick?.(marker)
+					mapInstance.setCenter(position)
+					mapInstance.panTo(position)
+				})
+
+				const overlay = new window.kakao.maps.CustomOverlay({
+					position,
+					content: markerDiv,
+					zIndex: 100,
 				})
 
 				overlay.setMap(mapInstance)
