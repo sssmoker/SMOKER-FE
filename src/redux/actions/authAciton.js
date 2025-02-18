@@ -19,9 +19,8 @@ export const kakaoLogin = (code, state) => async (dispatch) => {
 
 		const data = await response.json()
 
-		dispatch({ type: "KAKAO_LOGIN_SUCCESS", payload: data })
+		dispatch({ type: "KAKAO_LOGIN_SUCCESS", payload: data.result })
 
-		// 성공적으로 로그인한 경우 Redux 및 sessionStorage에 저장
 		sessionStorage.setItem(
 			"tokens",
 			JSON.stringify({
@@ -56,7 +55,6 @@ export const googleLogin = (code, state) => async (dispatch) => {
 
 		dispatch({ type: "GOOGLE_LOGIN_SUCCESS", payload: data.result })
 
-		// 성공적으로 로그인한 경우 Redux 및 sessionStorage에 저장
 		sessionStorage.setItem(
 			"tokens",
 			JSON.stringify({
@@ -70,9 +68,68 @@ export const googleLogin = (code, state) => async (dispatch) => {
 	}
 }
 
-// 로그아웃 함수 (세션 데이터 완전 삭제)
-export const logout = () => (dispatch) => {
-	sessionStorage.removeItem("tokens")
-	sessionStorage.removeItem("member")
-	dispatch({ type: "LOGOUT" })
+// 로그아웃
+export const logout = () => async (dispatch) => {
+	try {
+		const tokens = sessionStorage.getItem("tokens")
+		const parsedTokens = tokens ? JSON.parse(tokens) : null
+		const accessToken = parsedTokens?.accessToken
+
+		if (!accessToken) {
+			throw new Error("로그인된 사용자가 없습니다.")
+		}
+
+		const response = await fetch(`${BASE_URL}/api/auth/logout`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${accessToken}`,
+			},
+		})
+
+		if (!response.ok) {
+			throw new Error("로그아웃 요청 실패")
+		}
+
+		dispatch({ type: "LOGOUT" })
+		sessionStorage.removeItem("tokens")
+		sessionStorage.removeItem("member")
+	} catch (error) {
+		console.error("로그아웃 실패:", error)
+		dispatch({ type: "LOGOUT_FAILURE", payload: error.message })
+	}
+}
+
+// 회원 탈퇴
+export const deactivateAccount = () => async (dispatch) => {
+	dispatch({ type: "DEACTIVATE_ACCOUNT_REQUEST" })
+
+	try {
+		const tokens = sessionStorage.getItem("tokens")
+		const parsedTokens = tokens ? JSON.parse(tokens) : null
+		const accessToken = parsedTokens?.accessToken
+
+		if (!accessToken) {
+			throw new Error("로그인된 사용자가 없습니다.")
+		}
+
+		const response = await fetch(`${BASE_URL}/api/auth/deactivate`, {
+			method: "DELETE",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${accessToken}`,
+			},
+		})
+
+		if (!response.ok) {
+			throw new Error("회원 탈퇴 요청 실패")
+		}
+
+		dispatch({ type: "DEACTIVATE_ACCOUNT_SUCCESS" })
+		sessionStorage.removeItem("tokens")
+		sessionStorage.removeItem("member")
+	} catch (error) {
+		console.error("회원 탈퇴 실패:", error)
+		dispatch({ type: "DEACTIVATE_ACCOUNT_FAILURE", payload: error.message })
+	}
 }

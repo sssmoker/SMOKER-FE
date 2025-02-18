@@ -1,12 +1,14 @@
 import React, { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux"
+import { logout, deactivateAccount } from "@/redux/actions/authAciton"
 import { ChevronRight } from "lucide-react"
 import BackButton from "@/components/common/button/BackButton"
-import { useAuthContext } from "@/contexts/AuthContext"
 
 export default function MyPage() {
 	const navigate = useNavigate()
-	const { member, logout, deactivateAccount } = useAuthContext()
+	const dispatch = useDispatch()
+	const member = useSelector((state) => state.auth.user)
 
 	useEffect(() => {
 		if (!member) navigate("/login")
@@ -24,15 +26,15 @@ export default function MyPage() {
 		{ label: "개인정보처리방침", path: "/privacy-policy" },
 	]
 
-	const handleLogout = () => {
-		logout()
+	const handleLogout = async () => {
+		await dispatch(logout()) // Redux에 logout 액션 디스패치
 		navigate("/login")
 	}
 
 	const handleDeactivate = async () => {
 		const confirmDeactivate = window.confirm("정말 탈퇴하시겠습니까?")
 		if (confirmDeactivate) {
-			await deactivateAccount()
+			await dispatch(deactivateAccount()) // Redux에 회원 탈퇴 액션 디스패치
 			navigate("/login")
 		}
 	}
