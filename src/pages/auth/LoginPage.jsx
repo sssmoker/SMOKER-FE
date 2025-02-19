@@ -12,9 +12,9 @@ export default function LoginPage() {
 
 	const handleLogin = (provider) => {
 		if (provider === "google") {
-			window.location.href = GOOGLE_AUTH_URL
+			window.location.href = GOOGLE_AUTH_URL()
 		} else if (provider === "kakao") {
-			window.location.href = KAKAO_AUTH_URL
+			window.location.href = KAKAO_AUTH_URL()
 		}
 	}
 
@@ -25,8 +25,8 @@ export default function LoginPage() {
 			</div>
 
 			<div className="relative mt-2 w-full max-w-lg">
-				<div className="animate-yellowBounce absolute left-2 top-2 h-4 w-4 rounded-full bg-[#FDFF72]"></div>
-				<div className="animate-purpleBounce absolute left-16 top-2 h-4 w-4 translate-x-10 rounded-full bg-[#4517FF]"></div>{" "}
+				<div className="absolute left-2 top-2 h-4 w-4 animate-yellowBounce rounded-full bg-[#FDFF72]"></div>
+				<div className="absolute left-16 top-2 h-4 w-4 translate-x-10 animate-purpleBounce rounded-full bg-[#4517FF]"></div>{" "}
 			</div>
 
 			<div className="ml-2 mt-0 w-full text-left">
@@ -70,8 +70,8 @@ export default function LoginPage() {
 						<span className="text-center font-bold">구글로 로그인하기</span>
 					</button>
 
-					<a
-						href={KAKAO_AUTH_URL}
+					<button
+						onClick={() => handleLogin("kakao")}
 						className="flex h-[2.75rem] min-w-[10rem] max-w-[50vw] flex-1 items-center justify-center whitespace-nowrap rounded-[0.75rem] bg-[#FEE500] px-4 text-xs font-bold text-black sm:text-sm"
 					>
 						<div className="flex items-center gap-[0.5rem]">
@@ -82,7 +82,7 @@ export default function LoginPage() {
 							/>
 							<span className="text-center">카카오로 로그인하기</span>
 						</div>
-					</a>
+					</button>
 				</div>
 			</div>
 
