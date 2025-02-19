@@ -81,8 +81,8 @@ const routes = [
 	{ path: "my-page", element: <Outlet />, children: myPageRoutes },
 	{ path: "favorites", element: <Outlet />, children: favoritesRoutes },
 	{ path: "login", element: <LoginPage /> },
-	{ path: "login/oauth/code/kakao", element: <KakaoOAuthRedirectHandler /> },
-	{ path: "login/oauth/code/google", element: <GoogleOAuth2RedirectHandler /> },
+	{ path: "auth/kakao/callback", element: <KakaoOAuthRedirectHandler /> },
+	{ path: "auth/google/callback", element: <GoogleOAuth2RedirectHandler /> },
 ]
 
 export const router = createBrowserRouter([
