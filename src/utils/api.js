@@ -186,7 +186,7 @@ export const fetchMemberUpdateHistory = async (memberId, page = 1) =>
 export const reissueToken = async () =>
 	await apiRequest(`/api/token/reissue`, "POST")
 //authAction에서 관리중
-//export const logout = async () => await apiRequestWithAuth(`/api/token/logout`)
+export const logout = async () => await apiRequestWithAuth(`/api/token/logout`)
 //export const deactivateAccount = async () =>
 //await apiRequestWithAuth(`/api/auth/deactivate`, "DELETE")
 
