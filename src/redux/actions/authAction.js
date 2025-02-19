@@ -78,13 +78,15 @@ export const googleLogin = (code, state) => async (dispatch) => {
 	}
 }
 
-// 로그아웃
+//로그아웃
 export const logout = () => async (dispatch) => {
 	try {
 		const tokens = getStoredTokens()
 		const accessToken = tokens?.accessToken
 
-		if (!accessToken) throw new Error("로그인된 사용자가 없습니다.")
+		if (!accessToken) {
+			throw new Error("로그인된 사용자가 없습니다.")
+		}
 
 		const response = await fetch(`${BASE_URL}/api/auth/logout`, {
 			method: "POST",
@@ -92,16 +94,24 @@ export const logout = () => async (dispatch) => {
 				"Content-Type": "application/json",
 				Authorization: `Bearer ${accessToken}`,
 			},
+			body: JSON.stringify({ token: accessToken }), // ✅ 바디에 토큰 추가 (필요할 경우)
 		})
 
-		if (!response.ok) throw new Error("로그아웃 요청 실패")
+		if (!response.ok) {
+			const errorData = await response.json().catch(() => "서버 응답 없음")
+			throw new Error(
+				`로그아웃 요청 실패: ${errorData.message || "알 수 없는 오류"}`,
+			)
+		}
 
-		// Redux 상태 변경 및 로컬 데이터 삭제
+		// ✅ 로그아웃 성공 시, 로컬 데이터 삭제
 		dispatch({ type: "LOGOUT" })
 		sessionStorage.removeItem("tokens")
 		sessionStorage.removeItem("member")
+
+		console.log("✅ 로그아웃 성공")
 	} catch (error) {
-		console.error("로그아웃 실패:", error)
+		console.error("❌ 로그아웃 실패:", error)
 		dispatch({ type: "LOGOUT_FAILURE", payload: error.message })
 	}
 }
