@@ -143,22 +143,26 @@ export const refreshAccessToken = () => async (dispatch) => {
 		const refreshToken = tokens?.refreshToken
 
 		if (!refreshToken) {
-			throw new Error("Refresh Token이 존재하지 않습니다.")
+			console.error("🚨 Refresh Token이 없습니다. 다시 로그인하세요!")
+			dispatch(logout())
+			throw new Error("Unauthorized: No Refresh Token")
 		}
 
 		const response = await fetch(`${BASE_URL}/api/auth/refresh`, {
-			method: "GET",
+			method: "POST", // POST 요청으로 변경
 			headers: {
 				"Content-Type": "application/json",
-				Authorization: `Bearer ${refreshToken}`, // 명세서에 맞게 헤더에 refreshToken 포함
+				Authorization: `Bearer ${refreshToken}`, // 헤더에 추가
 			},
+			body: JSON.stringify({ refreshToken }), // Body에도 추가
 		})
 
-		const data = await response.json()
-
 		if (!response.ok) {
-			throw new Error(data.message || "토큰 재발급 실패")
+			throw new Error("❌ 토큰 재발급 실패")
 		}
+
+		const data = await response.json()
+		console.log(" 새 JWT 액세스 토큰 재발급 완료")
 
 		// Redux 상태 업데이트
 		dispatch({ type: "REFRESH_TOKEN_SUCCESS", payload: data.result })
@@ -168,18 +172,14 @@ export const refreshAccessToken = () => async (dispatch) => {
 			"tokens",
 			JSON.stringify({
 				accessToken: data.result.accessToken,
-				refreshToken: data.result.refreshToken,
+				refreshToken: data.result.refreshToken, // 리프레시 토큰도 갱신
 			}),
 		)
 
-		console.log("새 JWT 액세스 토큰 재발급 완료")
-		return data.result
+		return data.result.accessToken
 	} catch (error) {
-		console.error("JWT 액세스 토큰 재발급 실패:", error)
-		dispatch({ type: "REFRESH_TOKEN_FAILURE", payload: error.message })
-
-		// 토큰 재발급 실패 시 로그아웃 처리 (보안 강화를 위해)
-		dispatch(logout())
+		console.error("❌ JWT 액세스 토큰 재발급 실패:", error)
+		dispatch(logout()) // 재발급 실패 시 강제 로그아웃
 		throw error
 	}
 }
