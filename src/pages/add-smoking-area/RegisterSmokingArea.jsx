@@ -11,7 +11,7 @@ export default function RegisterSmokingArea() {
 	useEffect(() => {
 		const fetchUserLocation = async () => {
 			try {
-				const res = await fetch("http://localhost:3001/currentLocation")
+				const res = await fetch("https://api.smoker.my/currentLocation")
 				if (!res.ok) throw new Error("Failed to fetch current location")
 				const data = await res.json()
 				setSelectedLocation({

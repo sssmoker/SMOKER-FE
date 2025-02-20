@@ -24,7 +24,7 @@ export default function Toast({
 		<AnimatePresence>
 			{isVisible && (
 				<motion.div
-					className="fixed left-1/2 top-1/2 z-[999] w-[320px] -translate-x-1/2 -translate-y-1/2"
+					className="fixed left-1/2 top-1/2 z-[999] h-[200px] w-[320px] -translate-x-1/2 -translate-y-1/2"
 					initial={{ opacity: 0 }}
 					animate={{ opacity: 1 }}
 					exit={{ opacity: 0 }}
