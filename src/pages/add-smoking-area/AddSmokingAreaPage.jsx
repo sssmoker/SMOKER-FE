@@ -7,7 +7,7 @@ import AroundMeButton from "@/components/common/AroundMeButton"
 
 export default function AddSmokingAreaPage() {
 	const navigate = useNavigate()
-	const [address, setAddress] = useState("도로명 주소를 불러오는 중...") // 🏠 도로명 주소 상태 추가
+	const [address, setAddress] = useState("도로명 주소를 불러오는 중...")
 	const distance = "100m"
 
 	// 📌 Map 컴포넌트에서 도로명 주소를 받아오는 함수
@@ -17,7 +17,7 @@ export default function AddSmokingAreaPage() {
 
 	const handleNext = () => {
 		navigate("/add-smoking-area/name", {
-			state: { address }, // 🚀 주소를 전달
+			state: { address },
 		})
 	}
 
