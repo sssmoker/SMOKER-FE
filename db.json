@@ -10,7 +10,7 @@
 			"id": "1",
 			"memberId": 1,
 			"nickName": "즐거운 하마 134",
-			"profileImageUrl": "https://example.com/profile1.jpg",
+			"profileImageUrl": null,
 			"loginType": "google",
 			"createdAt": "2024-01-01T10:00:00",
 			"updatedAt": "2024-01-15T10:00:00",
