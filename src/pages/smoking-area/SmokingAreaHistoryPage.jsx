@@ -3,8 +3,8 @@ import BackButton from "@/components/common/button/BackButton"
 import HistoryCard from "@/components/smoking-history/HistoryCard"
 import ComButton from "@/components/common/button/ComButton"
 import { useLocation, useNavigate } from "react-router-dom"
-import { useQuery } from "@tanstack/react-query"
 import { useSmokingAreaUpdateHistory } from "@/utils/queries"
+import { smokingAreaHistoryDummy } from "@/mock/smokingAreaHistoryDummy"
 
 export default function SmokingAreaHistoryPage() {
 	const location = useLocation()
@@ -19,11 +19,11 @@ export default function SmokingAreaHistoryPage() {
 
 	// 토근 없을 시 로그인 화면으로 이동 플로우 추가하기
 	// api 연결
-	const { data, error, isLoading } = useSmokingAreaUpdateHistory(
-		smokingAreaId,
-		0,
-	)
-
+	// const { data, error, isLoading } = useSmokingAreaUpdateHistory(
+	// 	smokingAreaId,
+	// 	0,
+	// )
+	const data = smokingAreaHistoryDummy
 	// if (isLoading) {
 	// 	return <div>로딩 중...</div>
 	// }
@@ -53,9 +53,11 @@ export default function SmokingAreaHistoryPage() {
 						))}
 					</ul>
 					<div className="mt-3 flex justify-center">
-						<ComButton onClick={handleMoveToUpdate} size="xl">
-							정보 수정하러 가기
-						</ComButton>
+						<ComButton
+							onClick={handleMoveToUpdate}
+							children="정보 수정하러 가기"
+							size="xl"
+						/>
 					</div>
 				</div>
 			</div>

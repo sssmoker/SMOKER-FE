@@ -13,11 +13,12 @@ export default function ReviewCard({
 			<div className="flex items-center justify-between border-t px-[20px] py-[16px]">
 				<div>
 					<div className="flex items-center gap-[6px]">
-						<img
+						{/* <img
 							src={`${imageUrl}`}
 							alt="profile"
 							className="h-[16px] w-[16px] rounded-full object-cover object-center"
-						/>
+						/> */}
+						<div className="h-[16px] w-[16px] rounded-full bg-[#E4E4E4]" />
 						<p className="text-[12px] font-semibold text-[#252525]">
 							{memberName}
 						</p>
@@ -38,11 +39,11 @@ export default function ReviewCard({
 					</p>
 				</div>
 
-				<img
+				{/* <img
 					src={`${imageUrl}`}
 					alt="profile"
 					className="h-[48px] w-[48px] rounded-[5px] object-cover object-center"
-				/>
+				/> */}
 			</div>
 		</>
 	)
