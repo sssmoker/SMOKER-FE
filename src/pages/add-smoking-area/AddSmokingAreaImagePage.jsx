@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import { useNavigate } from "react-router-dom"
 import BackButton from "@/components/common/button/BackButton"
 import ComButton from "@/components/common/button/ComButton"
 import CompleteToast from "@/components/smoking-add/completeToast"
@@ -8,6 +9,7 @@ export default function AddSmokingAreaImagePage() {
 	const [image, setImage] = useState(null)
 	const [showCompleteToast, setShowCompleteToast] = useState(false)
 	const [showAlertToast, setShowAlertToast] = useState(false)
+	const navigate = useNavigate()
 
 	const handleImageUpload = (e) => {
 		const file = e.target.files[0]
@@ -19,6 +21,9 @@ export default function AddSmokingAreaImagePage() {
 	const handleSubmit = () => {
 		if (image) {
 			setShowCompleteToast(true)
+			setTimeout(() => {
+				navigate("/")
+			}, 3200)
 		} else {
 			setShowAlertToast(true)
 		}
@@ -97,7 +102,7 @@ export default function AddSmokingAreaImagePage() {
 
 			<div className="mt-4 flex w-full justify-center">
 				<ComButton size="xl" onClick={handleSubmit}>
-					다음
+					완료
 				</ComButton>
 			</div>
 		</div>

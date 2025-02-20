@@ -6,8 +6,7 @@ import {
 	Title,
 	OptionsList,
 } from "@/components/smoking-update/OptionsSelection"
-import CompleteToast from "@/components/smoking-area/review/completeToast"
-
+import CompleteToast from "@/components/smoking-add/completeToast"
 const optionMap = {
 	"담배꽁초 처리함": "hasCigaretteDisposal",
 	"의자 ": "hasChair",
@@ -36,6 +35,7 @@ export default function SmokingAreaUpdatePage() {
 	const [showCompleteToast, setShowCompleteToast] = useState(false)
 	// /api/smoking-area/update/{smokingAreaId}
 	const navigate = useNavigate()
+
 	// const [selectedOptions, setSelectedOptions] = useState([])
 	const [selectedOptionsData, setSelectedOptionsData] = useState(optionKeys)
 
@@ -76,8 +76,6 @@ export default function SmokingAreaUpdatePage() {
 						</p>
 					</div>
 				</div>
-
-				{/* 흰 박스 */}
 				<div className="mb-[8px] mt-[32px] w-full rounded-2xl border border-white bg-white px-6 py-8">
 					<Title text="흡연 부스의 정보를 수정해주세요." />
 					<OptionsList
@@ -96,7 +94,7 @@ export default function SmokingAreaUpdatePage() {
 					rel="noopener noreferrer"
 				>
 					존재하지 않는 장소인가요?{" "}
-					<span className="text-[#4517FF] underline">신고하러 가기</span>
+					<span className="text-[#4517FF] underline">클릭</span>
 				</a>
 
 				<div className="mt-8 flex justify-center">

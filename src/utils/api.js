@@ -156,7 +156,6 @@ export const fetchSmokingAreaDetails = async (
 	apiRequest(
 		`/api/smoking-area/${smokingAreaId}/simple?userLat=${userLat}&userLng=${userLng}`,
 	)
-
 export const searchSmokingAreas = async ({
 	location,
 	userLat,
