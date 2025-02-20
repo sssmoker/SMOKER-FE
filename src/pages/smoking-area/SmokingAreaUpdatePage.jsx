@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import BackButton from "@/components/common/button/BackButton"
 import ComButton from "@/components/common/button/ComButton"
 import {
@@ -29,6 +29,9 @@ const optionKeys = Object.fromEntries(
 )
 
 export default function SmokingAreaUpdatePage() {
+	const location = useLocation()
+	const data = location.state
+
 	// /api/smoking-area/update/{smokingAreaId}
 	const navigate = useNavigate()
 	// const [selectedOptions, setSelectedOptions] = useState([])
@@ -46,7 +49,7 @@ export default function SmokingAreaUpdatePage() {
 
 	const handleSubmit = () => {
 		alert("업데이트가 완료되었습니다!")
-		navigate("/list/smoking-area")
+		navigate(`/list/smoking-area?id=${data.smokingAreaId}`, { state: data })
 		// console.log("optionKeys: ", selectedOptionsData)
 	}
 
