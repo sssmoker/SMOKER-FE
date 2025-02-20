@@ -30,7 +30,7 @@ export default function AddSmokingAreaImagePage() {
 	}
 
 	return (
-		<div className="relative h-screen space-y-6 bg-white px-4 py-6">
+		<div className="relative h-screen space-y-6 overflow-y-scroll bg-white px-4 py-6 pb-40">
 			<CompleteToast
 				isVisible={showCompleteToast}
 				onClose={() => setShowCompleteToast(false)}

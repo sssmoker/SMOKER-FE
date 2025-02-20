@@ -75,7 +75,7 @@ export default function AddSmokingAreaNamePage() {
 	}
 
 	return (
-		<div className="h-screen space-y-4 bg-white p-6">
+		<div className="h-screen space-y-4 overflow-y-scroll bg-white p-6 pb-40">
 			<BackButton />
 			<Title text="정보를 업데이트해주세요!" />
 			<Title text="흡연 구역의 이름을 입력해주세요." />
