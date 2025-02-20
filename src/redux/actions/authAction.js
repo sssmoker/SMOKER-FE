@@ -11,6 +11,8 @@ export const kakaoLogin = (code, state) => async (dispatch) => {
 	dispatch({ type: "KAKAO_LOGIN_REQUEST" })
 
 	try {
+		console.log("🔍 Kakao Login 요청 시작:", { code, state })
+
 		const response = await fetch(
 			`${BASE_URL}/api/auth/login/kakao?code=${code}&state=${state}`,
 			{
@@ -19,16 +21,21 @@ export const kakaoLogin = (code, state) => async (dispatch) => {
 			},
 		)
 
+		console.log("📩 Kakao Login 응답 상태 코드:", response.status)
+
 		const data = await response.json()
+
+		console.log("🔍 Kakao Login 응답 데이터:", data)
 
 		if (!response.ok || !data.result) {
 			throw new Error(data.message || "카카오 로그인 요청 실패")
 		}
 
-		// Redux 상태 업데이트
+		// ✅ accessToken 출력 추가
+		console.log("🛠️ Kakao Login Access Token:", data.result.accessToken)
+
 		dispatch({ type: "KAKAO_LOGIN_SUCCESS", payload: data.result })
 
-		// 세션 스토리지에 토큰 저장
 		sessionStorage.setItem(
 			"tokens",
 			JSON.stringify({
@@ -37,7 +44,10 @@ export const kakaoLogin = (code, state) => async (dispatch) => {
 			}),
 		)
 		sessionStorage.setItem("member", JSON.stringify(data.result))
+
+		console.log("✅ Kakao Login 성공!")
 	} catch (error) {
+		console.error("❌ Kakao Login 실패:", error)
 		dispatch({ type: "KAKAO_LOGIN_FAILURE", payload: error.message })
 	}
 }
