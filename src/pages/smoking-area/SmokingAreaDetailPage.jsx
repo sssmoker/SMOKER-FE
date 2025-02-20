@@ -35,10 +35,9 @@ export default function SmokingAreaDetailPage({ detailInfoList, region }) {
 						</div>
 					))}
 			</div>
-			<p className="mx-[20px] mt-[28px] text-center text-[16px] font-bold text-[#252525]">
+			<p className="mx-[20px] mt-[28px] text-left text-[16px] font-bold text-[#252525]">
 				흡연 부스 위치
 			</p>
-			<p className="mt-1 text-center text-sm text-gray-600">{roadAddress}</p>
 			<div className="mt-4 flex justify-center">
 				<div className="h-[400px] w-[90vw] max-w-[600px] overflow-hidden rounded-xl border border-gray-500 shadow-lg">
 					<Map roadAddress={roadAddress} />
