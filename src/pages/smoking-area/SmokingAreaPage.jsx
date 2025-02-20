@@ -40,7 +40,7 @@ export default function SmokingAreaPage() {
 	return (
 		<div className="min-h-[100vh] bg-white">
 			<Topbar isBookmarked={false} />
-			{data.imageUrl && <BackgroundImg bgImg={data.imageUrl} />}
+			{data?.imageUrl !== "" && <BackgroundImg bgImg={data?.imageUrl} />}
 
 			<SmokingAreaInfo
 				smokingAreaId={data.smokingAreaId}

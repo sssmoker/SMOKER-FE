@@ -52,10 +52,9 @@ export default function SmokingAreaUpdatePage() {
 	const handleSubmit = () => {
 		setShowCompleteToast(true)
 		setTimeout(() => {
-			navigate("/list/smoking-area")
+			navigate(`/list/smoking-area?id=${data.smokingAreaId}`, { state: data })
 		}, 3200)
 		// alert("업데이트가 완료되었습니다!")
-		navigate(`/list/smoking-area?id=${data.smokingAreaId}`, { state: data })
 		console.log("optionKeys: ", selectedOptionsData)
 	}
 

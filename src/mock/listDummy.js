@@ -1,7 +1,7 @@
 export const listDummy = [
 	{
 		distance: 120,
-		imageUrl: null,
+		imageUrl: "",
 		location: {
 			address: "서초구 강남대로 321-14",
 			latitude: 37.546,
@@ -15,7 +15,7 @@ export const listDummy = [
 	},
 	{
 		distance: 580,
-		imageUrl: null,
+		imageUrl: "",
 		location: {
 			address: "서초구 강남대로 289-7",
 			latitude: 37.546,
@@ -29,7 +29,7 @@ export const listDummy = [
 	},
 	{
 		distance: 350,
-		imageUrl: null,
+		imageUrl: "",
 		location: {
 			address: "서초구 강남대로 305-3",
 			latitude: 37.546,
@@ -43,7 +43,7 @@ export const listDummy = [
 	},
 	{
 		distance: 910,
-		imageUrl: null,
+		imageUrl: "",
 		location: {
 			address: "서초구 강남대로 277-9",
 			latitude: 37.546,
@@ -57,7 +57,7 @@ export const listDummy = [
 	},
 	{
 		distance: 650,
-		imageUrl: null,
+		imageUrl: "",
 		location: {
 			address: "서초구 강남대로 333-12",
 			latitude: 37.546,
@@ -71,7 +71,7 @@ export const listDummy = [
 	},
 	{
 		distance: 890,
-		imageUrl: null,
+		imageUrl: "",
 		location: {
 			address: "서초구 강남대로 350-5",
 			latitude: 37.546,
@@ -85,7 +85,7 @@ export const listDummy = [
 	},
 	{
 		distance: 430,
-		imageUrl: null,
+		imageUrl: "",
 		location: {
 			address: "서초구 강남대로 312-8",
 			latitude: 37.546,
@@ -99,7 +99,7 @@ export const listDummy = [
 	},
 	{
 		distance: 200,
-		imageUrl: null,
+		imageUrl: "",
 		location: {
 			address: "서초구 강남대로 290-6",
 			latitude: 37.546,
@@ -113,7 +113,7 @@ export const listDummy = [
 	},
 	{
 		distance: 700,
-		imageUrl: null,
+		imageUrl: "",
 		location: {
 			address: "서초구 강남대로 280-10",
 			latitude: 37.546,
@@ -127,7 +127,7 @@ export const listDummy = [
 	},
 	{
 		distance: 910,
-		imageUrl: null,
+		imageUrl: "",
 		location: {
 			address: "서초구 강남대로 265-4",
 			latitude: 37.546,
