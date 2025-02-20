@@ -43,7 +43,7 @@ OptionsList.propTypes = {
 const CompleteButton = ({ onClick }) => (
 	<div className="mt-6 flex justify-center">
 		<ComButton size="xl" color="purple" onClick={onClick}>
-			완료
+			다음
 		</ComButton>
 	</div>
 )

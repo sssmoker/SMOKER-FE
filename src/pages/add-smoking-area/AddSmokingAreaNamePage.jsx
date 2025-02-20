@@ -54,8 +54,7 @@ export default function AddSmokingAreaNamePage() {
 			details: selectedOptions,
 		}
 		console.log("등록 데이터:", data)
-		alert("등록이 완료되었습니다!")
-		navigate("/")
+		navigate("/add-smoking-area/image")
 	}
 
 	const facilityOptions = [

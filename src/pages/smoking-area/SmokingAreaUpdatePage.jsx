@@ -6,7 +6,7 @@ import {
 	Title,
 	OptionsList,
 } from "@/components/smoking-update/OptionsSelection"
-
+import CompleteToast from "@/components/smoking-add/completeToast"
 const optionMap = {
 	"담배꽁초 처리함": "hasCigaretteDisposal",
 	"의자 ": "hasChair",
@@ -31,6 +31,8 @@ const optionKeys = Object.fromEntries(
 export default function SmokingAreaUpdatePage() {
 	// /api/smoking-area/update/{smokingAreaId}
 	const navigate = useNavigate()
+
+	const [showCompleteToast, setShowCompleteToast] = useState(false)
 	// const [selectedOptions, setSelectedOptions] = useState([])
 	const [selectedOptionsData, setSelectedOptionsData] = useState(optionKeys)
 
@@ -45,14 +47,20 @@ export default function SmokingAreaUpdatePage() {
 	}
 
 	const handleSubmit = () => {
-		alert("업데이트가 완료되었습니다!")
-		navigate("/list/smoking-area")
-		// console.log("optionKeys: ", selectedOptionsData)
+		setShowCompleteToast(true)
+		setTimeout(() => {
+			navigate("/list/smoking-area")
+		}, 3200)
+		console.log("optionKeys: ", selectedOptionsData)
 	}
 
 	return (
 		<>
 			<div className="container mx-auto h-screen bg-[#F5F3FF] px-4 py-6">
+				<CompleteToast
+					isVisible={showCompleteToast}
+					onClose={() => setShowCompleteToast(false)}
+				/>
 				<div className="flex items-start gap-[12px]">
 					<BackButton className="mb-4" />
 					<div>
@@ -64,8 +72,6 @@ export default function SmokingAreaUpdatePage() {
 						</p>
 					</div>
 				</div>
-
-				{/* 흰 박스 */}
 				<div className="mb-[8px] mt-[32px] w-full rounded-2xl border border-white bg-white px-6 py-8">
 					<Title text="흡연 부스의 정보를 수정해주세요." />
 					<OptionsList
@@ -78,13 +84,13 @@ export default function SmokingAreaUpdatePage() {
 				</div>
 
 				<a
-					href="https://naver.com"
+					href="https://www.notion.so/redsummerluv/Smoker-146d9c6dcc318005aa4aed726c5a9c17?pvs=4"
 					className="text-[11px] font-semibold text-[#828282]"
 					target="_blank"
 					rel="noopener noreferrer"
 				>
 					존재하지 않는 장소인가요?{" "}
-					<span className="text-[#4517FF] underline">신고하러 가기</span>
+					<span className="text-[#4517FF] underline">클릭</span>
 				</a>
 
 				<div className="mt-8 flex justify-center">
