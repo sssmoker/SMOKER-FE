@@ -1,18 +1,23 @@
-import React from "react"
+import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import ComButton from "@/components/common/button/ComButton"
 import BackButton from "@/components/common/button/BackButton"
-import Map from "@/components/HomeMap/Map"
+import Map from "@/components/smoking-add/RegisterMap"
 import AroundMeButton from "@/components/common/AroundMeButton"
 
 export default function AddSmokingAreaPage() {
 	const navigate = useNavigate()
-	const address = "서울 동작구 남부순환로 2089"
+	const [address, setAddress] = useState("도로명 주소를 불러오는 중...") // 🏠 도로명 주소 상태 추가
 	const distance = "100m"
+
+	// 📌 Map 컴포넌트에서 도로명 주소를 받아오는 함수
+	const handleAddressChange = (newAddress) => {
+		setAddress(newAddress)
+	}
 
 	const handleNext = () => {
 		navigate("/add-smoking-area/name", {
-			state: { address: address },
+			state: { address }, // 🚀 주소를 전달
 		})
 	}
 
@@ -32,7 +37,8 @@ export default function AddSmokingAreaPage() {
 				<AroundMeButton />
 			</header>
 			<div className="w-full flex-grow">
-				<Map />
+				{/* 📌 onAddressChange를 Map 컴포넌트에 전달 */}
+				<Map onAddressChange={handleAddressChange} />
 			</div>
 
 			<div className="fixed bottom-[10vh] left-0 right-0 z-20 flex flex-col items-center justify-center rounded-2xl border border-gray-300 bg-white p-2 pt-4 text-left">
