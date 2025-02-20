@@ -38,7 +38,7 @@ export default function LoginPage() {
 					모든 기능을 이용해보세요!
 				</p>
 			</div>
-			<div className="mt-80 w-full max-w-sm text-center">
+			<div className="mt-[calc(100vh-572px)] w-full max-w-sm text-center">
 				<div className="flex items-center">
 					<div className="flex-grow border-t-2 border-[#E8ECF4]"></div>
 					<span className="px-3 text-sm font-bold text-[#6A707C]">
