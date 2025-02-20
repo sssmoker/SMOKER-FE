@@ -8,8 +8,13 @@ import MarkerInfoCard from "@/components/HomeMap/MarkerInfoCard"
 import MarkerPopup from "@/components/HomeMap/MarkerPopup"
 
 export default function HomePage() {
+	// currentLocation: 실제 사용자의 위치 (geolocation 결과)
 	const [currentLocation, setCurrentLocation] = useState(null)
-	const [moveToLocation, setMoveToLocation] = useState(null)
+	// lookLocation: 지도 중심으로 사용되는 좌표 (사용자가 드래그하거나, 마커 클릭 시 업데이트)
+	const [lookLocation, setLookLocation] = useState({
+		userLat: 37.546,
+		userLng: 127.071,
+	})
 	const [showAgreementToast, setShowAgreementToast] = useState(
 		localStorage.getItem("locationAgreement") !== "true",
 	)
@@ -17,13 +22,18 @@ export default function HomePage() {
 	const [showInfoCard, setShowInfoCard] = useState(false)
 	const navigate = useNavigate()
 
-	// 현재 위치 받아오기 (Geolocation API)
+	// 1. 사용자의 현재 위치 받아오기 (Geolocation API)
 	useEffect(() => {
 		if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(
 				({ coords: { latitude, longitude } }) => {
 					console.log("Current location:", latitude, longitude)
-					setCurrentLocation({ userLat: latitude, userLng: longitude })
+					const loc = { userLat: latitude, userLng: longitude }
+					setCurrentLocation(loc)
+					// 위치 사용 동의한 경우 초기 지도 중심도 사용자의 위치로 설정
+					if (localStorage.getItem("locationAgreement") === "true") {
+						setLookLocation(loc)
+					}
 				},
 				(error) => console.error("Geolocation error:", error),
 				{ enableHighAccuracy: true, timeout: 10000, maximumAge: 0 },
@@ -33,28 +43,28 @@ export default function HomePage() {
 		}
 	}, [])
 
-	// "내 주변" 버튼 클릭 시, 동의 여부에 따라 현재 위치 또는 기본 좌표를 moveToLocation에 업데이트
+	// 2. "내 주변" 버튼: 동의 여부에 따라 현재 위치(또는 기본 좌표)를 지도 중심(lookLocation)으로 설정
 	const handleMoveToCurrentLocation = () => {
 		const loc =
 			localStorage.getItem("locationAgreement") === "true" && currentLocation
 				? currentLocation
 				: { userLat: 37.546, userLng: 127.071 }
 		console.log("Moving to location:", loc)
-		setMoveToLocation({ lat: loc.userLat, lng: loc.userLng })
+		setLookLocation(loc)
 	}
 
-	// 동의 처리: 동의 시 currentLocation, 아니면 기본 좌표 사용
+	// 3. 동의 처리: 동의 시 현재 위치를, 아니면 기본 좌표를 지도 중심으로 설정
 	const handleAgreementConfirm = (isChecked) => {
 		localStorage.setItem("locationAgreement", isChecked ? "true" : "false")
 		const loc =
 			isChecked && currentLocation
 				? currentLocation
 				: { userLat: 37.546, userLng: 127.071 }
-		setMoveToLocation({ lat: loc.userLat, lng: loc.userLng })
+		setLookLocation(loc)
 		setShowAgreementToast(false)
 	}
 
-	// 마커 클릭 시, API에서 받은 데이터를 MarkerPopup/MarkerInfoCard에 맞게 변환
+	// 4. 마커 클릭: 클릭한 마커의 정보를 HomePage의 상태로 저장하고, 지도 중심(lookLocation)을 해당 마커 위치로 변경
 	const handleMarkerClick = (maker) => {
 		const marker = {
 			id: maker.smokingId,
@@ -68,24 +78,21 @@ export default function HomePage() {
 		console.log("Converted marker:", marker)
 		setSelectedMarker(marker)
 		setShowInfoCard(true)
-		// 마커 클릭 시 지도 중심 이동 (Map 컴포넌트에서 처리됨)
-		setMoveToLocation({
-			lat: maker.location.latitude,
-			lng: maker.location.longitude,
+		// 마커 클릭 시 지도 중심을 해당 마커 위치로 변경하여, 이후 1km 반경 계산에 반영
+		setLookLocation({
+			userLat: maker.location.latitude,
+			userLng: maker.location.longitude,
 		})
 	}
 
-	// MarkerInfoCard를 닫을 때 (MarkerPopup은 유지)
+	// 5. MarkerInfoCard 닫기
 	const handleCloseMarkerInfo = () => {
 		setShowInfoCard(false)
-		// 만약 MarkerPopup도 닫고 싶다면 setSelectedMarker(null)로 처리하세요.
+		// 만약 MarkerPopup도 함께 닫고 싶다면 setSelectedMarker(null) 호출 가능
 	}
 
-	// API 조회 및 지도 중심에 사용할 좌표:
-	const apiLocation =
-		localStorage.getItem("locationAgreement") === "true" && currentLocation
-			? currentLocation
-			: { userLat: 37.546, userLng: 127.071 }
+	// API 조회 및 마커 필터링 기준은 "lookLocation"을 사용함
+	const apiLocation = lookLocation
 
 	return (
 		<div className="relative h-screen w-full bg-gray-100">
@@ -100,8 +107,8 @@ export default function HomePage() {
 			<div className="h-full">
 				<Map
 					currentLocation={apiLocation}
-					moveToLocation={moveToLocation}
 					onMarkerClick={handleMarkerClick}
+					onLookLocationChange={setLookLocation}
 				/>
 			</div>
 			{selectedMarker && <MarkerPopup marker={selectedMarker} />}
