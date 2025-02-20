@@ -1,99 +1,78 @@
-import React, { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
+import React, { useState, useEffect } from "react"
 import SearchBar from "@/components/common/SearchBar"
-import SmokingAreaCard from "@/components/area-list/card-list/SmokingAreaCard"
 import Button from "@/components/common/button/ComButton"
+import SmokingAreaList from "@/components/area-list/card-list/SmokingAreaList"
+import Filter from "@/components/area-list/filter/Filter"
+import { useNavigate } from "react-router-dom"
+import { useSmokingAreas } from "@/utils/queries"
 
 export default function SavedSmokingAreasPage() {
-	const [savedAreas, setSavedAreas] = useState([])
-	const [sortOption, setSortOption] = useState("distance")
 	const navigate = useNavigate()
+	const userLat = 37.546 // 사용자 위도 // 임시 데이터
+	const userLng = 127.071 // 사용자 경도 // 임시 데이터
+	const FILTER_OPTIONS = {
+		DISTANCE: "거리순",
+		RATING: "평점순",
+	}
+	const [selectedFilter, setSelectedFilter] = useState(FILTER_OPTIONS.DISTANCE) // "거리순", "평점순"
+	const [data, setData] = useState()
 
-	// Mock 데이터 Fetch
+	const {
+		data: apiData,
+		error,
+		isLoading,
+	} = useSmokingAreas({
+		userLat,
+		userLng,
+		selectedFilter,
+	})
 	useEffect(() => {
-		const fetchSavedAreas = async () => {
-			try {
-				const response = await fetch("http://localhost:3001/savedSmokingAreas")
-				const data = await response.json()
-				setSavedAreas(data)
-			} catch (error) {
-				console.error("Failed to fetch saved areas:", error)
-			}
+		if (apiData) {
+			setData(apiData)
 		}
+	}, [apiData])
 
-		fetchSavedAreas()
-	}, [])
+	const handleMoveToHome = () => {
+		navigate("/")
+	}
 
-	// 정렬 로직
-	const handleSortChange = (option) => {
-		setSortOption(option)
-		const sortedAreas = [...savedAreas].sort((a, b) => {
-			if (option === "distance") return a.distance - b.distance
-			if (option === "rating") return b.rating - a.rating
-			return 0
-		})
-		setSavedAreas(sortedAreas)
+	if (isLoading) {
+		return <div>로딩 중...</div>
+	}
+
+	if (error) {
+		return <div>에러 발생: {error.message}</div>
 	}
 
 	return (
-		<div className="relative min-h-screen bg-gray-100">
-			{/* Header */}
-			<div className="sticky top-0 z-10 bg-white shadow-md">
-				<div className="flex items-center justify-between p-4">
-					<button onClick={() => navigate(-1)} className="text-gray-600">
-						←
-					</button>
-					<h1 className="text-lg font-bold text-gray-800">저장한 흡연 구역</h1>
-					<div></div>
-				</div>
-				<SearchBar placeholder="저장한 흡연 구역에서 검색해보세요!" />
+		<div className="relative h-[100vh] bg-white">
+			{/* 상단 검색바 */}
+			<div className="absolute left-0 top-[env(safe-area-inset-top)] z-50 w-full px-4">
+				<SearchBar
+					setData={setData}
+					isList={true}
+					placeholder="내 주변에 흡연구역을 검색해보세요 (예시) LG타워 사당역"
+				/>
 			</div>
 
-			{/* 정렬 버튼 */}
-			<div className="p-4">
-				<Button
-					size="s"
-					color="gray"
-					onClick={() => handleSortChange("distance")}
-					className={`mr-2 ${
-						sortOption === "distance" ? "bg-gray-200 text-gray-800" : ""
-					}`}
-				>
-					거리순
-				</Button>
-				<Button
-					size="s"
-					color="gray"
-					onClick={() => handleSortChange("rating")}
-					className={sortOption === "rating" ? "bg-gray-200 text-gray-800" : ""}
-				>
-					평점순
-				</Button>
+			{/* 필터 버튼 */}
+			<div className="fixed left-[20px] top-[92px]">
+				<Filter
+					FILTER_OPTIONS={FILTER_OPTIONS}
+					selectedFilter={selectedFilter}
+					setSelectedFilter={setSelectedFilter}
+				/>
 			</div>
 
-			{/* 저장된 흡연 구역 리스트 */}
-			<div className="space-y-4 p-4">
-				{savedAreas.length > 0 ? (
-					savedAreas.map((area) => (
-						<SmokingAreaCard
-							key={area.smoking_id}
-							title={area.name}
-							address={area.address}
-							rating={area.rating}
-							distance={area.distance}
-							imageUrl="/path/to/image" // Placeholder image
-							isBookmarked={true}
-							onBookmarkClick={() => {
-								console.log(`Unbookmark area: ${area.smoking_id}`)
-							}}
-							onClick={() => navigate(`/smoking-area/${area.smoking_id}`)}
-						/>
-					))
-				) : (
-					<p className="text-center text-gray-600">
-						저장된 흡연 구역이 없습니다.
-					</p>
-				)}
+			{/* 흡연 구역 목록 */}
+			<div className="h-[calc(100%-84px)] w-full pt-32">
+				<ul className="h-full w-full overflow-y-scroll pb-[11vh]">
+					<SmokingAreaList
+						selectedFilter={selectedFilter}
+						smokingAreasData={data?.result?.smokingAreas || []}
+						isBookmarked={true}
+					/>
+				</ul>
 			</div>
 		</div>
 	)

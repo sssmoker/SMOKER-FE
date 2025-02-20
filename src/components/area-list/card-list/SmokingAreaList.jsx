@@ -4,6 +4,7 @@ import SmokingAreaCard from "./SmokingAreaCard"
 export default function SmokingAreaList({
 	selectedFilter,
 	smokingAreasData = [],
+	isBookmarked = false,
 }) {
 	const sortedDataList = useMemo(() => {
 		return selectedFilter == "거리순"
@@ -15,7 +16,11 @@ export default function SmokingAreaList({
 		<>
 			{smokingAreasData.length ? (
 				sortedDataList.map((data) => (
-					<SmokingAreaCard key={data.smokingAreaId} {...data} />
+					<SmokingAreaCard
+						key={data.smokingAreaId}
+						data={data}
+						isBookmarked={isBookmarked}
+					/>
 				))
 			) : (
 				<div className="mt-[10vh] flex flex-col items-center">

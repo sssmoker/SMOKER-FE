@@ -5,6 +5,7 @@ import SmokingAreaList from "@/components/area-list/card-list/SmokingAreaList"
 import Filter from "@/components/area-list/filter/Filter"
 import { useNavigate } from "react-router-dom"
 import { useSmokingAreas } from "@/utils/queries"
+import { listDummy } from "@/mock/listDummy"
 
 export default function ListPage() {
 	const navigate = useNavigate()
@@ -86,7 +87,7 @@ export default function ListPage() {
 				<ul className="h-full w-full overflow-y-scroll pb-[11vh]">
 					<SmokingAreaList
 						selectedFilter={selectedFilter}
-						smokingAreasData={data?.result?.smokingAreas || []}
+						smokingAreasData={listDummy || []}
 					/>
 				</ul>
 			</div>
