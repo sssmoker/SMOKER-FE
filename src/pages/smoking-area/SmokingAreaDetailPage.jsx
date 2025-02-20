@@ -1,8 +1,11 @@
-import React from "react"
+import React, { useState } from "react"
+import Map from "@/components/smoking-area/LocationMap"
 
-export default function SmokingAreaDetailPage({ detailInfoList }) {
+export default function SmokingAreaDetailPage({ detailInfoList, region }) {
+	const [roadAddress, setRoadAddress] = useState(region) // 초기값으로 region 설정
+
 	const options = {
-		hasCigaretteDisposal: "담배꽁초 처리함 ",
+		hasCigaretteDisposal: "담배꽁초 처리함",
 		hasChair: "의자",
 		hasTrashBin: "쓰레기통",
 		hasVentilationSystem: "환기 시스템",
@@ -20,7 +23,7 @@ export default function SmokingAreaDetailPage({ detailInfoList }) {
 
 	return (
 		<>
-			<div className="mx-[20px] mt-[16px] flex-wrap justify-center gap-x-[12px] gap-y-[8px]">
+			<div className="mx-[20px] mt-[16px] flex flex-wrap justify-center gap-x-[12px] gap-y-[8px]">
 				{Object.entries(options)
 					.filter(([key]) => detailInfoList?.feature?.[key])
 					.map(([key, value]) => (
@@ -32,10 +35,14 @@ export default function SmokingAreaDetailPage({ detailInfoList }) {
 						</div>
 					))}
 			</div>
-
-			<p className="mx-[20px] mt-[28px] text-[16px] font-bold text-[#252525]">
+			<p className="mx-[20px] mt-[28px] text-left text-[16px] font-bold text-[#252525]">
 				흡연 부스 위치
 			</p>
+			<div className="mt-4 flex justify-center">
+				<div className="h-[400px] w-[90vw] max-w-[600px] overflow-hidden rounded-xl border border-gray-500 shadow-lg">
+					<Map roadAddress={roadAddress} />
+				</div>
+			</div>
 		</>
 	)
 }
