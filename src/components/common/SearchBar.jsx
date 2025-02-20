@@ -3,12 +3,14 @@ import PropTypes from "prop-types"
 import { Search } from "lucide-react"
 import AroundMeBtn from "@/components/common/AroundMeButton"
 import { useSearchSmokingAreas } from "@/utils/queries"
+import { useNavigate } from "react-router-dom"
 
 export default function SearchBar({
 	setData,
 	isList = false,
 	onMoveToCurrentLocation,
 }) {
+	const navigate = useNavigate()
 	const [searchTerm, setSearchTerm] = useState("")
 
 	const handleInputChange = (e) => {
@@ -16,6 +18,12 @@ export default function SearchBar({
 	}
 
 	const { mutate, data, error, isLoading } = useSearchSmokingAreas()
+
+	const handleMoveToList = () => {
+		if (!isList) {
+			navigate("/list")
+		}
+	}
 
 	const handleSearchSubmit = (e) => {
 		e.preventDefault()
@@ -29,6 +37,7 @@ export default function SearchBar({
 	useEffect(() => {
 		if (data) {
 			setData(data)
+			console.log("!!!!!!!!!!!!data: ", data)
 		}
 	}, [data])
 
@@ -52,13 +61,16 @@ export default function SearchBar({
 				</>
 			)}
 			<input
+				onClick={handleMoveToList}
 				type="text"
 				placeholder="내 근처 흡연구역이 궁금하다면"
 				value={searchTerm}
 				onChange={handleInputChange}
-				className="flex-grow border-none text-sm text-gray-700 placeholder-gray-400 focus:outline-none"
+				className={`w-[156px] flex-grow border-none text-sm text-gray-700 placeholder-gray-400 focus:outline-none`}
 			/>
-			<Search className="h-5 w-5 text-[#4517FF]" />
+			<div className="h-5 w-5">
+				<Search className="h-5 w-5 text-[#4517FF]" />
+			</div>
 		</form>
 	)
 }

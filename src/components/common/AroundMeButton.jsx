@@ -14,7 +14,7 @@ export default function AroundMeButton({ onClick }) {
 			className="flex flex-col items-center justify-center text-[#4517FF] focus:outline-none"
 		>
 			<Compass className="h-5 w-5" />
-			<span className="mt-1 text-xs font-medium">내 주변</span>
+			<span className="mt-1 w-[24px] text-[8px] font-medium">내 주변</span>
 		</button>
 	)
 }
