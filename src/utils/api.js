@@ -136,8 +136,14 @@ export const refreshAccessToken = async () => {
 
 export default apiRequest
 
-export const fetchSmokingAreas = async ({ userLat, userLng }) =>
-	apiRequest(`/api/smoking-area/list?userLat=${userLat}&userLng=${userLng}`)
+export const fetchSmokingAreas = async ({
+	userLat,
+	userLng,
+	selectedFilter = "거리순",
+}) =>
+	apiRequest(
+		`/api/smoking-area/list?userLat=${userLat}&userLng=${userLng}&filter=${selectedFilter}`,
+	)
 
 export const fetchSmokingAreaMarkers = async (userLat, userLng) =>
 	apiRequest(`/api/smoking-area/marker?userLat=${userLat}&userLng=${userLng}`)
@@ -150,7 +156,6 @@ export const fetchSmokingAreaDetails = async (
 	apiRequest(
 		`/api/smoking-area/${smokingAreaId}/simple?userLat=${userLat}&userLng=${userLng}`,
 	)
-
 export const searchSmokingAreas = async ({
 	location,
 	userLat,
