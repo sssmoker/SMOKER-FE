@@ -37,6 +37,103 @@ async function apiRequest(endpoint, method = "GET", body = null) {
 	}
 }
 
+// 세션 스토리지에서 토큰 가져오기
+const getStoredTokens = () => {
+	const tokens = sessionStorage.getItem("tokens")
+	return tokens ? JSON.parse(tokens) : null
+}
+
+// JWT가 필요한 API 요청 (401 발생 시 자동 재발급)
+export async function apiRequestWithAuth(
+	endpoint,
+	method = "GET",
+	body = null,
+) {
+	try {
+		let tokens = getStoredTokens()
+		let accessToken = tokens?.accessToken
+
+		const options = {
+			method,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${accessToken}`,
+			},
+		}
+
+		if (body) options.body = JSON.stringify(body)
+
+		let response = await fetch(`${BASE_URL}${endpoint}`, options)
+
+		// 401 발생 시 -> 자동으로 토큰 재발급 후 다시 요청
+		if (response.status === 401) {
+			try {
+				const newAccessToken = await refreshAccessToken() // 새 accessToken 가져오기
+				if (!newAccessToken) throw new Error("새로운 액세스 토큰 없음")
+
+				// 새로운 accessToken으로 요청 다시 보내기
+				options.headers.Authorization = `Bearer ${newAccessToken}`
+				response = await fetch(`${BASE_URL}${endpoint}`, options)
+			} catch (error) {
+				console.error("토큰 갱신 실패 후 요청 불가:", error)
+				throw error // 여기서는 로그인 상태를 변경하지 않음 (refreshAccessToken 내부에서 처리)
+			}
+		}
+
+		if (!response.ok) {
+			const errorData = await response.json().catch(() => ({}))
+			console.error(`API ERROR: ${endpoint}`, errorData)
+			throw new Error(`${response.status}: ${response.statusText}`)
+		}
+
+		return await response.json()
+	} catch (error) {
+		console.error(`API REQUEST FAILED: ${endpoint}`, error)
+		throw error
+	}
+}
+
+// JWT 액세스 토큰 재발급
+export const refreshAccessToken = async () => {
+	try {
+		const tokens = getStoredTokens()
+		const refreshToken = tokens?.refreshToken
+		if (!refreshToken) throw new Error("Refresh Token이 존재하지 않습니다.")
+
+		const response = await fetch(`${BASE_URL}/api/auth/refresh`, {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${refreshToken}`,
+			},
+		})
+
+		if (!response.ok) {
+			throw new Error("토큰 재발급 실패")
+		}
+
+		const data = await response.json()
+
+		// 새 accessToken, refreshToken 저장
+		const newTokens = {
+			accessToken: data.result.accessToken,
+			refreshToken: data.result.refreshToken,
+		}
+		sessionStorage.setItem("tokens", JSON.stringify(newTokens))
+
+		return newTokens.accessToken // 새 accessToken 반환
+	} catch (error) {
+		console.error("JWT 액세스 토큰 재발급 실패:", error)
+
+		// 실패 시 즉시 로그아웃 처리
+		sessionStorage.removeItem("tokens")
+		sessionStorage.removeItem("member")
+		window.location.href = "/login" // 강제 로그아웃 후 로그인 페이지 이동
+
+		throw error
+	}
+}
+
 export default apiRequest
 
 export const fetchSmokingAreas = async ({ userLat, userLng }) =>
@@ -73,6 +170,14 @@ export const getSmokingAreaMarkers = async ({ userLat, userLng }) =>
 	apiRequest(`/api/smoking-area/marker?userLat=${userLat}&userLng=${userLng}`)
 
 // 흡연 구역 관련 API
+// export const fetchSmokingAreas = async ({ userLat, userLng, selectedFilter }) =>
+// 	await apiRequest(
+// 		`/api/smoking-area/list?userLat=${userLat}&userLng=${userLng}&filter=${selectedFilter}`,
+// 	)
+// export const fetchSmokingAreaDetails = async (smokingAreaId) =>
+// 	await apiRequest(`/api/smoking-area/${smokingAreaId}`)
+export const searchSmokingArea = async (data) =>
+	await apiRequest(`/api/smoking-area/search`, "POST", data)
 export const registerSmokingArea = async (data) =>
 	await apiRequest(`/api/smoking-area/register`, "POST", data)
 export const updateSmokingArea = async (smokingAreaId, data) =>
@@ -106,8 +211,10 @@ export const saveSmokingArea = async (smokingAreaId) =>
 export const deleteSavedSmokingArea = async (smokingAreaId) =>
 	await apiRequest(`/api/saved-smoking-area/${smokingAreaId}`, "DELETE")
 
-// 공지사항 관련 API
-export const fetchNotices = async () => await apiRequest(`/api/member/notices`)
+// 공지사항
+export const fetchNotices = async (page = 1) =>
+	await apiRequest(`/api/member/notices?page=${page}`)
+
 export const fetchNoticeDetail = async (noticeId) =>
 	await apiRequest(`/api/member/notices/detail/${noticeId}`)
 
