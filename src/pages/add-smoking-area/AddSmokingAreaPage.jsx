@@ -23,7 +23,7 @@ export default function AddSmokingAreaPage() {
 
 	return (
 		<div className="flex h-[100vh] w-full flex-col items-center justify-between">
-			<header className="fixed left-0 right-0 top-[5vh] z-10 flex items-center justify-between rounded-2xl bg-white p-4 pr-4 shadow-md">
+			<header className="fixed left-0 right-0 top-0 z-10 flex items-center justify-between bg-white px-2 py-4 pr-4 shadow-md">
 				<BackButton />
 				<div className="flex flex-col items-center">
 					<h1 className="text-center text-[16px] font-bold sm:text-[18px] md:text-[20px] lg:text-[24px]">
