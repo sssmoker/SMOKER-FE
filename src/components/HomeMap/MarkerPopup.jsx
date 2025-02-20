@@ -58,8 +58,8 @@ export default function MarkerPopup({ marker }) {
 						<svg viewBox="0 0 24 24">
 							<path d="M12 17.25L6.18 20.64L7.45 14.41L2.9 10.11L9.09 9.39L12 3.5L14.91 9.39L21.1 10.11L16.55 14.41L17.82 20.64L12 17.25Z"/>
 						</svg>
-						<span>${marker.rating || "N/A"} ⭐ (${marker.reviews || 0})</span>
-						<span>📍 ${marker.distance || "N/A"}m</span>
+						<span>${marker.rating || "4.3"} ⭐ (${marker.reviews || 11})</span>
+						<span>📍 ${marker.distance || "250"}m</span>
 					</div>
 				</div>
 			`,
