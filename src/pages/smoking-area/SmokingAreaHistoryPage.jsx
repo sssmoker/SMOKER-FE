@@ -5,6 +5,7 @@ import ComButton from "@/components/common/button/ComButton"
 import { useLocation, useNavigate } from "react-router-dom"
 import { useQuery } from "@tanstack/react-query"
 import { useSmokingAreaUpdateHistory } from "@/utils/queries"
+import { smokingAreaHistoryDummy } from "@/mock/smokingAreaHistoryDummy"
 
 export default function SmokingAreaHistoryPage() {
 	const location = useLocation()
@@ -19,11 +20,11 @@ export default function SmokingAreaHistoryPage() {
 
 	// 토근 없을 시 로그인 화면으로 이동 플로우 추가하기
 	// api 연결
-	const { data, error, isLoading } = useSmokingAreaUpdateHistory(
-		smokingAreaId,
-		0,
-	)
-
+	// const { data, error, isLoading } = useSmokingAreaUpdateHistory(
+	// 	smokingAreaId,
+	// 	0,
+	// )
+	const data = smokingAreaHistoryDummy
 	// if (isLoading) {
 	// 	return <div>로딩 중...</div>
 	// }
