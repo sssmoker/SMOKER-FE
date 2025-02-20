@@ -46,7 +46,7 @@ export default function ListPage() {
 	})
 	useEffect(() => {
 		if (apiData) {
-			setData(apiData)
+			// setData(apiData)
 		}
 	}, [apiData])
 
@@ -87,7 +87,7 @@ export default function ListPage() {
 				<ul className="h-full w-full overflow-y-scroll pb-[11vh]">
 					<SmokingAreaList
 						selectedFilter={selectedFilter}
-						smokingAreasData={listDummy || []}
+						smokingAreasData={data?.result?.smokingAreas || listDummy || []}
 					/>
 				</ul>
 			</div>
