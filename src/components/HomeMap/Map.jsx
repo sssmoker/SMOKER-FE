@@ -4,7 +4,7 @@ import { renderToString } from "react-dom/server"
 import { Cigarette } from "lucide-react"
 import { debounce } from "lodash"
 
-const DEFAULT_CENTER = { lat: 37.546, lng: 127.071 }
+const DEFAULT_CENTER = { lat: 37.468105670805606, lng: 127.03926498444508 }
 
 export default function Map({
 	currentLocation,
@@ -52,7 +52,7 @@ export default function Map({
 		const container = document.getElementById("map")
 		const options = {
 			center: new window.kakao.maps.LatLng(mapCenter.lat, mapCenter.lng),
-			level: 4,
+			level: 2,
 			draggable: true,
 			scrollwheel: true,
 		}
@@ -86,34 +86,59 @@ export default function Map({
 	// 현재 위치 마커 추가 (동의한 경우에만)
 	const addCurrentLocationMarker = useCallback(
 		(map, location) => {
-			if (!locationAgreement) return
+			if (!locationAgreement || !map) return
 			const markerDiv = document.createElement("div")
 			markerDiv.style.cssText = `
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 35px;
-        height: 35px;
-        background: rgba(248, 150, 179, 0.4);
-        border-radius: 50%;
-        animation: pulse-animation 1.5s infinite alternate;
-      `
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 35px;
+			height: 35px;
+			background: rgba(255, 100, 179, 0.6);
+			border-radius: 50%;
+			position: absolute;
+			z-index: 300;
+		`
+
 			markerDiv.innerHTML = `
-        <div style="width: 16px; height: 16px; background: yellow; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-          <div style="width: 10px; height: 10px; background: blue; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-            <div style="width: 4px; height: 4px; background: yellow; border-radius: 50%;"></div>
-          </div>
-        </div>
-      `
+			<div style="
+				width: 14px;
+				height: 14px;
+				background: yellow;
+				border-radius: 50%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			">
+				<div style="
+					width: 9px;
+					height: 9px;
+					background: blue;
+					border-radius: 50%;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+				">
+					<div style="
+						width: 5px;
+						height: 5px;
+						background: yellow;
+						border-radius: 50%;
+					"></div>
+				</div>
+			</div>
+		`
+
 			const overlay = new window.kakao.maps.CustomOverlay({
 				position: new window.kakao.maps.LatLng(
 					location.userLat,
 					location.userLng,
 				),
 				content: markerDiv,
-				zIndex: 300,
+				zIndex: 100,
 			})
 			overlay.setMap(map)
+			console.log("✅ 현재 위치 마커 추가 완료!")
 		},
 		[locationAgreement],
 	)
@@ -242,5 +267,11 @@ export default function Map({
 		}
 	}, [mapInstance, onLookLocationChange])
 
+	useEffect(() => {
+		if (mapInstance && currentLocation) {
+			console.log("🗺️ 현재 위치 마커 추가:", currentLocation) // 디버깅 로그 추가
+			addCurrentLocationMarker(mapInstance, currentLocation) // 🔥 지도 중심(lookLocation)과 무관하게 현재 위치 유지
+		}
+	}, [mapInstance, currentLocation])
 	return <div id="map" className="h-full w-full" />
 }

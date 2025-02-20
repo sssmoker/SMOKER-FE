@@ -6,12 +6,13 @@ import AgreementToast from "@/components/common/toast/AgreementToast"
 import ComButton from "@/components/common/button/ComButton"
 import MarkerInfoCard from "@/components/HomeMap/MarkerInfoCard"
 import MarkerPopup from "@/components/HomeMap/MarkerPopup"
+import { calculateDistance } from "@/utils/calculateDistance"
 
 export default function HomePage() {
 	const [currentLocation, setCurrentLocation] = useState(null)
 	const [lookLocation, setLookLocation] = useState({
-		userLat: 37.546,
-		userLng: 127.071,
+		userLat: 37.468105670805606,
+		userLng: 127.03926498444508,
 	})
 	const [moveToLocation, setMoveToLocation] = useState(null)
 	const [showAgreementToast, setShowAgreementToast] = useState(
@@ -29,10 +30,8 @@ export default function HomePage() {
 			navigator.geolocation.getCurrentPosition(
 				({ coords: { latitude, longitude } }) => {
 					const loc = { userLat: latitude, userLng: longitude }
-					setCurrentLocation(loc)
-					if (localStorage.getItem("locationAgreement") === "true") {
-						setLookLocation(loc)
-					}
+					setCurrentLocation(loc) // 🔥 현재 위치(GPS) 값 업데이트
+					console.log("📍 현재 위치 업데이트됨:", loc) // 디버깅 로그 추가
 				},
 				(error) => console.error("Geolocation error:", error),
 				{ enableHighAccuracy: true, timeout: 10000, maximumAge: 0 },
@@ -43,11 +42,9 @@ export default function HomePage() {
 	}, [])
 
 	const handleMoveToCurrentLocation = () => {
-		const loc =
-			localStorage.getItem("locationAgreement") === "true" && currentLocation
-				? currentLocation
-				: { userLat: 37.546, userLng: 127.071 }
-		setLookLocation(loc)
+		if (currentLocation) {
+			setLookLocation(currentLocation)
+		}
 	}
 
 	const handleAgreementConfirm = (isChecked) => {
@@ -55,23 +52,32 @@ export default function HomePage() {
 		const loc =
 			isChecked && currentLocation
 				? currentLocation
-				: { userLat: 37.546, userLng: 127.071 }
+				: { userLat: 37.468105670805606, userLng: 127.03926498444508 }
 		setLookLocation(loc)
 		setShowAgreementToast(false)
 	}
 
 	const handleMarkerClick = (marker) => {
+		// 현재 위치와 마커 간 거리 계산
+		const distance = calculateDistance(
+			currentLocation.userLat,
+			currentLocation.userLng,
+			marker.location.latitude,
+			marker.location.longitude,
+		)
+
 		setLookLocation({
 			userLat: marker.location.latitude,
 			userLng: marker.location.longitude,
 		})
+
 		setTimeout(() => {
 			setSelectedMarker({
 				id: marker.smokingId,
 				title: marker.name,
 				rating: marker.rating || 4.3,
 				reviews: marker.reviews || 11,
-				distance: marker.distance || 250,
+				distance: distance.toFixed(1),
 				latitude: marker.location.latitude,
 				longitude: marker.location.longitude,
 			})

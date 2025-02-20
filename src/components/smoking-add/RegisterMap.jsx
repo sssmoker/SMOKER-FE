@@ -3,7 +3,7 @@ import { useSmokingAreaMarkers } from "@/hooks/useMapQueries"
 import { renderToString } from "react-dom/server"
 import { Cigarette } from "lucide-react"
 
-const DEFAULT_CENTER = { lat: 37.546, lng: 127.071 }
+const DEFAULT_CENTER = { lat: 37.468105670805606, lng: 127.03926498444508 }
 
 export default function Map({ currentLocation, onAddressChange }) {
 	const [mapInstance, setMapInstance] = useState(null)
