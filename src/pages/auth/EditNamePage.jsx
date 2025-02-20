@@ -2,30 +2,39 @@ import React, { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import BackButton from "@/components/common/button/BackButton"
 import LongButton from "@/components/common/button/LongButton"
-import { useAuthContext } from "@/contexts/AuthContext"
 
 export default function EditNamePage() {
 	const navigate = useNavigate()
-	const { member, setMember } = useAuthContext()
 	const [nickname, setNickname] = useState("")
 	const [originalNickname, setOriginalNickname] = useState("")
 	const [isLoading, setIsLoading] = useState(false)
 	const [isUpdated, setIsUpdated] = useState(false)
 	const [isEditing, setIsEditing] = useState(false)
 
+	// 🟢 memberId=1의 닉네임 가져오기
 	useEffect(() => {
-		if (member) {
-			setNickname(member.nickName)
-			setOriginalNickname(member.nickName)
-		}
-	}, [member])
+		const fetchMemberInfo = async () => {
+			try {
+				const response = await fetch("http://localhost:3001/members/1") // memberId=1 고정
+				const data = await response.json()
 
+				setNickname(data.nickName)
+				setOriginalNickname(data.nickName)
+			} catch (error) {
+				console.error("[EditNamePage] 회원 정보 불러오기 실패:", error)
+			}
+		}
+
+		fetchMemberInfo()
+	}, [])
+
+	// 닉네임 수정 함수
 	const handleUpdateNickname = async () => {
 		if (!nickname.trim() || nickname === originalNickname) return
 
 		setIsLoading(true)
 		try {
-			const url = `http://localhost:3001/members/${member.memberId}`
+			const url = "http://localhost:3001/members/1" // memberId=1 고정
 			const response = await fetch(url, {
 				method: "PATCH",
 				headers: { "Content-Type": "application/json" },
@@ -36,8 +45,7 @@ export default function EditNamePage() {
 				throw new Error(`닉네임 변경 실패 (status: ${response.status})`)
 			}
 
-			const updatedMember = { ...member, nickName: nickname }
-			setMember(updatedMember)
+			const updatedMember = { memberId: 1, nickName: nickname }
 			sessionStorage.setItem("member", JSON.stringify(updatedMember))
 
 			setOriginalNickname(nickname)

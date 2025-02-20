@@ -20,10 +20,26 @@ export default function MyPage() {
 		{ label: "회원 정보", path: `/my-page/${member.memberId}/info` },
 		{ label: "공지사항", path: "/my-page/notices" },
 		{ label: "자주 묻는 질문", path: "/my-page/questions" },
-		{ label: "1:1 문의", path: "/inquiry" },
-		{ label: "서비스 이용 약관", path: "/terms" },
-		{ label: "위치 기반 서비스 이용 약관", path: "/location-terms" },
-		{ label: "개인정보처리방침", path: "/privacy-policy" },
+		{
+			label: "1:1 문의",
+			path: "https://walla.my/v/WxpfarU6aHsXy7ydBwaV",
+			external: true,
+		},
+		{
+			label: "서비스 이용 약관",
+			path: "https://redsummerluv.notion.site/19cd9c6dcc3180dc89a3d5ae00bbc1bb?pvs=4",
+			external: true,
+		},
+		{
+			label: "위치 기반 서비스 이용 약관",
+			path: "https://redsummerluv.notion.site/19cd9c6dcc31803f884ec97bb0e3b07b?pvs=4",
+			external: true,
+		},
+		{
+			label: "개인정보처리방침",
+			path: "https://redsummerluv.notion.site/19cd9c6dcc31805a9720ef2df07293e8?pvs=4",
+			external: true,
+		},
 	]
 
 	const handleLogout = async () => {
@@ -47,16 +63,35 @@ export default function MyPage() {
 			</header>
 
 			<ul className="flex-1 overflow-y-auto">
-				{menuItems.map((item, index) => (
-					<li
-						key={index}
-						className="flex cursor-pointer items-center justify-between px-4 py-3 hover:bg-gray-50"
-						onClick={() => navigate(item.path)}
-					>
-						<span>{item.label}</span>
-						<ChevronRight className="h-4 w-4 text-gray-400" />
-					</li>
-				))}
+				{menuItems.map((item, index) =>
+					item.external ? (
+						<li
+							key={index}
+							className="flex items-center justify-between px-4 py-3 hover:bg-gray-50"
+						>
+							<a
+								href={item.path}
+								target="_blank"
+								rel="noopener noreferrer"
+								className="flex w-full justify-between"
+							>
+								<span>{item.label}</span>
+								<ChevronRight className="h-4 w-4 text-gray-400" />
+							</a>
+						</li>
+					) : (
+						<li
+							key={index}
+							className={`flex cursor-pointer items-center justify-between px-4 py-3 hover:bg-gray-50 ${
+								item.path ? "" : "cursor-default text-gray-400"
+							}`}
+							onClick={() => item.path && navigate(item.path)}
+						>
+							<span>{item.label}</span>
+							<ChevronRight className="h-4 w-4 text-gray-400" />
+						</li>
+					),
+				)}
 
 				<li
 					className="flex cursor-pointer items-center justify-between px-4 py-3 hover:bg-gray-50"

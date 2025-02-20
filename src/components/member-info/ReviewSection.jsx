@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from "react"
 import { Star } from "lucide-react"
 
-export default function ReviewSection({ memberReviews }) {
+export default function ReviewSection() {
 	const [currentPage, setCurrentPage] = useState(1)
 	const itemsPerPage = 5
 	const containerRef = useRef(null)
 	const [containerHeight, setContainerHeight] = useState("auto")
+	const [reviews, setReviews] = useState([])
 
 	useEffect(() => {
 		if (containerRef.current) {
@@ -14,16 +15,35 @@ export default function ReviewSection({ memberReviews }) {
 		}
 	}, [])
 
-	if (
-		!memberReviews ||
-		!memberReviews.result ||
-		memberReviews.result.reviews.length === 0
-	) {
+	// 🟢 memberId=1의 리뷰 데이터 가져오기
+	useEffect(() => {
+		const fetchReviews = async () => {
+			try {
+				const response = await fetch(
+					"http://localhost:3001/memberReviews?memberId=1",
+				) // memberId=1 고정
+				const data = await response.json()
+
+				const sortedReviews = data.sort(
+					(a, b) => new Date(b.createdAt) - new Date(a.createdAt),
+				)
+				setReviews(sortedReviews)
+			} catch (error) {
+				console.error("[ReviewSection] 리뷰 정보 불러오기 실패:", error)
+			}
+		}
+
+		fetchReviews()
+	}, [])
+
+	// 리뷰가 없을 경우
+	if (reviews.length === 0) {
 		return (
 			<p className="mt-4 text-center text-gray-500">작성한 리뷰가 없습니다.</p>
 		)
 	}
 
+	// 날짜 포맷 함수
 	const formatDate = (dateString) => {
 		const date = new Date(dateString)
 		return date.toLocaleString("ko-KR", {
@@ -36,15 +56,10 @@ export default function ReviewSection({ memberReviews }) {
 		})
 	}
 
-	const totalPages = Math.max(
-		1,
-		Math.ceil(memberReviews.result.reviews.length / itemsPerPage),
-	)
+	// 페이지네이션 계산
+	const totalPages = Math.max(1, Math.ceil(reviews.length / itemsPerPage))
 	const startIndex = (currentPage - 1) * itemsPerPage
-	const paginatedReviews = memberReviews.result.reviews.slice(
-		startIndex,
-		startIndex + itemsPerPage,
-	)
+	const paginatedReviews = reviews.slice(startIndex, startIndex + itemsPerPage)
 
 	return (
 		<div className="relative flex h-full flex-col overflow-auto bg-white pb-20">
@@ -54,23 +69,23 @@ export default function ReviewSection({ memberReviews }) {
 				style={{ height: containerHeight }}
 			>
 				<ul className="w-full bg-white">
-					{paginatedReviews.map((review, index) => (
+					{paginatedReviews.map((review) => (
 						<li
-							key={index}
+							key={review.reviewId}
 							className="flex items-center justify-between border-t border-gray-300 bg-white px-4 py-3"
 						>
 							<div className="flex-1">
 								<div className="flex items-center gap-2">
 									<h3 className="text-sm font-semibold text-gray-800">
-										{review.memberName}
+										{review.smokingAreaName}
 									</h3>
 									<p className="text-xs text-gray-300">
-										{formatDate(review.creationDate)}
+										{formatDate(review.createdAt)}
 									</p>
 								</div>
 
 								<div className="mt-1 flex">
-									{Array.from({ length: review.score }, (_, index) => (
+									{Array.from({ length: review.rating }, (_, index) => (
 										<Star
 											key={index}
 											className="h-3 w-3 fill-[#FFDD00] text-[#FFDD00]"
@@ -78,12 +93,12 @@ export default function ReviewSection({ memberReviews }) {
 									))}
 								</div>
 
-								<p className="text-sm text-gray-600">{review.content}</p>
+								<p className="text-sm text-gray-600">{review.body}</p>
 							</div>
 
-							{review.imageUrl ? (
+							{review.imgUrl ? (
 								<img
-									src={review.imageUrl}
+									src={review.imgUrl}
 									alt="리뷰 이미지"
 									className="ml-4 h-[50px] w-[50px] rounded-md border object-cover"
 								/>
