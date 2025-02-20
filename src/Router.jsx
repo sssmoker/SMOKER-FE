@@ -34,8 +34,8 @@ const listRoutes = [
 		element: <Outlet />,
 		children: [
 			{ index: true, element: <SmokingAreaPage /> },
-			{ path: "detail", element: <SmokingAreaDetailPage /> },
-			{ path: "review", element: <SmokingAreaReviewPage /> },
+			{ path: "detail", element: <SmokingAreaDetailPage /> }, // 이거 사실 smoking-area 부속 페이지
+			{ path: "review", element: <SmokingAreaReviewPage /> }, // 이거 사실 smoking-area 부속 페이지
 			{ path: "update", element: <SmokingAreaUpdatePage /> },
 			{ path: "writing-review", element: <WritingReviewPage /> },
 			{ path: "history", element: <SmokingAreaHistoryPage /> },
