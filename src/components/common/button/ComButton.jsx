@@ -7,7 +7,7 @@ import cn from "clsx"
 import { buttonVariants } from "./ButtonVariants"
 
 export default function Button({
-	className,
+	className = "",
 	size = "m",
 	color = "purple",
 	children,
@@ -31,10 +31,4 @@ Button.propTypes = {
 	color: PropTypes.string,
 	children: PropTypes.node.isRequired,
 	type: PropTypes.oneOf(["button", "submit"]),
-}
-
-Button.defaultProps = {
-	size: "m",
-	color: "purple",
-	type: "button",
 }

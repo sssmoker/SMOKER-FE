@@ -67,7 +67,10 @@ export default function SmokingAreaPage() {
 			</div>
 
 			{currentPage == "detail" ? (
-				<SmokingAreaDetailPage detailInfoList={detailData} />
+				<SmokingAreaDetailPage
+					detailInfoList={detailData}
+					region={data.location.address}
+				/>
 			) : (
 				<>
 					<SmokingAreaReviewPage

@@ -1,5 +1,4 @@
 import React from "react"
-import PropTypes from "prop-types"
 import { Compass } from "lucide-react"
 
 export default function AroundMeButton({ onClick }) {
@@ -18,8 +17,4 @@ export default function AroundMeButton({ onClick }) {
 			<span className="mt-1 text-xs font-medium">내 주변</span>
 		</button>
 	)
-}
-
-AroundMeButton.propTypes = {
-	onClick: PropTypes.func.isRequired,
 }
