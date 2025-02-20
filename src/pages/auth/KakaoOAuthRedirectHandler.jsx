@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 import { useDispatch } from "react-redux"
-import { kakaoLogin } from "@/redux/actions/authAciton"
+import { kakaoLogin } from "@/redux/actions/authAction"
 import { useNavigate } from "react-router-dom"
 
 export default function KakaoOAuthRedirectHandler() {
@@ -10,9 +10,10 @@ export default function KakaoOAuthRedirectHandler() {
 	useEffect(() => {
 		const urlParams = new URLSearchParams(window.location.search)
 		const code = urlParams.get("code")
+		const state = urlParams.get("state")
 
 		if (code) {
-			dispatch(kakaoLogin(code))
+			dispatch(kakaoLogin(code, state))
 				.then(() => {
 					navigate("/")
 				})
@@ -21,7 +22,7 @@ export default function KakaoOAuthRedirectHandler() {
 					navigate("/login")
 				})
 		} else {
-			console.error("OAuth 코드 없음!")
+			console.error("OAuth 코드 또는 state 없음!")
 			navigate("/login")
 		}
 	}, [dispatch, navigate])
