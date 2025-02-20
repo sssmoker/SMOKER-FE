@@ -10,10 +10,9 @@ export default function SubmitForm({ onSubmit }) {
 	const [images, setImages] = useState([])
 	const [rating, setRating] = useState(0)
 
+	// 폼 제출 시, 이미지를 유무와 관계없이 부모에게 전달
 	const handleSubmit = () => {
-		if (onSubmit) {
-			onSubmit({ images, review, rating })
-		}
+		onSubmit({ images, review, rating }) // 이미지, 리뷰, 별점 데이터를 부모로 전달
 	}
 
 	return (
