@@ -14,6 +14,7 @@ export default function Map({
 	const [mapInstance, setMapInstance] = useState(null)
 	const [markers, setMarkers] = useState([])
 	const locationAgreement = localStorage.getItem("locationAgreement") === "true"
+	const [zoomLevel, setZoomLevel] = useState(2) // 상태값으로 관리
 
 	// API 데이터: 현재 지도 중심(currentLocation) 기준 흡연구역 데이터
 	const { data: markerData } = useSmokingAreaMarkers(
@@ -52,14 +53,14 @@ export default function Map({
 		const container = document.getElementById("map")
 		const options = {
 			center: new window.kakao.maps.LatLng(mapCenter.lat, mapCenter.lng),
-			level: 2,
+			level: zoomLevel, // 상태값을 반영
 			draggable: true,
 			scrollwheel: true,
 		}
 		const map = new window.kakao.maps.Map(container, options)
 		setMapInstance(map)
 		window.kakaoMapInstance = map
-	}, [mapCenter])
+	}, [mapCenter, zoomLevel]) // zoomLevel을 의존성에 추가
 
 	// Kakao 지도 스크립트 동적 로드
 	const loadKakaoMapScript = useCallback(() => {
@@ -268,10 +269,29 @@ export default function Map({
 	}, [mapInstance, onLookLocationChange])
 
 	useEffect(() => {
-		if (mapInstance && currentLocation) {
-			console.log("🗺️ 현재 위치 마커 추가:", currentLocation) // 디버깅 로그 추가
-			addCurrentLocationMarker(mapInstance, currentLocation) // 🔥 지도 중심(lookLocation)과 무관하게 현재 위치 유지
+		if (mapInstance) {
+			const handleZoomChange = () => {
+				setZoomLevel(mapInstance.getLevel()) // 현재 확대 레벨 저장
+			}
+			window.kakao.maps.event.addListener(
+				mapInstance,
+				"zoom_changed",
+				handleZoomChange,
+			)
+			return () =>
+				window.kakao.maps.event.removeListener(
+					mapInstance,
+					"zoom_changed",
+					handleZoomChange,
+				)
 		}
-	}, [mapInstance, currentLocation])
+	}, [mapInstance])
+
+	useEffect(() => {
+		if (mapInstance) {
+			mapInstance.setLevel(zoomLevel) // zoomLevel 변경 시 적용
+		}
+	}, [mapInstance, zoomLevel])
+
 	return <div id="map" className="h-full w-full" />
 }
