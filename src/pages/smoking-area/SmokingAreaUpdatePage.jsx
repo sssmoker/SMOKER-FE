@@ -47,7 +47,7 @@ export default function SmokingAreaUpdatePage() {
 	const handleSubmit = () => {
 		alert("업데이트가 완료되었습니다!")
 		navigate("/list/smoking-area")
-		console.log("optionKeys: ", selectedOptionsData)
+		// console.log("optionKeys: ", selectedOptionsData)
 	}
 
 	return (

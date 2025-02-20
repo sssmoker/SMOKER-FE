@@ -3,7 +3,6 @@ import BackButton from "@/components/common/button/BackButton"
 import HistoryCard from "@/components/smoking-history/HistoryCard"
 import ComButton from "@/components/common/button/ComButton"
 import { useLocation, useNavigate } from "react-router-dom"
-import { useQuery } from "@tanstack/react-query"
 import { useSmokingAreaUpdateHistory } from "@/utils/queries"
 import { smokingAreaHistoryDummy } from "@/mock/smokingAreaHistoryDummy"
 
@@ -54,9 +53,11 @@ export default function SmokingAreaHistoryPage() {
 						))}
 					</ul>
 					<div className="mt-3 flex justify-center">
-						<ComButton onClick={handleMoveToUpdate} size="xl">
-							정보 수정하러 가기
-						</ComButton>
+						<ComButton
+							onClick={handleMoveToUpdate}
+							children="정보 수정하러 가기"
+							size="xl"
+						/>
 					</div>
 				</div>
 			</div>

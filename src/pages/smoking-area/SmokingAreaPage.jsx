@@ -22,7 +22,7 @@ export default function SmokingAreaPage() {
 	const smokingAreaId = queryParams.get("id")
 
 	// api 연결
-	const results = useSmokingAreaDetailsPage(smokingAreaId)
+	// const results = useSmokingAreaDetailsPage(smokingAreaId)
 
 	// const detailData = results[0].data?.result
 	const detailData = smokingAreaDetailDummy
@@ -31,11 +31,11 @@ export default function SmokingAreaPage() {
 	// const starRatingData = results[2].data?.result
 	const starRatingData = smokingAreaStarInfoDummy
 
-	const isLoading = results.some((result) => result.isLoading)
-	const isError = results.some((result) => result.isError)
+	// const isLoading = results.some((result) => result.isLoading)
+	// const isError = results.some((result) => result.isError)
 
-	if (isLoading) return <div>로딩 중...</div>
-	if (isError) return <div>데이터를 불러오는 중 오류가 발생했습니다.</div>
+	// if (isLoading) return <div>로딩 중...</div>
+	// if (isError) return <div>데이터를 불러오는 중 오류가 발생했습니다.</div>
 
 	return (
 		<div className="min-h-[100vh] bg-white">

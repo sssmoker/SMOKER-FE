@@ -35,32 +35,32 @@ export default function ListPage() {
 	// 	fetchUserLocation()
 	// }, [])
 
-	const {
-		data: apiData,
-		error,
-		isLoading,
-	} = useSmokingAreas({
-		userLat,
-		userLng,
-		selectedFilter,
-	})
-	useEffect(() => {
-		if (apiData) {
-			// setData(apiData)
-		}
-	}, [apiData])
+	// const {
+	// 	data: apiData,
+	// 	error,
+	// 	isLoading,
+	// } = useSmokingAreas({
+	// 	userLat,
+	// 	userLng,
+	// 	selectedFilter,
+	// })
+	// useEffect(() => {
+	// 	if (apiData) {
+	// 		// setData(apiData)
+	// 	}
+	// }, [apiData])
 
 	const handleMoveToHome = () => {
 		navigate("/")
 	}
 
-	if (isLoading) {
-		return <div>로딩 중...</div>
-	}
+	// if (isLoading) {
+	// 	return <div>로딩 중...</div>
+	// }
 
-	if (error) {
-		return <div>에러 발생: {error.message}</div>
-	}
+	// if (error) {
+	// 	return <div>에러 발생: {error.message}</div>
+	// }
 
 	return (
 		<div className="relative h-[100vh] bg-white">
@@ -87,6 +87,7 @@ export default function ListPage() {
 				<ul className="h-full w-full overflow-y-scroll pb-[11vh]">
 					<SmokingAreaList
 						selectedFilter={selectedFilter}
+						// smokingAreasData={listDummy || []}
 						smokingAreasData={data?.result?.smokingAreas || listDummy || []}
 					/>
 				</ul>
