@@ -89,6 +89,7 @@ export default function HomePage() {
 	const handleCloseMarkerInfo = () => {
 		setShowInfoCard(false)
 		// 만약 MarkerPopup도 함께 닫고 싶다면 setSelectedMarker(null) 호출 가능
+		setSelectedMarker(null)
 	}
 
 	// API 조회 및 마커 필터링 기준은 "lookLocation"을 사용함
