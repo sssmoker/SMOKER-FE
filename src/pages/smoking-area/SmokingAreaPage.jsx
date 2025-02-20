@@ -40,7 +40,7 @@ export default function SmokingAreaPage() {
 	return (
 		<div className="min-h-[100vh] bg-white">
 			<Topbar isBookmarked={false} />
-			{data.imageUrl && <BackgroundImg bgImg={data.imageUrl} />}
+			{data?.imageUrl && <BackgroundImg bgImg={data?.imageUrl} />}
 
 			<SmokingAreaInfo
 				smokingAreaId={data.smokingAreaId}
@@ -50,6 +50,7 @@ export default function SmokingAreaPage() {
 				review_num={data.reviewCount}
 				rating={data.rating}
 				bookmark_count={data.savedCount}
+				data={data}
 			/>
 
 			<div className="h-[8px] w-full bg-[#E0E0E0]" />

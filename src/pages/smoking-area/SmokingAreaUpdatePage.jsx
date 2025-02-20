@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import BackButton from "@/components/common/button/BackButton"
 import ComButton from "@/components/common/button/ComButton"
 import {
@@ -29,10 +29,13 @@ const optionKeys = Object.fromEntries(
 )
 
 export default function SmokingAreaUpdatePage() {
+	const location = useLocation()
+	const data = location.state
+
+	const [showCompleteToast, setShowCompleteToast] = useState(false)
 	// /api/smoking-area/update/{smokingAreaId}
 	const navigate = useNavigate()
 
-	const [showCompleteToast, setShowCompleteToast] = useState(false)
 	// const [selectedOptions, setSelectedOptions] = useState([])
 	const [selectedOptionsData, setSelectedOptionsData] = useState(optionKeys)
 
@@ -49,8 +52,9 @@ export default function SmokingAreaUpdatePage() {
 	const handleSubmit = () => {
 		setShowCompleteToast(true)
 		setTimeout(() => {
-			navigate("/list/smoking-area")
+			navigate(`/list/smoking-area?id=${data.smokingAreaId}`, { state: data })
 		}, 3200)
+		// alert("업데이트가 완료되었습니다!")
 		console.log("optionKeys: ", selectedOptionsData)
 	}
 
@@ -84,7 +88,7 @@ export default function SmokingAreaUpdatePage() {
 				</div>
 
 				<a
-					href="https://www.notion.so/redsummerluv/Smoker-146d9c6dcc318005aa4aed726c5a9c17?pvs=4"
+					href="https://walla.my/v/WxpfarU6aHsXy7ydBwaV"
 					className="text-[11px] font-semibold text-[#828282]"
 					target="_blank"
 					rel="noopener noreferrer"
