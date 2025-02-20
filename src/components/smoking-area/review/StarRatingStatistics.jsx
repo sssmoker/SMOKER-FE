@@ -19,7 +19,7 @@ export default function StarRatingStatistics({ avg, count, stars = [] }) {
 					<Star className="h-6 w-6 fill-[#FFDD00] text-[#FFDD00]" />
 					<p className="text-[16px] font-bold text-[#252525]">{avg}</p>
 					<p className="font-regular rounded-full bg-[#D9D9D9] px-[8px] text-[8px] text-[#252525]">
-						{count}개 리뷰 별점 평균
+						10개 리뷰 별점 평균
 					</p>
 				</div>
 				<div>

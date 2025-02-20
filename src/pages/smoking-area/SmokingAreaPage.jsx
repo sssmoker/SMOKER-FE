@@ -9,6 +9,9 @@ import SmokingAreaReviewPage from "./SmokingAreaReviewPage"
 import FloatingButton from "@/components/smoking-area/review/FloatingButton"
 import { useQueries } from "@tanstack/react-query"
 import { useSmokingAreaDetailsPage } from "@/utils/queries"
+import { smokingAreaDetailDummy } from "@/mock/smokingAreaDetailDummy"
+import { smokingAreaStarInfoDummy } from "@/mock/smokingAreaStarInfoDummy"
+import { smokingAreaReviewsDummy } from "@/mock/smokingAreaReviewsDummy"
 
 export default function SmokingAreaPage() {
 	const location = useLocation()
@@ -21,18 +24,18 @@ export default function SmokingAreaPage() {
 	// api 연결
 	const results = useSmokingAreaDetailsPage(smokingAreaId)
 
-	// const smokingAreasData
-	const detailData = results[0].data?.result
-	const reviewListData = results[1].data?.result
-	const starRatingData = results[2].data?.result
+	// const detailData = results[0].data?.result
+	const detailData = smokingAreaDetailDummy
+	// const reviewListData = results[1].data?.result
+	const reviewListData = smokingAreaReviewsDummy
+	// const starRatingData = results[2].data?.result
+	const starRatingData = smokingAreaStarInfoDummy
 
 	const isLoading = results.some((result) => result.isLoading)
 	const isError = results.some((result) => result.isError)
 
 	if (isLoading) return <div>로딩 중...</div>
 	if (isError) return <div>데이터를 불러오는 중 오류가 발생했습니다.</div>
-
-	console.log(data)
 
 	return (
 		<div className="min-h-[100vh] bg-white">
