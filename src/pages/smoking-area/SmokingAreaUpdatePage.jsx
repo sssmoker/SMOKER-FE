@@ -6,6 +6,7 @@ import {
 	Title,
 	OptionsList,
 } from "@/components/smoking-update/OptionsSelection"
+import CompleteToast from "@/components/smoking-area/review/completeToast"
 
 const optionMap = {
 	"담배꽁초 처리함": "hasCigaretteDisposal",
@@ -32,6 +33,7 @@ export default function SmokingAreaUpdatePage() {
 	const location = useLocation()
 	const data = location.state
 
+	const [showCompleteToast, setShowCompleteToast] = useState(false)
 	// /api/smoking-area/update/{smokingAreaId}
 	const navigate = useNavigate()
 	// const [selectedOptions, setSelectedOptions] = useState([])
@@ -48,14 +50,22 @@ export default function SmokingAreaUpdatePage() {
 	}
 
 	const handleSubmit = () => {
-		alert("업데이트가 완료되었습니다!")
+		setShowCompleteToast(true)
+		setTimeout(() => {
+			navigate("/list/smoking-area")
+		}, 3200)
+		// alert("업데이트가 완료되었습니다!")
 		navigate(`/list/smoking-area?id=${data.smokingAreaId}`, { state: data })
-		// console.log("optionKeys: ", selectedOptionsData)
+		console.log("optionKeys: ", selectedOptionsData)
 	}
 
 	return (
 		<>
 			<div className="container mx-auto h-screen bg-[#F5F3FF] px-4 py-6">
+				<CompleteToast
+					isVisible={showCompleteToast}
+					onClose={() => setShowCompleteToast(false)}
+				/>
 				<div className="flex items-start gap-[12px]">
 					<BackButton className="mb-4" />
 					<div>
@@ -81,7 +91,7 @@ export default function SmokingAreaUpdatePage() {
 				</div>
 
 				<a
-					href="https://naver.com"
+					href="https://walla.my/v/WxpfarU6aHsXy7ydBwaV"
 					className="text-[11px] font-semibold text-[#828282]"
 					target="_blank"
 					rel="noopener noreferrer"
