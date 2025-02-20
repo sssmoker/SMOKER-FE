@@ -64,7 +64,8 @@ export default function MarkerPopup({ marker }) {
 				</div>
 			`,
 			xAnchor: 0.5,
-			yAnchor: 1.5,
+			yAnchor: 0.5,
+			offset: new window.kakao.maps.Point(0, 10),
 			zIndex: 200,
 		})
 

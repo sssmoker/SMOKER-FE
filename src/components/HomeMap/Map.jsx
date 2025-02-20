@@ -13,10 +13,9 @@ export default function Map({
 }) {
 	const [mapInstance, setMapInstance] = useState(null)
 	const [markers, setMarkers] = useState([])
-	// 동의 여부: 사용자가 위치 사용에 동의한 경우에만 현재 위치 마커 등 표시
 	const locationAgreement = localStorage.getItem("locationAgreement") === "true"
 
-	// API를 통해 흡연구역 데이터를 가져옴 (현재 지도 중심 기준)
+	// API 데이터: 현재 지도 중심(currentLocation) 기준 흡연구역 데이터
 	const { data: markerData } = useSmokingAreaMarkers(
 		{
 			userLat: currentLocation?.userLat,
@@ -27,34 +26,35 @@ export default function Map({
 		},
 	)
 
-	// 지도 중심 좌표 (HomePage에서 전달받은 currentLocation, 즉 lookLocation)
+	// 지도 중심 좌표 (실질적으로는 lookLocation)
 	const mapCenter = useMemo(() => {
 		return currentLocation
 			? { lat: currentLocation.userLat, lng: currentLocation.userLng }
 			: DEFAULT_CENTER
 	}, [currentLocation])
 
-	// Haversine Formula: 두 좌표 사이 거리를 미터 단위로 계산
+	// Haversine Formula: 두 좌표 사이의 거리를 계산 (미터 단위)
 	const calculateDistance = (lat1, lng1, lat2, lng2) => {
 		const R = 6371
 		const dLat = ((lat2 - lat1) * Math.PI) / 180
 		const dLng = ((lng2 - lng1) * Math.PI) / 180
 		const a =
-			Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+			Math.sin(dLat / 2) ** 2 +
 			Math.cos((lat1 * Math.PI) / 180) *
 				Math.cos((lat2 * Math.PI) / 180) *
-				Math.sin(dLng / 2) *
-				Math.sin(dLng / 2)
+				Math.sin(dLng / 2) ** 2
 		const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
 		return R * c * 1000
 	}
 
-	// 지도 초기화: 지도 컨테이너에서 Kakao 지도 인스턴스를 생성하고 저장
+	// 지도 초기화: container에서 Kakao 지도 인스턴스를 생성
 	const initializeMap = useCallback(() => {
 		const container = document.getElementById("map")
 		const options = {
 			center: new window.kakao.maps.LatLng(mapCenter.lat, mapCenter.lng),
 			level: 4,
+			draggable: true,
+			scrollwheel: true,
 		}
 		const map = new window.kakao.maps.Map(container, options)
 		setMapInstance(map)
@@ -118,13 +118,13 @@ export default function Map({
 		[locationAgreement],
 	)
 
-	// 기존 마커 제거: 매번 업데이트 전에 중복 마커를 제거하여 겹치는 현상 방지
+	// 기존 마커 제거 (중복 제거)
 	const clearMarkers = useCallback(() => {
 		markers.forEach((overlay) => overlay.setMap(null))
 		setMarkers([])
 	}, [markers])
 
-	// 흡연구역 마커 업데이트 (현재 지도 중심 기준 1km 반경 필터링)
+	// 흡연구역 마커 업데이트: 현재 중심 기준 1km 반경 필터링 후 새 마커 생성
 	const updateMarkers = useCallback(() => {
 		if (!mapInstance || !markerData || !currentLocation) {
 			console.warn(
@@ -177,12 +177,10 @@ export default function Map({
 						style={{ width: 15, height: 15 }}
 					/>,
 				)
-				// 마커 클릭 시 HomePage의 onMarkerClick 콜백을 호출하고, 지도 중심을 해당 위치로 이동
+				// 마커 클릭 시 HomePage의 onMarkerClick 콜백 호출 (강제 중심 이동 제거)
 				markerDiv.addEventListener("click", () => {
 					markerDiv.style.transform = "rotateY(180deg)"
 					onMarkerClick?.(marker)
-					mapInstance.setCenter(position)
-					mapInstance.panTo(position)
 				})
 				const overlay = new window.kakao.maps.CustomOverlay({
 					position,
@@ -202,56 +200,44 @@ export default function Map({
 		calculateDistance,
 	])
 
-	// Debounce updateMarkers 호출: 빈번한 업데이트를 방지
+	// Debounce updateMarkers: 잦은 호출 제한 (300ms)
 	const debouncedUpdateMarkers = useCallback(debounce(updateMarkers, 300), [
 		updateMarkers,
 	])
 
-	// 초기 지도 로드: Kakao 지도 스크립트를 로드한 후 지도를 초기화
+	// 초기 지도 로드: Kakao 지도 스크립트 로드 후 지도 초기화
 	useEffect(() => {
 		loadKakaoMapScript().then(() => initializeMap())
 	}, [loadKakaoMapScript, initializeMap])
 
-	// 지도 중심(currentLocation)이 변경되면 지도 중심 이동 및 마커 업데이트 실행
+	// 지도 중심(currentLocation)이 변경되면, 마커 업데이트만 실행 (panTo 호출 제거하여 자유 이동 허용)
 	useEffect(() => {
-		if (mapInstance && currentLocation) {
-			const newCenter = new window.kakao.maps.LatLng(
-				currentLocation.userLat,
-				currentLocation.userLng,
-			)
-			mapInstance.panTo(newCenter)
-		}
 		debouncedUpdateMarkers()
 		return () => debouncedUpdateMarkers.cancel()
 	}, [debouncedUpdateMarkers, currentLocation])
 
-	// 지도 드래그, 줌 변경 시, 새로운 중심 좌표를 부모(HomePage)로 전달
+	// "center_changed" 이벤트: 지도 중심이 변경될 때마다 실시간으로 부모에 새로운 중심 전달 (100ms debounce)
 	useEffect(() => {
-		if (mapInstance) {
-			const updateCenter = () => {
+		if (mapInstance && typeof onLookLocationChange === "function") {
+			const updateCenter = debounce(() => {
 				const center = mapInstance.getCenter()
 				onLookLocationChange({
 					userLat: center.getLat(),
 					userLng: center.getLng(),
 				})
-			}
-			window.kakao.maps.event.addListener(mapInstance, "dragend", updateCenter)
+			}, 100)
 			window.kakao.maps.event.addListener(
 				mapInstance,
-				"zoom_changed",
+				"center_changed",
 				updateCenter,
 			)
 			return () => {
 				window.kakao.maps.event.removeListener(
 					mapInstance,
-					"dragend",
+					"center_changed",
 					updateCenter,
 				)
-				window.kakao.maps.event.removeListener(
-					mapInstance,
-					"zoom_changed",
-					updateCenter,
-				)
+				updateCenter.cancel()
 			}
 		}
 	}, [mapInstance, onLookLocationChange])
