@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react"
 
-export default function DetailSection({ memberInfo }) {
+export default function DetailSection() {
 	const [currentPage, setCurrentPage] = useState(1)
 	const itemsPerPage = 5
 	const containerRef = useRef(null)
@@ -14,14 +14,11 @@ export default function DetailSection({ memberInfo }) {
 		}
 	}, [])
 
+	// 🟢 memberId=1의 업데이트 데이터 가져오기
 	useEffect(() => {
-		if (!memberInfo) return
-
 		const fetchUpdates = async () => {
 			try {
-				const response = await fetch(
-					`http://localhost:3001/updates?memberId=${memberInfo.memberId}`,
-				)
+				const response = await fetch("http://localhost:3001/updates?memberId=1") // memberId=1 고정
 				const data = await response.json()
 
 				const sortedUpdates = data.sort(
@@ -34,8 +31,9 @@ export default function DetailSection({ memberInfo }) {
 		}
 
 		fetchUpdates()
-	}, [memberInfo])
+	}, [])
 
+	// 업데이트 내역이 없을 때 표시할 UI
 	if (!updates.length) {
 		return (
 			<p className="mt-4 text-center text-gray-500">
@@ -44,6 +42,7 @@ export default function DetailSection({ memberInfo }) {
 		)
 	}
 
+	// 날짜 포맷 함수
 	const formatDate = (dateString) => {
 		const date = new Date(dateString)
 		return date
@@ -55,6 +54,7 @@ export default function DetailSection({ memberInfo }) {
 			.replace(/\./g, ".")
 	}
 
+	// 페이지네이션 계산
 	const totalPages = Math.ceil(updates.length / itemsPerPage)
 	const startIndex = (currentPage - 1) * itemsPerPage
 	const paginatedUpdates = updates.slice(startIndex, startIndex + itemsPerPage)
@@ -69,7 +69,7 @@ export default function DetailSection({ memberInfo }) {
 				style={{ maxHeight: containerHeight }}
 			>
 				<ul className="w-full border-b border-gray-300 bg-white">
-					{paginatedUpdates.map((update, index) => (
+					{paginatedUpdates.map((update) => (
 						<li
 							key={update.updateHistoryId}
 							className="w-full border-t border-gray-300 bg-white px-4 py-2"
