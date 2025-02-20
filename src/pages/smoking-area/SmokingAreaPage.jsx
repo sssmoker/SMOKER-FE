@@ -8,6 +8,7 @@ import SmokingAreaDetailPage from "./SmokingAreaDetailPage"
 import SmokingAreaReviewPage from "./SmokingAreaReviewPage"
 import FloatingButton from "@/components/smoking-area/review/FloatingButton"
 import { useQueries } from "@tanstack/react-query"
+import { useSmokingAreaDetailsPage } from "@/utils/queries"
 
 export default function SmokingAreaPage() {
 	const location = useLocation()
@@ -16,49 +17,13 @@ export default function SmokingAreaPage() {
 	const queryParams = new URLSearchParams(location.search)
 	const smokingAreaId = queryParams.get("id")
 
-	const results = useQueries({
-		queries: [
-			{
-				queryKey: ["smokingAreas", smokingAreaId],
-				queryFn: async () => {
-					const response = await fetch("http://localhost:3001/list")
-					if (!response.ok) throw new Error("데이터 호출 실패")
-					return response.json()
-				},
-			},
-			{
-				queryKey: ["detail", smokingAreaId],
-				queryFn: async () => {
-					const response = await fetch("http://localhost:3001/detail")
-					// `https://api.smoker.my/api/smoking-area/${smokingAreaId}`,
-					if (!response.ok) throw new Error("데이터 호출 실패")
-					return response.json()
-				},
-			},
-			{
-				queryKey: ["reviews", smokingAreaId],
-				queryFn: async () => {
-					const response = await fetch("http://localhost:3001/reviews")
-					// `/api/reviews/${smokingAreaId}`
-					if (!response.ok) throw new Error("데이터 호출 실패")
-					return response.json()
-				},
-			},
-			{
-				queryKey: ["starRating", smokingAreaId],
-				queryFn: async () => {
-					const response = await fetch("http://localhost:3001/starRating")
-					// `/api/reviews/${smokingAreaId}/starInfo`
-					if (!response.ok) throw new Error("데이터 호출 실패")
-					return response.json()
-				},
-			},
-		],
-	})
-	const smokingAreasData = results[0].data
-	const detailData = results[1].data?.result
-	const reviewListData = results[2].data?.result
-	const starRatingData = results[3].data?.result
+	// api 연결
+	const results = useSmokingAreaDetailsPage(smokingAreaId)
+
+	// const smokingAreasData
+	const detailData = results[0].data?.result
+	const reviewListData = results[1].data?.result
+	const starRatingData = results[2].data?.result
 
 	const isLoading = results.some((result) => result.isLoading)
 	const isError = results.some((result) => result.isError)
@@ -68,12 +33,18 @@ export default function SmokingAreaPage() {
 
 	return (
 		<div className="min-h-[100vh] bg-white">
-			<Topbar isBookmarked={smokingAreasData.is_bookmarked} />
-			{smokingAreasData.area_image && (
+			<Topbar isBookmarked={false} />
+			{/* {smokingAreasData.area_image && (
 				<BackgroundImg bgImg={smokingAreasData.area_image} />
-			)}
+			)} */}
 
-			<SmokingAreaInfo smokingAreaId={smokingAreaId} {...smokingAreasData} />
+			<SmokingAreaInfo
+				smokingAreaId={smokingAreaId}
+				smoking_name={detailData.smokingAreaName}
+				region={detailData.location.address}
+				review_num={starRatingData.count}
+				rating={starRatingData.avg}
+			/>
 
 			<div className="h-[8px] w-full bg-[#E0E0E0]" />
 			<div className="flex justify-evenly gap-[20px]">

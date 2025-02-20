@@ -1,4 +1,9 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
+import {
+	useQuery,
+	useMutation,
+	useQueryClient,
+	useQueries,
+} from "@tanstack/react-query"
 import {
 	fetchSmokingAreas,
 	fetchSmokingAreaDetails,
@@ -19,31 +24,72 @@ import {
 	fetchNoticeDetail,
 	fetchSmokingAreaUpdateHistory,
 	fetchMemberUpdateHistory,
+	apiRequestWithAuth,
 	reissueToken,
 	logout,
 	fetchOpenApi,
 	healthCheck,
+	searchSmokingArea,
 } from "@/utils/api"
 
 //  흡연 구역 목록 가져오기
 export const useSmokingAreas = ({ userLat, userLng, selectedFilter }) =>
 	useQuery({
-		queryKey: ["smokingAreas"],
-		queryFn: fetchSmokingAreas({ userLat, userLng, selectedFilter }),
+		queryKey: ["smokingAreas", userLat, userLng],
+		queryFn: () => fetchSmokingAreas({ userLat, userLng, selectedFilter }),
 		retry: 1,
 		onError: (error) =>
 			console.error("흡연 구역 목록을 불러오는 데 실패했습니다.", error),
 	})
 
-//  특정 흡연 구역 상세 조회
-export const useSmokingAreaDetails = (smokingAreaId) =>
-	useQuery({
-		queryKey: ["smokingAreaDetails", smokingAreaId],
-		queryFn: () => fetchSmokingAreaDetails(smokingAreaId),
-		enabled: !!smokingAreaId,
-		retry: 1,
-		onError: (error) => console.error("흡연 구역 상세 조회 실패:", error),
+//  흡연 구역 검색 목록
+export const useSearchSmokingAreas = () => {
+	const queryClient = useQueryClient()
+	return useMutation({
+		mutationFn: searchSmokingArea,
+		onSuccess: () => {
+			queryClient.invalidateQueries(["smokingAreas"])
+		},
+		onError: (error) => console.error("흡연 구역 검색 실패:", error),
 	})
+}
+
+// 특정 흡연 구역 상세 조회, 리뷰 목록 조회, 총 별점 및 개수 조회
+export const useSmokingAreaDetailsPage = (smokingAreaId) =>
+	useQueries({
+		queries: [
+			{
+				queryKey: ["smokingAreaDetails", smokingAreaId],
+				queryFn: () => fetchSmokingAreaDetails(smokingAreaId),
+				enabled: !!smokingAreaId,
+				retry: 1,
+				onError: (error) => console.error("흡연 구역 상세 조회 실패:", error),
+			},
+			{
+				queryKey: ["reviews", smokingAreaId],
+				queryFn: () => fetchReviews(smokingAreaId),
+				enabled: !!smokingAreaId,
+				retry: 1,
+				onError: (error) => console.error("리뷰 목록 조회 실패:", error),
+			},
+			{
+				queryKey: ["reviewStars", smokingAreaId],
+				queryFn: () => fetchReviewStars(smokingAreaId),
+				enabled: !!smokingAreaId,
+				retry: 1,
+				onError: (error) => console.error("별점 조회 실패:", error),
+			},
+		],
+	})
+//  특정 흡연 구역 상세 조회
+// export const useSmokingAreaDetails = (smokingAreaId) =>
+// 	useQuery({
+// 		queryKey: ["smokingAreaDetails", smokingAreaId],
+// 		queryFn: () => fetchSmokingAreaDetails(smokingAreaId),
+// 		enabled: !!smokingAreaId,
+// 		retry: 1,
+// 		onError: (error) => console.error("흡연 구역 상세 조회 실패:", error),
+// 	})
 
 //  흡연 구역 등록
 export const useRegisterSmokingArea = () => {
@@ -80,14 +126,14 @@ export const useSmokingAreaMarkers = () =>
 	})
 
 //  리뷰 목록 조회
-export const useReviews = (smokingAreaId) =>
-	useQuery({
-		queryKey: ["reviews", smokingAreaId],
-		queryFn: () => fetchReviews(smokingAreaId),
-		enabled: !!smokingAreaId,
-		retry: 1,
-		onError: (error) => console.error("리뷰 목록 조회 실패:", error),
-	})
+// export const useReviews = (smokingAreaId) =>
+// 	useQuery({
+// 		queryKey: ["reviews", smokingAreaId],
+// 		queryFn: () => fetchReviews(smokingAreaId),
+// 		enabled: !!smokingAreaId,
+// 		retry: 1,
+// 		onError: (error) => console.error("리뷰 목록 조회 실패:", error),
+// 	})
 
 //  리뷰 등록
 export const usePostReview = (smokingAreaId) => {
@@ -102,14 +148,14 @@ export const usePostReview = (smokingAreaId) => {
 }
 
 //  총 별점 및 개수 조회
-export const useReviewStars = (smokingAreaId) =>
-	useQuery({
-		queryKey: ["reviewStars", smokingAreaId],
-		queryFn: () => fetchReviewStars(smokingAreaId),
-		enabled: !!smokingAreaId,
-		retry: 1,
-		onError: (error) => console.error("별점 조회 실패:", error),
-	})
+// export const useReviewStars = (smokingAreaId) =>
+// 	useQuery({
+// 		queryKey: ["reviewStars", smokingAreaId],
+// 		queryFn: () => fetchReviewStars(smokingAreaId),
+// 		enabled: !!smokingAreaId,
+// 		retry: 1,
+// 		onError: (error) => console.error("별점 조회 실패:", error),
+// 	})
 
 //  사용자 정보 조회
 export const useUserInfo = () =>
@@ -228,20 +274,51 @@ export const useMemberUpdateHistory = (memberId, page = 0) =>
 	})
 
 //  JWT 액세스 토큰 재발급
-export const useReissueToken = () =>
-	useMutation({
+export const useReissueToken = () => {
+	const queryClient = useQueryClient()
+
+	return useMutation({
 		mutationFn: reissueToken,
-		onSuccess: (data) => console.log("토큰 재발급 성공:", data),
+		onSuccess: (data) => {
+			console.log("토큰 재발급 성공:", data)
+
+			// 세션 스토리지에 최신 토큰 저장
+			sessionStorage.setItem(
+				"tokens",
+				JSON.stringify({
+					accessToken: data.result.accessToken,
+					refreshToken: data.result.refreshToken,
+				}),
+			)
+
+			// 모든 사용자 관련 데이터 새로고침
+			queryClient.invalidateQueries(["userInfo"])
+			queryClient.invalidateQueries(["savedSmokingAreas"]) // 저장된 흡연 구역
+			queryClient.invalidateQueries(["userReviews"]) // 사용자가 작성한 리뷰
+		},
 		onError: (error) => console.error("토큰 재발급 실패:", error),
 	})
+}
 
-//  로그아웃
-export const useLogout = () =>
-	useMutation({
+// 로그아웃
+export const useLogout = () => {
+	const queryClient = useQueryClient()
+
+	return useMutation({
 		mutationFn: logout,
-		onSuccess: () => console.log("로그아웃 성공"),
+		onSuccess: () => {
+			console.log("로그아웃 성공")
+
+			// 세션 스토리지 정리
+			sessionStorage.removeItem("tokens")
+			sessionStorage.removeItem("member")
+
+			// React Query 캐시 전체 삭제 (사용자 정보 및 관련 데이터 초기화)
+			queryClient.clear()
+		},
 		onError: (error) => console.error("로그아웃 실패:", error),
 	})
+}
 
 //  Open API 조회
 export const useOpenApi = (key) =>

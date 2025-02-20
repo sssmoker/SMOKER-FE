@@ -32,7 +32,15 @@ export default function Toast({
 				>
 					<div className="pointer-events-none flex w-full flex-col items-center rounded-3xl bg-white p-8 text-center shadow-lg">
 						<div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full">
-							{icon}
+							{typeof icon === "string" ? (
+								<img
+									src={icon}
+									alt="icon"
+									className="h-[50px] w-[50px] object-contain"
+								/>
+							) : (
+								icon
+							)}
 						</div>
 						<h2 className="mb-2 text-2xl font-bold">{message}</h2>
 						{subMessage && (

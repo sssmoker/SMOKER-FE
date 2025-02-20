@@ -23,12 +23,12 @@ function UpdateButton({ smokingAreaId }) {
 
 export default function SmokingAreaInfo({
 	smokingAreaId,
-	smoking_name,
-	region,
-	distance,
-	review_num,
-	rating,
-	bookmark_count,
+	smoking_name = "",
+	region = "",
+	distance = 0, //
+	review_num = 0,
+	rating = 0,
+	bookmark_count = 0, //
 }) {
 	return (
 		<>

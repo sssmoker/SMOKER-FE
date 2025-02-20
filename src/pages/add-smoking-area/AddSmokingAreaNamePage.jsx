@@ -9,19 +9,25 @@ import BackButton from "@/components/common/button/BackButton"
 import { motion, AnimatePresence } from "framer-motion"
 
 const options = [
-	"환풍시설이 있어요",
-	"깔끔해요",
-	"쓰레기통이 있어요",
-	"의자가 있어요",
-	"장애인 편의시설이에요",
-	"냉난방이 가능해요",
-	"야외에 있어요",
+	"공기 청정 기능",
+	"냉난방 기능",
+	"쓰레기통",
+	"비상버튼",
+	"환기 시스템",
+	"휠체어 진입 가능",
+	"음성 안내 시스템",
+	"CCTV 시스템",
+	"담배꽁초 처리함",
+	"햇빛 차단 시설",
+	"소화기 비치",
+	"정기적인 청소",
+	"비바람 차단 시설",
 ]
 
 export default function AddSmokingAreaNamePage() {
 	const navigate = useNavigate()
 	const location = useLocation()
-	const [name, setName] = useState("")
+	const [address, setAddress] = useState(location.state?.address || "") // address를 상태로 관리
 	const [showOptions, setShowOptions] = useState(false)
 	const [selectedOptions, setSelectedOptions] = useState([])
 	const [facilityType, setFacilityType] = useState(null)
@@ -36,7 +42,7 @@ export default function AddSmokingAreaNamePage() {
 	}
 
 	const handleNext1 = () => {
-		if (name.trim()) {
+		if (address.trim()) {
 			setShowFacilityType(true)
 		}
 	}
@@ -44,7 +50,7 @@ export default function AddSmokingAreaNamePage() {
 	const handleComplete = () => {
 		const data = {
 			...location.state,
-			name,
+			address, // 수정된 address 값 전달
 			details: selectedOptions,
 		}
 		console.log("등록 데이터:", data)
@@ -74,13 +80,14 @@ export default function AddSmokingAreaNamePage() {
 			<BackButton />
 			<Title text="정보를 업데이트해주세요!" />
 			<Title text="흡연 구역의 이름을 입력해주세요." />
+			<p className="text-xs">현재 위치: {address}</p>
 			<input
 				type="text"
 				className="w-full rounded border p-3"
-				placeholder="예: 청파성당 앞 흡연 부스"
-				value={name}
+				placeholder="주소를 수정해주세요"
+				value={address} // 상태 변수 address 값을 input 필드에 표시
 				onChange={(e) => {
-					setName(e.target.value)
+					setAddress(e.target.value) // 주소 변경 시 상태 업데이트
 					if (e.target.value.trim()) {
 						handleNext1()
 					}

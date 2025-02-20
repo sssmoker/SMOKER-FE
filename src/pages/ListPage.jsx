@@ -4,18 +4,18 @@ import Button from "@/components/common/button/ComButton"
 import SmokingAreaList from "@/components/area-list/card-list/SmokingAreaList"
 import Filter from "@/components/area-list/filter/Filter"
 import { useNavigate } from "react-router-dom"
-import { useQuery } from "@tanstack/react-query"
-import { fetchSmokingAreas } from "@/utils/api"
+import { useSmokingAreas } from "@/utils/queries"
 
 export default function ListPage() {
 	const navigate = useNavigate()
-	const userLat = 37.2937909 // 사용자 위도 // 임시 데이터
-	const userLng = 127.2026415 // 사용자 경도 // 임시 데이터
+	const userLat = 37.546 // 사용자 위도 // 임시 데이터
+	const userLng = 127.071 // 사용자 경도 // 임시 데이터
 	const FILTER_OPTIONS = {
 		DISTANCE: "거리순",
 		RATING: "평점순",
 	}
 	const [selectedFilter, setSelectedFilter] = useState(FILTER_OPTIONS.DISTANCE) // "거리순", "평점순"
+	const [data, setData] = useState()
 
 	// 현재 위치 가져오기
 	// useEffect(() => {
@@ -34,18 +34,20 @@ export default function ListPage() {
 	// 	fetchUserLocation()
 	// }, [])
 
-	//  흡연 구역 목록 가져오기 // api.js 머지하면 삭제 예정
-	const useSmokingAreas = () =>
-		useQuery({
-			queryKey: ["smokingAreas", userLat, userLng], // (추가)
-			queryFn: () => fetchSmokingAreas({ userLat, userLng, selectedFilter }),
-			retry: 1,
-			onError: (error) =>
-				console.error("흡연 구역 목록을 불러오는 데 실패했습니다.", error),
-		})
-	// 여기까지~~ // api.js 머지하면 삭제 예정
-
-	const { data, error, isLoading } = useSmokingAreas()
+	const {
+		data: apiData,
+		error,
+		isLoading,
+	} = useSmokingAreas({
+		userLat,
+		userLng,
+		selectedFilter,
+	})
+	useEffect(() => {
+		if (apiData) {
+			setData(apiData)
+		}
+	}, [apiData])
 
 	const handleMoveToHome = () => {
 		navigate("/")
@@ -63,7 +65,11 @@ export default function ListPage() {
 		<div className="relative h-[100vh] bg-white">
 			{/* 상단 검색바 */}
 			<div className="absolute left-0 top-[env(safe-area-inset-top)] z-50 w-full px-4">
-				<SearchBar placeholder="내 주변에 흡연구역을 검색해보세요 (예시) LG타워 사당역" />
+				<SearchBar
+					setData={setData}
+					isList={true}
+					placeholder="내 주변에 흡연구역을 검색해보세요 (예시) LG타워 사당역"
+				/>
 			</div>
 
 			{/* 필터 버튼 */}
