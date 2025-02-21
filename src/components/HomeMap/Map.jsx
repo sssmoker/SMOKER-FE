@@ -4,7 +4,7 @@ import { renderToString } from "react-dom/server"
 import { Cigarette } from "lucide-react"
 import { debounce } from "lodash"
 
-const DEFAULT_CENTER = { lat: 37.546, lng: 127.071 }
+const DEFAULT_CENTER = { lat: 37.468105670805606, lng: 127.03926498444508 }
 
 export default function Map({
 	currentLocation,
@@ -14,6 +14,7 @@ export default function Map({
 	const [mapInstance, setMapInstance] = useState(null)
 	const [markers, setMarkers] = useState([])
 	const locationAgreement = localStorage.getItem("locationAgreement") === "true"
+	const [zoomLevel, setZoomLevel] = useState(2) // 상태값으로 관리
 
 	// API 데이터: 현재 지도 중심(currentLocation) 기준 흡연구역 데이터
 	const { data: markerData } = useSmokingAreaMarkers(
@@ -52,14 +53,14 @@ export default function Map({
 		const container = document.getElementById("map")
 		const options = {
 			center: new window.kakao.maps.LatLng(mapCenter.lat, mapCenter.lng),
-			level: 4,
+			level: zoomLevel, // 상태값을 반영
 			draggable: true,
 			scrollwheel: true,
 		}
 		const map = new window.kakao.maps.Map(container, options)
 		setMapInstance(map)
 		window.kakaoMapInstance = map
-	}, [mapCenter])
+	}, [mapCenter, zoomLevel]) // zoomLevel을 의존성에 추가
 
 	// Kakao 지도 스크립트 동적 로드
 	const loadKakaoMapScript = useCallback(() => {
@@ -86,34 +87,59 @@ export default function Map({
 	// 현재 위치 마커 추가 (동의한 경우에만)
 	const addCurrentLocationMarker = useCallback(
 		(map, location) => {
-			if (!locationAgreement) return
+			if (!locationAgreement || !map) return
 			const markerDiv = document.createElement("div")
 			markerDiv.style.cssText = `
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 35px;
-        height: 35px;
-        background: rgba(248, 150, 179, 0.4);
-        border-radius: 50%;
-        animation: pulse-animation 1.5s infinite alternate;
-      `
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 35px;
+			height: 35px;
+			background: rgba(255, 100, 179, 0.6);
+			border-radius: 50%;
+			position: absolute;
+			z-index: 300;
+		`
+
 			markerDiv.innerHTML = `
-        <div style="width: 16px; height: 16px; background: yellow; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-          <div style="width: 10px; height: 10px; background: blue; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-            <div style="width: 4px; height: 4px; background: yellow; border-radius: 50%;"></div>
-          </div>
-        </div>
-      `
+			<div style="
+				width: 14px;
+				height: 14px;
+				background: yellow;
+				border-radius: 50%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			">
+				<div style="
+					width: 9px;
+					height: 9px;
+					background: blue;
+					border-radius: 50%;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+				">
+					<div style="
+						width: 5px;
+						height: 5px;
+						background: yellow;
+						border-radius: 50%;
+					"></div>
+				</div>
+			</div>
+		`
+
 			const overlay = new window.kakao.maps.CustomOverlay({
 				position: new window.kakao.maps.LatLng(
 					location.userLat,
 					location.userLng,
 				),
 				content: markerDiv,
-				zIndex: 300,
+				zIndex: 100,
 			})
 			overlay.setMap(map)
+			console.log("✅ 현재 위치 마커 추가 완료!")
 		},
 		[locationAgreement],
 	)
@@ -241,6 +267,31 @@ export default function Map({
 			}
 		}
 	}, [mapInstance, onLookLocationChange])
+
+	useEffect(() => {
+		if (mapInstance) {
+			const handleZoomChange = () => {
+				setZoomLevel(mapInstance.getLevel()) // 현재 확대 레벨 저장
+			}
+			window.kakao.maps.event.addListener(
+				mapInstance,
+				"zoom_changed",
+				handleZoomChange,
+			)
+			return () =>
+				window.kakao.maps.event.removeListener(
+					mapInstance,
+					"zoom_changed",
+					handleZoomChange,
+				)
+		}
+	}, [mapInstance])
+
+	useEffect(() => {
+		if (mapInstance) {
+			mapInstance.setLevel(zoomLevel) // zoomLevel 변경 시 적용
+		}
+	}, [mapInstance, zoomLevel])
 
 	return <div id="map" className="h-full w-full" />
 }
