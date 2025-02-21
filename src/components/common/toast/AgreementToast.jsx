@@ -50,7 +50,12 @@ export default function AgreementToast({ isVisible, onConfirm, onCancel }) {
 								[필수] 위치 기반 서비스 이용 약관
 							</label>
 							<span className="cursor-pointer text-xs text-gray-500 hover:underline">
-								보기
+								<a
+									href="https://redsummerluv.notion.site/19cd9c6dcc31803f884ec97bb0e3b07b?pvs=4"
+									target="_blank"
+								>
+									보기
+								</a>
 							</span>
 						</div>
 					</div>
